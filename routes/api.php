@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ReportTypeController;
+use App\Http\Controllers\LineController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,3 +22,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('report-types', [ReportTypeController::class, 'index']);
+Route::get('lines', [LineController::class, 'index']);

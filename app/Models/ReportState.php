@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class ReportState extends Model
 {
     /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'ReportState';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>

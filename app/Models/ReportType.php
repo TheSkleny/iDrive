@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class ReportType extends Model
 {
     /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'ReportType';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -28,5 +35,4 @@ class ReportType extends Model
      * @var string
      */
     protected $primaryKey = 'Id';
-
 }

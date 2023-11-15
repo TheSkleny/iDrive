@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Interfaces\ReportTypeRepositoryInterface;
+use App\Repositories\ReportTypeRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class ReportTypeController extends Controller
 {
-    private ReportTypeRepositoryInterface $ReportTypeRepository;
+    private ReportTypeRepository $ReportTypeRepository;
 
-    public function __construct(ReportTypeRepositoryInterface $ReportTypeRepository)
+    public function __construct(ReportTypeRepository $ReportTypeRepository)
         {
             $this->ReportTypeRepository = $ReportTypeRepository;
         }

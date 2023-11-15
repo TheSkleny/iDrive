@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class VehicleType extends Model
 {
     /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'VehicleType';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>

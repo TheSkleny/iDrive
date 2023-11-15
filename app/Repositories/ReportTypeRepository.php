@@ -2,13 +2,13 @@
 
 namespace App\Repositories;
 
-use App\Interfaces\ReportTypeRepositoryInterface;
 use App\Models\ReportType;
 
-class ReportTypeRepository implements ReportTypeRepositoryInterface
+class ReportTypeRepository
 {
     public function getAll()
     {
+
         return ReportType::all();
     }
 }
