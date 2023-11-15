@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('Link', function (Blueprint $table) {
-            $table->uuid('Id')->primary();
+            $table->uuid('Id')->primary()->default(DB::raw('gen_random_uuid()'));
             $table->foreignuuid('LineId')
                 ->constrained('Line', 'Id')
                 ->onUpdate('cascade')

@@ -38,4 +38,5 @@ class Stop extends Model
      * @var string
      */
     protected $primaryKey = 'Id';
+    protected $keyType = 'string';
 }

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('Report', function (Blueprint $table) {
-            $table->uuid('Id')->primary();
+            $table->uuid('Id')->primary()->default(DB::raw('gen_random_uuid()'));
             $table->date('ReportDate');
             $table->foreignid('DriverId')
                 ->constrained('users', 'id')
