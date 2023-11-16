@@ -42,4 +42,9 @@ class LineStop extends Model
     */
     protected $primaryKey = 'Id';
     protected $keyType = 'string';
+
+    public function lineStops()
+    {
+        return $this->hasMany(LineStop::class, 'LineId', 'Id');
+    }
 }

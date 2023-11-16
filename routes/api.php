@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\ReportTypeController;
-use App\Http\Controllers\LineController;
+use App\Http\Controllers\SearchLineController;
 use App\Http\Controllers\DriverController;
+use App\Http\Controllers\VehicleTypeController;
+use App\Http\Controllers\LineDetailController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,5 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('report-types', [ReportTypeController::class, 'index']);
-Route::get('lines', [LineController::class, 'index']);
+Route::get('lines', [SearchLineController::class, 'index']);
 Route::get('driver/{DriverId}', [DriverController::class, 'getDriverShifts']);
+Route::get('vehicle-type', [VehicleTypeController::class, 'index']);
+Route::get('line/{LineId}', [LineDetailController::class, 'getLineStops'])->where('LineId', '.*');

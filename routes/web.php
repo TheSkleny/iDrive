@@ -37,14 +37,17 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/report-types', function () {
     return Inertia::render('Base', ['c' => 'ReportTypes']);
-});
+})->name('report-types');
 
-Route::get('/lines', function () {
-    return Inertia::render('Base', ['c' => 'Lines']);
-});
+Route::get('/search-line', function () {
+    return Inertia::render('Base', ['c' => 'SearchLine']);
+})->name('search-line');
 
 Route::get('/driver', function () {
     return Inertia::render('Base', ['c' => 'Driver']);
-});
+})->name('driver');
+Route::get('/line/{lineId}', function ($lineId) {
+    return Inertia::render('Base', ['c' => 'LineDetail', 'args' => ['lineId' => $lineId]]);
+})->where('lineId', '.*');
 
 require __DIR__.'/auth.php';

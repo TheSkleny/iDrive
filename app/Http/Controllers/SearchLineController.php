@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\LineRepository;
+use App\Repositories\SearchLineRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class LineController extends Controller
+class SearchLineController extends Controller
 {
-    private LineRepository $LineRepository;
+    private SearchLineRepository $LineRepository;
 
-    public function __construct(LineRepository $LineRepository)
+    public function __construct(SearchLineRepository $LineRepository)
         {
             $this->LineRepository = $LineRepository;
         }

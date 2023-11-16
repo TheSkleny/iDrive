@@ -1,20 +1,24 @@
 <script setup>
 import Driver from "@/Pages/Driver.vue";
-import Lines from "@/Pages/Lines.vue";
+import SearchLine from "@/Pages/SearchLine.vue";
 import ReportTypes from "@/Pages/ReportTypes.vue";
+import LineDetail from "@/Pages/LineDetail.vue";
 
 const props = defineProps({
-    c: String
+    c: String,
+    args: Object
 })
 
 const comp = () => {
     switch (props.c) {
         case 'Driver':
             return Driver
-        case 'Lines':
-            return Lines
+        case 'SearchLine':
+            return SearchLine
         case 'ReportTypes':
             return ReportTypes
+        case 'LineDetail':
+            return LineDetail
         default:
             return Driver
     }
@@ -23,20 +27,31 @@ const comp = () => {
 </script>
 
 <template>
-    <v-app>
-        <Suspense>
-            <component :is="comp()"/>
-            <template #fallback>
-                <div class="center">
-                    <h1 style="font-weight: bold; font-size: larger">Loading</h1>
-                    <br>
-                    <v-progress-circular style="display: block;
+    <v-app style="display: flex; flex-direction: row">
+        <v-layout>
+            <v-navigation-drawer style="flex: 10">
+                <v-list color="transparent">
+                    <v-list-item prepend-icon="mdi-view-dashboard" title="Dashboard"></v-list-item>
+                    <v-list-item prepend-icon="mdi-account-box" title="Account"></v-list-item>
+                    <v-list-item prepend-icon="mdi-gavel" title="Admin"></v-list-item>
+                </v-list>
+            </v-navigation-drawer>
+            <v-main>
+                <Suspense style="flex: 100">
+                    <component :is="comp()" :args="args"/>
+                    <template #fallback>
+                        <div class="center">
+                            <h1 style="font-weight: bold; font-size: larger">Loading</h1>
+                            <br>
+                            <v-progress-circular style="display: block;
                                                 margin-left: auto;
                                                 margin-right: auto;"
-                                         indeterminate
-                    />
-                </div>
-            </template>
-        </Suspense>
+                                                 indeterminate
+                            />
+                        </div>
+                    </template>
+                </Suspense>
+            </v-main>
+        </v-layout>
     </v-app>
 </template>

@@ -1,15 +1,24 @@
 <script setup>
 import {ref} from "vue";
 import useApi from "@/Composables/useApi.js";
+import useRedirect from "@/Composables/useRedirect.js";
 
+/**
+ *
+ * @type {Ref<UnwrapRef<Shift[]>>}
+ */
 const shifts = ref([])
 
-const {response, error} = await useApi('GET', 'driver/3')
+const {response, error} = await useApi('GET', 'driver/5')
 if (response.data) {
     shifts.value = response.data.data
 }
 if (error) {
     console.log(error.value)
+}
+
+const routeToLine = (id) => {
+    useRedirect.line(id)
 }
 
 </script>
@@ -18,8 +27,6 @@ if (error) {
     <div>
         <v-container>
             <h1>Driver shifts</h1>
-            <v-icon icon="mdi-home"/>
-            <v-icon icon="$calendar" color="red"/>
             <v-table fixed-header>
                 <thead>
                 <tr>
@@ -33,9 +40,15 @@ if (error) {
                 </thead>
                 <tbody>
                 <tr v-for="shift in shifts" :key="shift.LinkId">
-                    <td>{{ shift.LineName }}</td>
-                    <td><v-icon icon="{{ shift.VehicleIcon }}"/></td>
-                    <td>{{ shift.VehicleName }}</td>
+                    <td>
+                        <v-btn @click="() => routeToLine(shift.LineId)" variant="text">{{ shift.LineName }}</v-btn>
+                    </td>
+                    <td>
+                        <v-icon>{{ shift.VehicleIcon }}</v-icon>
+                    </td>
+                    <td>
+                        <v-btn variant="text">{{ shift.VehicleName }}</v-btn>
+                    </td>
                     <td>{{ shift.DepartureTime }}</td>
                     <td>{{ shift.FirstStop }}</td>
                     <td>{{ shift.LastStop }}</td>

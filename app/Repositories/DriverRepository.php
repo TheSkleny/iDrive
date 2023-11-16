@@ -14,43 +14,48 @@ use App\Models\Stop;
 use App\Models\Vehicle;
 use App\Models\VehicleType;
 
-
 class DriverRepository
 {
     public function getDriverShifts($driverId) : array
     {
         return DB::select('
-        SELECT
-        "LK"."Id" AS "LinkId",
-        "LN"."Name" AS "LineName",
-        "VT"."Icon" AS "VehicleIcon",
-        "VL"."Name" AS "VehicleName",
-        "LK"."DepartureTime",
-        (
-            SELECT "FS"."Name" AS "FirstStop"
-            FROM "LineStop" "LS"
-            LEFT JOIN "Stop" "FS"
-            ON "LS"."StopId" = "FS"."Id"
-            WHERE "Order" = 1
-        ),
-        (
-            SELECT "LSS"."Name" AS "LastStop"
-            FROM "LineStop" "LS"
-            LEFT JOIN "Stop" "LSS"
-            ON "LS"."StopId" = "LSS"."Id"
-            ORDER BY "LS"."Order" DESC
-            LIMIT 1
-        )
-        FROM "Link" "LK"
-        LEFT JOIN "Line" "LN"
-        ON "LK"."LineId" = "LN"."Id"
-        LEFT JOIN "Vehicle" "VL"
-        ON "LK"."VehicleId" = "VL"."Id"
-        LEFT JOIN "users" "DR"
-        ON "LK"."DriverId" = "DR"."id"
-        LEFT JOIN "VehicleType" "VT"
-        ON "VL"."TypeId" = "VT"."Id"
-        WHERE "DR"."id" = :driverId
+        select
+  "LK"."Id" as "LinkId",
+  "LN"."Name" as "LineName",
+  "LN"."Id" as "LineId",
+  "VT"."Icon" as "VehicleIcon",
+  "VL"."Name" as "VehicleName",
+  "LK"."DepartureTime",
+  (
+    select
+      "FS"."Name" as "FirstStop"
+    from
+      "LineStop" "LS"
+      left join "Stop" "FS" on "LS"."StopId" = "FS"."Id"
+    where
+      "Order" = 1
+    limit
+      1
+  ),
+  (
+    select
+      "LSS"."Name" as "LastStop"
+    from
+      "LineStop" "LS"
+      left join "Stop" "LSS" on "LS"."StopId" = "LSS"."Id"
+    order by
+      "LS"."Order" desc
+    limit
+      1
+  )
+from
+  "Link" "LK"
+  left join "Line" "LN" on "LK"."LineId" = "LN"."Id"
+  left join "Vehicle" "VL" on "LK"."VehicleId" = "VL"."Id"
+  left join "users" "DR" on "LK"."DriverId" = "DR"."id"
+  left join "VehicleType" "VT" on "VL"."TypeId" = "VT"."Id"
+where
+  "DR"."id" = :driverId
     ', ['driverId' => $driverId]);
     }
 }

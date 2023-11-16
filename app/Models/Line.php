@@ -41,4 +41,5 @@ class Line extends Model
     */
     protected $primaryKey = 'Id';
     protected $keyType = 'string';
+
 }

@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Line;
 
-class LineRepository
+class SearchLineRepository
 {
     public function getLineList()
     {
