@@ -52,10 +52,10 @@ from
   "Link" "LK"
   left join "Line" "LN" on "LK"."LineId" = "LN"."Id"
   left join "Vehicle" "VL" on "LK"."VehicleId" = "VL"."Id"
-  left join "users" "DR" on "LK"."DriverId" = "DR"."id"
+  left join "users" "DR" on "LK"."DriverId" = "DR"."Id"
   left join "VehicleType" "VT" on "VL"."TypeId" = "VT"."Id"
 where
-  "DR"."id" = :driverId
+  "DR"."Id" = :driverId
     ', ['driverId' => $driverId]);
     }
 }

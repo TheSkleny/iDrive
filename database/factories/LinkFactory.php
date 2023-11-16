@@ -21,7 +21,7 @@ class LinkFactory extends Factory
         return [
             'LineId' => $randomLine,
             'VehicleId' => $randomVehicle,
-            'DriverId' => '5', // in testing profiles driver is seeded with id 5
+            'DriverId' => '9c0d1e2f-3a4b-5c6d-7e8f-9a0b1c2d3e4f',
             'DepartureTime' => (new \DateTime())->setTime(rand(0, 23), rand(0, 59), 0)->format('H:i:s'),
             'IsReverse' => $this->faker->boolean
         ];

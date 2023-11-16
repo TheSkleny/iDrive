@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -21,8 +22,8 @@ return new class extends Migration
                 ->constrained('Vehicle', 'Id')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreignid('DriverId')
-                ->constrained('users', 'id')
+            $table->foreignuuid('DriverId')
+                ->constrained('users', 'Id')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->time('DepartureTime');

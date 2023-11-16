@@ -24,10 +24,10 @@ class ReportFactory extends Factory
         $randomMaintenanceDate->setTimestamp(rand($randomDate->getTimestamp(), time()));
         return [
             'ReportDate' => $randomDate,
-            'DriverId' => '5', // in testing profiles driver is seeded with id 5
+            'DriverId' => '9c0d1e2f-3a4b-5c6d-7e8f-9a0b1c2d3e4f',
             'DriverDescription' => $this->faker->text,
             'VehicleId' => $randomVehicle,
-            'TechnicianId' => '3', // in testing profiles technician is seeded with id 3
+            'TechnicianId' => '1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d',
             'TechnicianDescription' => $this->faker->text,
             'MaintenanceDate' => $randomMaintenanceDate,
             'StateId' => fake()->numberBetween(1, 4),
