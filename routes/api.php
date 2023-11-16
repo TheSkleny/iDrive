@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ReportTypeController;
 use App\Http\Controllers\LineController;
+use App\Http\Controllers\DriverController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,3 +24,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('report-types', [ReportTypeController::class, 'index']);
 Route::get('lines', [LineController::class, 'index']);
+Route::get('driver/{DriverId}', [DriverController::class, 'getDriverShifts']);

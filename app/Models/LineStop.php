@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 
-class Line extends Model
+class LineStop extends Model
 {
     use HasUuids;
 
