@@ -1,6 +1,6 @@
 <script setup>
 import {Head, Link} from '@inertiajs/vue3';
-import Base from '@/Pages/Base/App.vue';
+import Base from '@/Base/App.vue';
 
 defineProps({
     canLogin: {

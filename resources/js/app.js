@@ -7,11 +7,20 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 
 // Vuetify
-import '@mdi/font/css/materialdesignicons.css'
+//import '@mdi/font/css/materialdesignicons.css'
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
+
+import axios from "axios";
+
+axios.defaults.baseURL = import.meta.env.VITE_API_URL;
+// TODO auth token from local storage if this is your auth method idk now
+// local store can be used with https://pinia.vuejs.org/
+// axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("token")}`;
+axios.defaults.headers.common["Content-Type"] = "application/json";
+axios.defaults.headers.common["Accept"] = "application/json";
 
 const vuetify = createVuetify({
     components,
