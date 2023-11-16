@@ -25,9 +25,17 @@ const comp = () => {
 <template>
     <v-app>
         <Suspense>
-            <component :is="comp()" />
+            <component :is="comp()"/>
             <template #fallback>
-                <h1>Loading...</h1>
+                <div class="center">
+                    <h1 style="font-weight: bold; font-size: larger">Loading</h1>
+                    <br>
+                    <v-progress-circular style="display: block;
+                                                margin-left: auto;
+                                                margin-right: auto;"
+                                         indeterminate
+                    />
+                </div>
             </template>
         </Suspense>
     </v-app>
