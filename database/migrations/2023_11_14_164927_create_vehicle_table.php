@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('Vehicle', function (Blueprint $table) {
             $table->uuid('Id')->primary()->default(DB::raw('gen_random_uuid()'));
-            $table->string('Name');
+            $table->string('Name')->nullable()->unique();
             $table->string('Brand');
-            $table->string('ImageUri');
+            $table->string('ImageUri')->nullable();
             $table->date('LastMaintenance');
             $table->integer('Capacity');
             $table->integer('SpeedLimit');

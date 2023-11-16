@@ -28,7 +28,7 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->string('TechnicianDescription');
-            $table->date('MaintenanceDate');
+            $table->date('MaintenanceDate')->nullable();
             $table->foreignid('StateId')
                 ->constrained('ReportState', 'Id')
                 ->onUpdate('cascade')

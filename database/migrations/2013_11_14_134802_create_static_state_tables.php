@@ -19,6 +19,7 @@ return new class extends Migration
         Schema::create('VehicleType', function (Blueprint $table) {
             $table->id('Id');
             $table->string('Description');
+            $table->string('Icon');
         });
 
         Schema::create('UserType', function (Blueprint $table) {
