@@ -17,14 +17,14 @@ use App\Models\VehicleType;
 
 class DriverRepository
 {
-    public function getDriverShifts($driverId)
+    public function getDriverShifts($driverId) : array
     {
         return DB::select('
         SELECT
         "LK"."Id" AS "LinkId",
         "LN"."Name" AS "LineName",
-        "VT"."Description",
-        "VL"."Name",
+        "VT"."Icon" AS "VehicleIcon",
+        "VL"."Name" AS "VehicleName",
         "LK"."DepartureTime",
         (
             SELECT "FS"."Name" AS "FirstStop"
