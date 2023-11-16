@@ -29,7 +29,9 @@
     <div>
         <h1>Line {{ line.LineName }}</h1>
         <v-timeline direction="vertical" side="end" truncate-line="both">
-            <v-timeline-item v-for="stop in line.Stops">
+            <v-timeline-item v-for="stop in line.Stops"
+                             icon="mdi-map-marker"
+                             dot-color="red">
                 {{ stop.Name }}
             </v-timeline-item>
         </v-timeline>

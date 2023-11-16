@@ -24,11 +24,23 @@ const comp = () => {
     }
 }
 
+
 </script>
 
 <template>
     <v-app style="display: flex; flex-direction: row">
         <v-layout>
+            <v-app-bar>
+                <v-icon>mdi-select-place</v-icon>
+                Logo
+                <v-spacer/>
+                <v-app-bar-title>
+                    {{ comp().__name }}
+                </v-app-bar-title>
+                <v-spacer/>
+                <v-btn>BUTTON</v-btn>
+                <v-btn>BUTTON</v-btn>
+            </v-app-bar>
             <v-navigation-drawer style="flex: 10">
                 <v-list color="transparent">
                     <v-list-item prepend-icon="mdi-view-dashboard" title="Dashboard"></v-list-item>
