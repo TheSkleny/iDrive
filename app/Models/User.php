@@ -51,4 +51,9 @@ class User extends Authenticatable
     ];
     protected $primaryKey = 'Id';
     protected $keyType = 'string';
+
+    public function type()
+    {
+        return $this->belongsTo(UserType::class, 'type_id');
+    }
 }

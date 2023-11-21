@@ -4,12 +4,20 @@ import useApi from "@/Composables/useApi.js";
 import useRedirect from "@/Composables/useRedirect.js";
 
 /**
+     *
+     * @type {Prettify<Readonly<ExtractPropTypes<{args: ObjectConstructor<{driverId:string}>}>>>}
+     */
+     const props = defineProps({
+        args: Object}
+    )
+
+/**
  *
  * @type {Ref<UnwrapRef<Shift[]>>}
  */
 const shifts = ref([])
 
-const {response, error} = await useApi('GET', 'driver/9c0d1e2f-3a4b-5c6d-7e8f-9a0b1c2d3e4f')
+const { response, error } = await useApi('GET', `driver/${props.args.driverId}`)
 if (response.data) {
     shifts.value = response.data.data
 }

@@ -23,7 +23,7 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-});
+})->name('welcome');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -44,8 +44,9 @@ Route::get('/search-line', function () {
 })->name('search-line');
 
 Route::get('/driver', function () {
-    return Inertia::render('Base', ['c' => 'Driver']);
-})->name('driver');
+    return Inertia::render('Base', ['c' => 'Driver', 'args' => ['driverId' => auth()->user()->Id]]);
+})->name('driver')->middleware(['auth', 'verified', 'usertype:1']);
+
 Route::get('/line/{lineId}', function ($lineId) {
     return Inertia::render('Base', ['c' => 'LineDetail', 'args' => ['lineId' => $lineId]]);
 })->where('lineId', '.*');
