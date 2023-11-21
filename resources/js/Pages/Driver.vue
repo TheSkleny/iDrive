@@ -63,6 +63,9 @@ var h = window.innerWidth;
         <v-container>
             <div v-for="day in result" :key="day['date']">
                 {{ day.date }}
+                <div v-for="time in day['times']" :key="time['time']">
+                    {{ time.time }} : {{ time.data }}
+                </div>
             </div>
             <h1>Driver shifts</h1>
             <v-table fixed-header v-for="day in shift_date_time_arr" :key="day.date">
