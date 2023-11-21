@@ -7,7 +7,7 @@ import useApi from "@/Composables/useApi.js";
  * @type {Prettify<Readonly<ExtractPropTypes<{args: ObjectConstructor<{VehicleId:string}>}>>>}
  */
 const props = defineProps({
-        args: Object
+        args: Object,
     }
 )
 
@@ -25,6 +25,7 @@ if (error) {
     console.log(error.value)
 }
 
+
 </script>
 
 <template>
@@ -33,7 +34,7 @@ if (error) {
             <v-icon>{{ vehicle.VehicleTypeIcon }}</v-icon>
             Vehicle {{ vehicle.VehicleLicensePlate }} "{{ vehicle.VehicleName }}"
         </h1>
-<!--        {{ vehicle }}-->
+        <!--        {{ vehicle }}-->
         <div class="parent">
             <div class="child">
                 <v-img :src="vehicle.VehicleImageUri" width="300"></v-img>
@@ -45,9 +46,24 @@ if (error) {
                     <li>Speed limit: {{ vehicle.VehicleSpeedLimit }}</li>
                     <li>Last maintenance: {{ vehicle.VehicleLastMaintenance }}</li>
                 </ul>
-                <v-btn style="margin-top: 50px">Report malfunction</v-btn>
+                <v-card style="margin: 100px; padding: 20px" width="500">
+                    <v-card-title>
+                        <span class="headline">Report</span>
+                    </v-card-title>
+                    <v-card-text>
+                        <v-container>
+                            <v-form>
+                                <v-textarea label="Describe problem" required></v-textarea>
+                            </v-form>
+                        </v-container>
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer/>
+                        <v-btn @click="">Send report</v-btn>
+                    </v-card-actions>
+                </v-card>
             </div>
-            <div class="child" >
+            <div class="child">
             </div>
         </div>
     </div>
@@ -62,16 +78,12 @@ if (error) {
 }
 
 .parent {
-    //border: 1px solid black;
-    margin: 1rem;
-    padding: 2rem 2rem;
+//border: 1px solid black; margin: 1rem; padding: 2rem 2rem;
     text-align: left;
 }
 
 .child {
     display: inline-block;
-    //border: 1px solid red;
-    padding: 1rem 1rem;
-    vertical-align: top;
+//border: 1px solid red; padding: 1rem 1rem; vertical-align: top;
 }
 </style>
