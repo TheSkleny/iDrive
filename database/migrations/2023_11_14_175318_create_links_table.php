@@ -26,7 +26,7 @@ return new class extends Migration
                 ->constrained('users', 'Id')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->time('DepartureTime');
+            $table->dateTime('DepartureDate');
             $table->boolean('IsReverse');
         });
     }

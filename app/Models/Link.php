@@ -26,7 +26,7 @@ class Link extends Model
         'LineId',
         'VehicleId',
         'DriverId',
-        'DepartureTime',
+        'DepartureDate',
         'IsReverse'
     ];
 
