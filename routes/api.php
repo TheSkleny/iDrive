@@ -27,7 +27,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('report-types', [ReportTypeController::class, 'index']);
 Route::get('lines', [SearchLineController::class, 'index']);
-Route::get('driver/{DriverId}', [DriverController::class, 'getDriverShifts']);
+Route::get('driver/{DriverId}', [DriverController::class, 'getDriverShifts'])->where('DriverId', '.*');
 Route::get('vehicle-type', [VehicleTypeController::class, 'index']);
 Route::get('line/{LineId}', [LineDetailController::class, 'getLineStops'])->where('LineId', '.*');
 Route::get('vehicle/{VehicleId}', [VehicleController::class, 'getVehicleInfo'])->where('VehicleId', '.*');
