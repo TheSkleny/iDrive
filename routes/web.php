@@ -49,5 +49,8 @@ Route::get('/driver', function () {
 Route::get('/line/{lineId}', function ($lineId) {
     return Inertia::render('Base', ['c' => 'LineDetail', 'args' => ['lineId' => $lineId]]);
 })->where('lineId', '.*');
+Route::get('/vehicle/{vehicleId}', function ($vehicleId) {
+    return Inertia::render('Base', ['c' => 'VehicleDetail', 'args' => ['vehicleId' => $vehicleId]]);
+})->where('vehicleId', '.*');
 
 require __DIR__.'/auth.php';

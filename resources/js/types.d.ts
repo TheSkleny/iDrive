@@ -4,6 +4,7 @@ type Shift = {
     LineId: string,
     VehicleIcon: string,
     VehicleName: string,
+    VehicleId: string,
     FirstStopName: string,
     DepartureTime: string,
     FirstStop: string,
@@ -19,5 +20,25 @@ type Stop = {
 type Line = {
     LineName: string,
     Stops: Stop[]
+}
+
+// type VehicleType = {
+//     VehicleTypeId: string,
+//     VehicleTypeDescription: string,
+//     VehicleTypeIcon: string
+// }
+
+type Vehicle = {
+    VehicleId: string,
+    VehicleName: string,
+    VehicleBrand: string,
+    VehicleImageUri: string,
+    VehicleLastMaintenance: string,
+    VehicleCapacity: number,
+    VehicleSpeedLimit: number,
+    VehicleLicensePlate: string,
+    VehicleTypeDescription: string,
+    VehicleTypeIcon: string,
+    VehicleStateDescription: string
 }
 

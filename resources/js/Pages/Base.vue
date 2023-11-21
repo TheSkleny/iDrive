@@ -3,6 +3,7 @@ import Driver from "@/Pages/Driver.vue";
 import SearchLine from "@/Pages/SearchLine.vue";
 import ReportTypes from "@/Pages/ReportTypes.vue";
 import LineDetail from "@/Pages/LineDetail.vue";
+import VehicleDetail from "@/Pages/VehicleDetail.vue";
 
 const props = defineProps({
     c: String,
@@ -19,8 +20,10 @@ const comp = () => {
             return ReportTypes
         case 'LineDetail':
             return LineDetail
+        case 'VehicleDetail':
+            return VehicleDetail
         default:
-            return Driver
+            return Driver //TODO: error page or home page
     }
 }
 
@@ -33,10 +36,6 @@ const comp = () => {
             <v-app-bar>
                 <v-icon>mdi-select-place</v-icon>
                 Logo
-                <v-spacer/>
-                <v-app-bar-title>
-                    {{ comp().__name }}
-                </v-app-bar-title>
                 <v-spacer/>
                 <v-btn>BUTTON</v-btn>
                 <v-btn>BUTTON</v-btn>

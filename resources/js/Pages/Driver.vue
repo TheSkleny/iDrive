@@ -21,6 +21,12 @@ const routeToLine = (id) => {
     useRedirect.line(id)
 }
 
+const routeToVehicle = (id) => {
+    useRedirect.vehicle(id)
+}
+
+var h = window.innerWidth;
+
 </script>
 
 <template>
@@ -30,28 +36,32 @@ const routeToLine = (id) => {
             <v-table fixed-header>
                 <thead>
                 <tr>
-                    <th>Line name</th>
-                    <th>Vehicle type</th>
+                    <th class="text-center">Line name</th>
+                    <th class="text-center">Vehicle type</th>
                     <th>Vehicle name</th>
                     <th>Departure Time</th>
                     <th>First stop</th>
                     <th>Last stop</th>
+                    <th class="text-center">Report malfunction</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr v-for="shift in shifts" :key="shift.LinkId">
-                    <td>
-                        <v-btn @click="() => routeToLine(shift.LineId)" variant="text">{{ shift.LineName }}</v-btn>
+                    <td class="text-center">
+                        <v-btn @click="() => routeToLine(shift.LineId)" variant="tonal">{{ shift.LineName }}</v-btn>
                     </td>
-                    <td>
+                    <td class="text-center">
                         <v-icon>{{ shift.VehicleIcon }}</v-icon>
                     </td>
                     <td>
-                        <v-btn variant="text">{{ shift.VehicleName }}</v-btn>
+                        <v-btn @click="() => routeToVehicle(shift.VehicleId)" variant="tonal">{{ shift.VehicleName }}</v-btn>
                     </td>
                     <td>{{ shift.DepartureTime }}</td>
                     <td>{{ shift.FirstStop }}</td>
                     <td>{{ shift.LastStop }}</td>
+                    <td class="text-center">
+                        <v-btn variant="tonal" style="color: red">Report</v-btn>
+                    </td>
                 </tr>
                 </tbody>
             </v-table>

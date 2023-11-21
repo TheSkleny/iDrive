@@ -24,7 +24,7 @@ class VehicleFactory extends Factory
             'LastMaintenance' => now(),
             'Capacity' => fake()->numberBetween(1, 200),
             'SpeedLimit' => fake()->numberBetween(1, 120),
-            'LicensePlate' => sprintf('%d%c%05d', fake()->numberBetween(1, 9), chr(rand(65, 90)), fake()->numberBetween(1, 99999)),
+            'LicensePlate' => fake()->numberBetween(1, 9) . chr(rand(65, 90)) . fake()->numberBetween(1, 99999),
             'TypeId' => fake()->numberBetween(1, 5),
             'StateId' => fake()->numberBetween(1, 2),
         ];

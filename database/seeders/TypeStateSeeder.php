@@ -24,7 +24,7 @@ class TypeStateSeeder extends Seeder
         DB::table('ReportState')->insert([
             ['Description' => 'Reported'],
             ['Description' => 'Rejected'],
-            ['Description' => 'Waiting for maintenance'],
+            ['Description' => 'Assigned to technician'],
             ['Description' => 'Finished'],
         ]);
 
@@ -35,7 +35,8 @@ class TypeStateSeeder extends Seeder
 
         DB::table('VehicleState')->insert([
             ['Description' => 'Operational'],
-            ['Description' => 'Non-operational'],
+            ['Description' => 'At service station'],
+            ['Description' => 'Out of service'],
         ]);
 
         DB::table('VehicleType')->insert([

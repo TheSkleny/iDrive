@@ -2,52 +2,32 @@
 
 namespace App\Repositories;
 
+use Illuminate\Support\Facades\DB;
+
 use App\Models\Vehicle;
 
-class VehicleRepository extends BaseRepository
+class VehicleRepository
 {
-    /**
-     * Create a new VehicleRepository instance.
-     *
-     * @param  \App\Models\Vehicle  $vehicle
-     * @return void
-     */
-    public function __construct(Vehicle $vehicle)
+    public function getVehicleInfo($vehicleId) : array
     {
-        $this->model = $vehicle;
-    }
-
-    /**
-     * Create a new vehicle.
-     *
-     * @param  array<string, mixed>  $vehicle
-     * @return \App\Models\Vehicle
-     */
-    public function create(array $vehicle): Vehicle
-    {
-        return $this->model->create($vehicle);
-    }
-
-    /**
-     * Update a vehicle.
-     *
-     * @param  \App\Models\Vehicle  $vehicle
-     * @param  array<string, mixed>  $data
-     * @return void
-     */
-    public function update(Vehicle $vehicle, array $data): void
-    {
-        $vehicle->update($data);
-    }
-
-    /**
-     * Delete a vehicle.
-     *
-     * @param  \App\Models\Vehicle  $vehicle
-     * @return void
-     */
-    public function delete(Vehicle $vehicle): void
-    {
-        $vehicle->delete();
+        return DB::select('
+        select
+        "VL"."Id" as "VehicleId",
+        "VL"."Name" as "VehicleName",
+        "VL"."Brand" as "VehicleBrand",
+        "VL"."ImageUri" as "VehicleImageUri",
+        "VL"."LastMaintenance" as "VehicleLastMaintenance",
+        "VL"."Capacity" as "VehicleCapacity",
+        "VL"."SpeedLimit" as "VehicleSpeedLimit",
+        "VL"."LicensePlate" as "VehicleLicensePlate",
+        "VT"."Description" as "VehicleTypeDescription",
+        "VT"."Icon" as "VehicleTypeIcon",
+        "VS"."Description" as "VehicleStateDescription"
+        from
+        "Vehicle" as "VL"
+        left join "VehicleType" as "VT" on "VL"."TypeId" = "VT"."Id"
+        left join "VehicleState" as "VS" on "VL"."StateId" = "VS"."Id"
+        where "VL"."Id" = :vehicleId
+        ', ['vehicleId' => $vehicleId]);
     }
 }

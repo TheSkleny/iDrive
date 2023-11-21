@@ -25,6 +25,7 @@ class DriverRepository
   "LN"."Id" as "LineId",
   "VT"."Icon" as "VehicleIcon",
   "VL"."Name" as "VehicleName",
+  "VL"."Id" as "VehicleId",
   "LK"."DepartureTime",
   (
     select
