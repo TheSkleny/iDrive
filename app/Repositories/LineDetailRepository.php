@@ -27,12 +27,15 @@ class LineDetailRepository
 
         $q_detail = DB::select('
         select
-        "LN"."Name" as "LineName"
+        "LN"."Name" as "LineName",
+        "VT"."Icon" as "LineIcon"
         from "Line" "LN"
+        left join "VehicleType" "VT" on "LN"."TypeId" = "VT"."Id"
         where "LN"."Id" = :lineId', ['lineId' => $lineId]);
 
         return [
             'LineName' => $q_detail[0]->LineName,
+            'VehicleTypeIcon' => $q_detail[0]->LineIcon,
             'Stops' => $q_stops
         ];
 
