@@ -6,7 +6,7 @@ type Shift = {
     VehicleName: string,
     VehicleId: string,
     FirstStopName: string,
-    DepartureTime: string,
+    DepartureDate: string,
     FirstStop: string,
     LastStop: string
 }

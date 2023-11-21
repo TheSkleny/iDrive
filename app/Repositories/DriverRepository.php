@@ -26,7 +26,7 @@ class DriverRepository
   "VT"."Icon" as "VehicleIcon",
   "VL"."Name" as "VehicleName",
   "VL"."Id" as "VehicleId",
-  "LK"."DepartureTime",
+  "LK"."DepartureDate" as "DepartureDate",
   (
     select
       "FS"."Name" as "FirstStop"
@@ -57,6 +57,8 @@ from
   left join "VehicleType" "VT" on "VL"."TypeId" = "VT"."Id"
 where
   "DR"."Id" = :driverId
+order by
+  "LK"."DepartureDate" asc
     ', ['driverId' => $driverId]);
     }
 }
