@@ -24,8 +24,8 @@ class Report extends Model
      */
     protected $fillable = [
         'ReportDate',
-        'DriverId',
-        'DriverDescription',
+        'SubmitterId',
+        'Description',
         'VehicleId',
         'TechnicianId',
         'TechnicianDescription',

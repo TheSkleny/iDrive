@@ -24,8 +24,8 @@ class ReportFactory extends Factory
         $randomMaintenanceDate->setTimestamp(rand($randomDate->getTimestamp(), time()));
         return [
             'ReportDate' => $randomDate,
-            'DriverId' => '9c0d1e2f-3a4b-5c6d-7e8f-9a0b1c2d3e4f',
-            'DriverDescription' => $this->faker->text,
+            'SubmitterId' => '9c0d1e2f-3a4b-5c6d-7e8f-9a0b1c2d3e4f',
+            'Description' => $this->faker->text,
             'VehicleId' => $randomVehicle,
             'TechnicianId' => '1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d',
             'TechnicianDescription' => $this->faker->text,

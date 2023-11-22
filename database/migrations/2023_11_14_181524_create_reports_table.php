@@ -15,21 +15,25 @@ return new class extends Migration
         Schema::create('Report', function (Blueprint $table) {
             $table->uuid('Id')->primary()->default(DB::raw('gen_random_uuid()'));
             $table->date('ReportDate');
-            $table->foreignuuid('DriverId')
+            $table->foreignuuid('SubmitterId')
                 ->constrained('users', 'Id')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->string('DriverDescription');
+            $table->string('Description');
             $table->foreignuuid('VehicleId')
+                ->nullable()
                 ->constrained('Vehicle', 'Id')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->foreignuuid('TechnicianId')
+                ->nullable()
                 ->constrained('users', 'Id')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->string('TechnicianDescription');
-            $table->date('MaintenanceDate')->nullable();
+            $table->string('TechnicianDescription')
+                ->nullable();
+            $table->date('MaintenanceDate')
+                ->nullable();
             $table->foreignid('StateId')
                 ->constrained('ReportState', 'Id')
                 ->onUpdate('cascade')

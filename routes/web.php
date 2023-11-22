@@ -50,8 +50,9 @@ Route::get('/driver', function () {
 Route::get('/line/{lineId}', function ($lineId) {
     return Inertia::render('Base', ['c' => 'LineDetail', 'args' => ['lineId' => $lineId]]);
 })->where('lineId', '.*');
+
 Route::get('/vehicle/{vehicleId}', function ($vehicleId) {
-    return Inertia::render('Base', ['c' => 'VehicleDetail', 'args' => ['vehicleId' => $vehicleId]]);
-})->where('vehicleId', '.*');
+    return Inertia::render('Base', ['c' => 'VehicleDetail', 'args' => ['submitterId' => auth()->user()->Id, 'vehicleId' => $vehicleId]]);
+})->where('vehicleId', '.*')->middleware(['auth', 'verified']);;
 
 require __DIR__.'/auth.php';

@@ -22,4 +22,14 @@ class VehicleController extends Controller
                 'data' => $this->VehicleRepository->getVehicleInfo($vehicleId)
             ]);
     }
+    public function reportVehicleMalfunction(Request $request) : JsonResponse
+    {
+        return response()->json([
+            'data' => $this->VehicleRepository->reportVehicleMalfunction(
+                $request->input('submitterId'),
+                $request->input('description'),
+                $request->input('vehicleId')
+            )
+        ]);
+    }
 }

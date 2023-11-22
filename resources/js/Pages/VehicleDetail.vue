@@ -11,10 +11,6 @@ const props = defineProps({
     }
 )
 
-/**
- *
- * @type {Ref<UnwrapRef<Vehicle>>}
- */
 const vehicle = ref(null)
 
 const {response, error} = await useApi('GET', `vehicle/${props.args.vehicleId}`)
@@ -25,6 +21,9 @@ if (error) {
     console.log(error.value)
 }
 
+async function sendReport() {
+    const {response, error} = await useApi('POST', `reports`, {'submitterId':props.args.submitterId, 'description': props.args.description, 'vehicleId': props.args.vehicleId})
+}
 
 </script>
 
@@ -52,15 +51,16 @@ if (error) {
                     </v-card-title>
                     <v-card-text>
                         <v-container>
-                            <v-form>
-                                <v-textarea label="Describe problem" required></v-textarea>
+                            <v-form @submit.prevent="sendReport">
+                                <v-textarea 
+                                    label="Describe problem"
+                                    v-model="props.args.description"
+                                    required
+                                />
+                                <v-btn type="submit">Send report</v-btn>
                             </v-form>
                         </v-container>
                     </v-card-text>
-                    <v-card-actions>
-                        <v-spacer/>
-                        <v-btn @click="">Send report</v-btn>
-                    </v-card-actions>
                 </v-card>
             </div>
             <div class="child">
@@ -75,15 +75,5 @@ if (error) {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-}
-
-.parent {
-//border: 1px solid black; margin: 1rem; padding: 2rem 2rem;
-    text-align: left;
-}
-
-.child {
-    display: inline-block;
-//border: 1px solid red; padding: 1rem 1rem; vertical-align: top;
 }
 </style>

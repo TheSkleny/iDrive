@@ -5,6 +5,9 @@ namespace App\Repositories;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Vehicle;
+use App\Models\VehicleType;
+use App\Models\VehicleState;
+use App\Models\Report;
 
 class VehicleRepository
 {
@@ -29,5 +32,35 @@ class VehicleRepository
         left join "VehicleState" as "VS" on "VL"."StateId" = "VS"."Id"
         where "VL"."Id" = :vehicleId
         ', ['vehicleId' => $vehicleId]);
+    }
+    public function reportVehicleMalfunction($submitterId, $description, $vehicleId) : void
+    {
+        // TODO - rename DriverId to SubmitterId and DriverDescription to Description
+        DB::insert('
+            insert into "Report"
+                (
+                    "ReportDate",
+                    "SubmitterId", 
+                    "Description", 
+                    "VehicleId", 
+                    "TechnicianId", 
+                    "TechnicianDescription", 
+                    "MaintenanceDate", 
+                    "StateId", 
+                    "TypeId"
+                )
+            values
+                (
+                    cast(NOW() as date), 
+                    :submitterId, 
+                    :description, 
+                    :vehicleId, 
+                    NULL,
+                    NULL, 
+                    NULL, 
+                    1, 
+                    1
+                )
+        ', ['submitterId' => $submitterId, 'description' => $description, 'vehicleId' => $vehicleId]);
     }
 }
