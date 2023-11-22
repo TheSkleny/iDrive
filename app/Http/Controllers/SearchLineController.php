@@ -16,10 +16,17 @@ class SearchLineController extends Controller
             $this->LineRepository = $LineRepository;
         }
 
-        public function index(): JsonResponse
+        public function getLineList(): JsonResponse
         {
             return response()->json([
                 'data' => $this->LineRepository->getLineList()
+            ]);
+        }
+
+        public function getLineTypes(): JsonResponse
+        {
+            return response()->json([
+                'data' => $this->LineRepository->getLineTypes()
             ]);
         }
 }

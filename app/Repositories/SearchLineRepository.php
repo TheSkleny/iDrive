@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Line;
+use App\Models\VehicleType;
 
 class SearchLineRepository
 {
@@ -15,4 +16,14 @@ class SearchLineRepository
         }
         return null;
     }
+
+    public function getLineTypes()
+    {
+        $lineTypes = VehicleType::all();
+        if ($lineTypes) {
+            return $lineTypes;
+        }
+        return null;
+    }
+
 }
