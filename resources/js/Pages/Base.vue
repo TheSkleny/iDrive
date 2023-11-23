@@ -35,7 +35,8 @@ const comp = () => {
         case 'Edit':
             return Edit
         default:
-            return Driver //TODO: error page or home page
+            console.log("default")
+            return SearchLine
     }
 }
 

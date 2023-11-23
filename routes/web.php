@@ -52,7 +52,7 @@ Route::get('/search-line', function () {
 })->name('search-line');
 
 Route::get('/shifts', function () {
-    return Inertia::render('Base', ['fc' => 'Driver', 'args' => ['driverId' => auth()->user()->Id]]);
+    return Inertia::render('Base', ['c' => 'Driver', 'args' => ['driverId' => auth()->user()->Id]]);
 })->name('shifts')->middleware(['auth', 'verified', 'usertype:1']);
 
 Route::get('/line/{lineId}', function ($lineId) {

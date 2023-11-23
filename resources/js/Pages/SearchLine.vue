@@ -51,7 +51,7 @@ const routeToLine = (id) => {
         <v-container>
             <v-card>
                 <v-tabs v-model="tab"
-                        grow="true">
+                        grow>
                     <v-tab v-for="type in types" :key="type.Id" :value="type.Id">
                         {{ type.Description }}
                     </v-tab>
