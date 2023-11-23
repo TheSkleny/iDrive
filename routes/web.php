@@ -43,9 +43,9 @@ Route::get('/search-line', function () {
     return Inertia::render('Base', ['c' => 'SearchLine']);
 })->name('search-line');
 
-Route::get('/driver', function () {
-    return Inertia::render('Base', ['c' => 'Driver', 'args' => ['driverId' => auth()->user()->Id]]);
-})->name('driver')->middleware(['auth', 'verified', 'usertype:1']);
+Route::get('/shifts', function () {
+    return Inertia::render('Base', ['fc' => 'Driver', 'args' => ['driverId' => auth()->user()->Id]]);
+})->name('shifts')->middleware(['auth', 'verified', 'usertype:1']);
 
 Route::get('/line/{lineId}', function ($lineId) {
     return Inertia::render('Base', ['c' => 'LineDetail', 'args' => ['lineId' => $lineId]]);

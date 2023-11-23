@@ -18,7 +18,7 @@ const props = defineProps({
  */
 const shifts = ref([])
 
-const {response, error} = await useApi('GET', `driver/${props.args.driverId}`)
+const {response, error} = await useApi('GET', `shifts/${props.args.driverId}`)
 if (response.data) {
     shifts.value = response.data.data
 }
@@ -78,7 +78,6 @@ const routeToVehicle = (id) => {
                         <th>Departure time</th>
                         <th>First stop</th>
                         <th>Last stop</th>
-                        <th class="text-center">Report malfunction</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -101,9 +100,6 @@ const routeToVehicle = (id) => {
                         <td>{{ shift.time }}</td>
                         <td>{{ shift.data.FirstStop }}</td>
                         <td>{{ shift.data.LastStop }}</td>
-                        <td class="text-center">
-                            <v-btn variant="tonal" style="color: red">Report</v-btn>
-                        </td>
                     </tr>
                     </tbody>
                 </v-table>
