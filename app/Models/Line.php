@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Enums\VehicleTypeEnum;
 
 class Line extends Model
 {
@@ -25,6 +26,15 @@ class Line extends Model
     protected $fillable = [
         'Name',
         'TypeId'
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'TypeId' => VehicleTypeEnum::class,
     ];
 
     /**

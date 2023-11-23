@@ -34,10 +34,12 @@ return new class extends Migration
                 ->nullable();
             $table->date('MaintenanceDate')
                 ->nullable();
+            // enum
             $table->foreignid('StateId')
                 ->constrained('ReportState', 'Id')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+            // enum
             $table->foreignid('TypeId')
                 ->constrained('ReportType', 'Id')
                 ->onUpdate('cascade')

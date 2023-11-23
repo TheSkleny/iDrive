@@ -4,6 +4,11 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Enums\UserTypeEnum;
+
+// Define the mapping between user types and their values
+
+
 
 /*
 |--------------------------------------------------------------------------

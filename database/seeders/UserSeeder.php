@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Enums\UserTypeEnum;
 
 class UserSeeder extends Seeder
 {
@@ -17,7 +18,7 @@ class UserSeeder extends Seeder
             'name' => 'admin',
             'email' => 'admin@idrive.com',
             'password' => 'admin',
-            'type_id' => '5',
+            'type_id' => UserTypeEnum::ADMIN,
         ]);
 
         \App\Models\User::factory()->create([
@@ -25,7 +26,7 @@ class UserSeeder extends Seeder
             'name' => 'spravce',
             'email' => 'spravce@idrive.com',
             'password' => 'spravce',
-            'type_id' => '4',
+            'type_id' => UserTypeEnum::SUPERVISOR,
         ]);
 
         \App\Models\User::factory()->create([
@@ -33,7 +34,7 @@ class UserSeeder extends Seeder
             'name' => 'technik',
             'email' => 'technik@idrive.com',
             'password' => 'technik',
-            'type_id' => '3',
+            'type_id' => UserTypeEnum::TECHNICIAN,
         ]);
 
         \App\Models\User::factory()->create([
@@ -41,7 +42,7 @@ class UserSeeder extends Seeder
             'name' => 'dispecer',
             'email' => 'dispecer@idrive.com',
             'password' => 'dispecer',
-            'type_id' => '2',
+            'type_id' => UserTypeEnum::DISPATCHER,
         ]);
 
         \App\Models\User::factory()->create([
@@ -49,7 +50,7 @@ class UserSeeder extends Seeder
             'name' => 'ridic',
             'email' => 'ridic@idrive.com',
             'password' => 'ridic',
-            'type_id' => '1',
+            'type_id' => UserTypeEnum::DRIVER,
         ]);
     }
 }

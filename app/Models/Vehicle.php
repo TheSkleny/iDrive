@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Enums\VehicleStateEnum;
+use App\Enums\VehicleTypeEnum;
 
 class Vehicle extends Model
 {
@@ -34,6 +36,17 @@ class Vehicle extends Model
         'StateId'
     ];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'LastMaintenance' => 'date',
+        'TypeId' => VehicleTypeEnum::class,
+        'StateId' => VehicleStateEnum::class,
+    ];
+    
     /**
      * Indicates if the model should be timestamped.
      *
