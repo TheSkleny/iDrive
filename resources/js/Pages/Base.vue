@@ -12,6 +12,9 @@ import ReportTypes from "@/Pages/ReportTypes.vue";
 import LineDetail from "@/Pages/LineDetail.vue";
 import VehicleDetail from "@/Pages/VehicleDetail.vue";
 import Edit from "@/Pages/Edit.vue";
+import SupervisorVehicleList from "@/Pages/SupervisorVehicleList.vue";
+import ReportDetail from "@/Pages/ReportDetail.vue";
+
 
 const showingNavigationDropdown = ref(false);
 
@@ -34,6 +37,10 @@ const comp = () => {
             return VehicleDetail
         case 'Edit':
             return Edit
+        case 'Vehicles':
+            return SupervisorVehicleList
+        case 'ReportDetail':
+            return ReportDetail
         default:
             console.log("default")
             return SearchLine
@@ -67,6 +74,16 @@ const comp = () => {
                                 <NavLink :href="route('shifts')" :active="route().current('shifts')">
                                     Shifts
                                 </NavLink>
+                                <NavLink>
+                                    Lines
+                                </NavLink>
+                                <NavLink>
+                                    Links
+                                </NavLink>
+                                <NavLink>
+                                    Vehicles
+                                </NavLink>
+
                             </div>
                         </div>
                         <div v-if="$page.props.auth.user">

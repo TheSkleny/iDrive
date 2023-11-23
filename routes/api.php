@@ -38,3 +38,7 @@ Route::get('reports/{StateId}', [ReportController::class, 'getReportsByState'])-
 Route::post('reports/main', [ReportController::class, 'createMaintenanceReport']);
 Route::patch('reports/{ReportId}', [ReportController::class, 'handleReport']);
 Route::patch('reports/{ReportId}', [ReportController::class, 'closeReport']);
+Route::get('reports_with_vehicle_info/{StateId}', [ReportController::class, 'getReportsByStateWithVehicleInfo'])
+    ->where('StateId', '.*');
+Route::get('report/{ReportId}', [ReportController::class, 'getReportById'])->where('ReportId', '.*');
+

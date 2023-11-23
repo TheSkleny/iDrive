@@ -75,7 +75,7 @@ const routeToVehicle = (id) => {
             <!--            </div>-->
             <div v-for="day in result" :key="day['date']" style="margin-bottom: 50px">
                 <v-card>
-                    <h2 style="margin-left: 10px; margin-top: 10px">{{ day.date }}</h2>
+                    <h2 class="card_header">{{ day.date }}</h2>
                     <v-table fixed-header>
                         <thead>
                         <tr>

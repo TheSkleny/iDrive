@@ -21,6 +21,18 @@ class ReportController extends Controller
                 'data' => $this->ReportRepository->getReportsByState($stateId)
             ]);
     }
+    public function getReportsByStateWithVehicleInfo($stateId) : JsonResponse
+    {
+            return response()->json([
+                'data' => $this->ReportRepository->getReportsByStateWithVehicleInfo($stateId)
+            ]);
+    }
+    public function getReportById($reportId) : JsonResponse
+    {
+            return response()->json([
+                'data' => $this->ReportRepository->getReportById($reportId)
+            ]);
+    }
     public function createMaintenanceReport(Request $request) : JsonResponse
     {
         return response()->json([

@@ -48,7 +48,7 @@ Route::get('/search-line', function () {
 
 Route::get('/shifts', function () {
     return Inertia::render('Base', ['c' => 'Driver', 'args' => ['driverId' => auth()->user()->Id]]);
-})->name('shifts')->middleware(['auth', 'verified', 'usertype:1']);
+})->name('shifts')->middleware(['auth', 'verified', 'usertype:1']); // TODO: @Skleny - change to enum
 
 Route::get('/line/{lineId}', function ($lineId) {
     return Inertia::render('Base', ['c' => 'LineDetail', 'args' => ['lineId' => $lineId]]);
@@ -57,5 +57,14 @@ Route::get('/line/{lineId}', function ($lineId) {
 Route::get('/vehicle/{vehicleId}', function ($vehicleId) {
     return Inertia::render('Base', ['c' => 'VehicleDetail', 'args' => ['submitterId' => auth()->user()->Id, 'vehicleId' => $vehicleId]]);
 })->where('vehicleId', '.*')->middleware(['auth', 'verified']);;
+
+Route::get('/vehicles', function () {
+    return Inertia::render('Base', ['c' => 'Vehicles']);
+})->name('vehicles');//->middleware(['auth', 'verified', 'usertype:4']); // TODO: @Skleny - change to enum
+
+Route::get('/report/{reportId}', function ($reportId) {
+    return Inertia::render('Base', ['c' => 'ReportDetail', 'args' => ['reportId' => $reportId]]);
+})->where('reportId', '.*')->middleware(['auth', 'verified']);
+
 
 require __DIR__.'/auth.php';

@@ -23,29 +23,76 @@ class ReportRepository
             ');
         }
     }
+    public function getReportsByStateWithVehicleInfo($stateId) : array
+    {
+        return DB::select('
+        select
+        "R"."Id" as "ReportId",
+        "R"."ReportDate" as "ReportDate",
+        "U"."name" as "SubmitterName",
+        "VL"."Id" as "VehicleId",
+        "VL"."Name" as "VehicleName",
+        "VL"."LicensePlate" as "VehicleLicensePlate",
+        "VL"."LastMaintenance" as "VehicleLastMaintenance",
+        "VT"."Icon" as "VehicleIcon"
+        from
+        "Report" "R"
+        left join "users" "U" on "R"."SubmitterId" = "U"."Id"
+        left join "Vehicle" "VL" on "R"."VehicleId" = "VL"."Id"
+        left join "VehicleType" "VT" on "VL"."TypeId" = "VT"."Id"
+        where
+        "R"."StateId" = :stateId
+        order by "R"."ReportDate"
+        ', ['stateId' => $stateId]
+        );
+    }
+    public function getReportById($reportId) : array
+    {
+        return DB::select('
+            select
+        "R"."Id" as "ReportId",
+        "R"."ReportDate" as "ReportDate",
+        "R"."Description" as "ReportDescription",
+        "U"."name" as "SubmitterName",
+        "VL"."Id" as "VehicleId",
+        "VL"."Name" as "VehicleName",
+        "VL"."LicensePlate" as "VehicleLicensePlate",
+        "VL"."LastMaintenance" as "VehicleLastMaintenance",
+        "VT"."Icon" as "VehicleIcon"
+        from
+        "Report" "R"
+        left join "users" "U" on "R"."SubmitterId" = "U"."Id"
+        left join "Vehicle" "VL" on "R"."VehicleId" = "VL"."Id"
+        left join "VehicleType" "VT" on "VL"."TypeId" = "VT"."Id"
+        where
+         "R"."Id" = :reportId
+        ', ['reportId' => $reportId]
+        );
+    }
+
     public function createMaintenanceReport($submitterId, $vehicleId, $technicianId) {
         DB::insert('
             insert into "Report"
                 (
                     "ReportDate",
-                    "SubmitterId", 
-                    "Description", 
-                    "VehicleId", 
-                    "TechnicianId", 
-                    "TechnicianDescription", 
-                    "MaintenanceDate", 
-                    "StateId", 
+                    "SubmitterId",
+                    "Description",
+                    "VehicleId",
+                    "TechnicianId",
+                    "TechnicianDescription",
+                    "MaintenanceDate",
+                    "StateId",
                     "TypeId"
                 )
             values
                 (
-                    cast(NOW() as date), 
-                    :submitterId, 
-                    \'Maintenance report\', 
-                    :vehicleId, 
+                    cast(NOW() as date),
+                    :submitterId,
+                    \'Maintenance report\',
+                    :vehicleId,
                     :technicianId,
-                    NULL, 
-                    NULL, 
+                    NULL,
+                    NULL,
                     3,
                     2
                 )
@@ -56,7 +103,7 @@ class ReportRepository
         if ($decision == 'accept') {
             DB::update('
                 update "Report"
-                set 
+                set
                     "StateId" = 3,
                     "TechnicianId" = :technicianId
                 where "Id" = :reportId
@@ -75,7 +122,7 @@ class ReportRepository
     public function closeReport($reportId, $technicianId, $technicianDescription) {
         DB::update(
             'update "Report"
-            set 
+            set
                 "StateId" = 4,
                 "TechnicianId" = :technicianId,
                 "TechnicianDescription" = :technicianDescription,

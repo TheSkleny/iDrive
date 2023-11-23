@@ -5,4 +5,5 @@ export default {
     searchLine: () => doRedirect('/search-line'),
     line: (id) => doRedirect(`/line/${id}`),
     vehicle: (id) => doRedirect(`/vehicle/${id}`),
+    report: (id) => doRedirect(`/report/${id}`),
 }
