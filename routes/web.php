@@ -22,13 +22,8 @@ use App\Enums\UserTypeEnum;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-})->name('welcome');
+    return redirect('/search-line');
+});
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

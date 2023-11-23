@@ -1,11 +1,11 @@
 <script setup>
-import { ref } from 'vue';
+import {ref} from 'vue';
 import ApplicationLogo from '@/Components/Default/ApplicationLogo.vue';
 import Dropdown from '@/Components/Default/Dropdown.vue';
 import DropdownLink from '@/Components/Default/DropdownLink.vue';
 import NavLink from '@/Components/Default/NavLink.vue';
 import ResponsiveNavLink from '@/Components/Default/ResponsiveNavLink.vue';
-import { Link } from '@inertiajs/vue3';
+import {Link} from '@inertiajs/vue3';
 import Driver from "@/Pages/Driver.vue";
 import SearchLine from "@/Pages/SearchLine.vue";
 import ReportTypes from "@/Pages/ReportTypes.vue";
@@ -73,7 +73,7 @@ const comp = () => {
                             <div class="hidden sm:flex sm:items-center sm:ms-6">
                                 <!-- Settings Dropdown -->
                                 <div class="ms-3 relative">
-                                    <Dropdown align="right" width="48">
+                                    <Dropdown align="right" width="48" style="margin-top: 15px">
                                         <template #trigger>
                                             <span class="inline-flex rounded-md">
                                                 <button
@@ -99,7 +99,7 @@ const comp = () => {
                                         </template>
 
                                         <template #content>
-                                            <DropdownLink :href="route('profile')"> Profile </DropdownLink>
+                                            <DropdownLink :href="route('profile')"> Profile</DropdownLink>
                                             <DropdownLink :href="route('logout')" method="post" as="button">
                                                 Log Out
                                             </DropdownLink>
@@ -107,6 +107,18 @@ const comp = () => {
                                     </Dropdown>
                                 </div>
                             </div>
+                        </div>
+                        <div v-else>
+                            <v-container>
+                                <v-row>
+                                    <v-col>
+                                        <v-btn :href="route('login')" variant="text">Login</v-btn>
+                                    </v-col>
+                                    <v-col>
+                                        <v-btn :href="route('register')" variant="text">Register</v-btn>
+                                    </v-col>
+                                </v-row>
+                            </v-container>
                         </div>
 
                         <!-- Hamburger -->
@@ -163,7 +175,7 @@ const comp = () => {
                         </div>
 
                         <div class="mt-3 space-y-1">
-                            <ResponsiveNavLink :href="route('profile')"> Profile </ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('profile')"> Profile</ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('logout')" method="post" as="button">
                                 Log Out
                             </ResponsiveNavLink>
