@@ -15,6 +15,7 @@ return new class extends Migration
         Schema::create('Line', function (Blueprint $table) {
             $table->uuid('Id')->primary()->default(DB::raw('gen_random_uuid()'));
             $table->string('Name');
+            // enum
             $table->foreignId('TypeId')
                 ->constrained('VehicleType', 'Id')
                 ->onUpdate('cascade')

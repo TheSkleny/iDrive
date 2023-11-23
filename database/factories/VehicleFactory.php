@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Enums\VehicleStateEnum;
+use App\Enums\VehicleTypeEnum;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Vehicle>
@@ -25,8 +27,8 @@ class VehicleFactory extends Factory
             'Capacity' => fake()->numberBetween(1, 200),
             'SpeedLimit' => fake()->numberBetween(1, 120),
             'LicensePlate' => fake()->numberBetween(1, 9) . chr(rand(65, 90)) . fake()->numberBetween(1, 99999),
-            'TypeId' => fake()->numberBetween(1, 5),
-            'StateId' => fake()->numberBetween(1, 2),
+            'TypeId' => fake()->randomElement(VehicleTypeEnum::cases()),
+            'StateId' => fake()->randomElement(VehicleStateEnum::cases()),
         ];
     }
 }

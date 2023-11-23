@@ -21,11 +21,13 @@ return new class extends Migration
             $table->integer('Capacity');
             $table->integer('SpeedLimit');
             $table->string('LicensePlate');
+            // enum
             $table->foreignId('TypeId')
                 ->constrained('VehicleType', 'Id')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreignId('StateId')
+            // enum
+                $table->foreignId('StateId')
                 ->constrained('VehicleState', 'Id')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
