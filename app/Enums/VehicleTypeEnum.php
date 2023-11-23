@@ -2,13 +2,13 @@
 
 namespace App\Enums;
 
-enum VehicleTypeEnum
+enum VehicleTypeEnum: int
 {
-    const TRAMVAJ = 1;
-    const TROLEJBUS = 2;
-    const AUTOBUS = 3;
-    const METRO = 4;
-    const LOD = 5;
-    const VLAK = 6;
-    const LETADLO = 7;
+    case TRAMVAJ = 1;
+    case TROLEJBUS = 2;
+    case AUTOBUS = 3;
+    case METRO = 4;
+    case LOD = 5;
+    case VLAK = 6;
+    case LETADLO = 7;
 }

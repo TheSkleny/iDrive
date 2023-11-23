@@ -2,10 +2,10 @@
 
 namespace App\Enums;
 
-enum ReportStateEnum
+enum ReportStateEnum: int
 {
-    const REPORTED = 1;
-    const REJECTED = 2;
-    const ASSIGNED_TO_TECHNITIAN = 3;
-    const FINISHED = 4;
+    case REPORTED = 1;
+    case REJECTED = 2;
+    case ASSIGNED_TO_TECHNITIAN = 3;
+    case FINISHED = 4;
 }

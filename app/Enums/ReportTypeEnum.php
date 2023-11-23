@@ -2,8 +2,8 @@
 
 namespace App\Enums;
 
-enum ReportTypeEnum
+enum ReportTypeEnum: int
 {
-    const MALFUNCTION = 1;
-    const MAINTENANCE = 2;
+    case MALFUNCTION = 1;
+    case MAINTENANCE = 2;
 }

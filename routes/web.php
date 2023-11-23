@@ -4,6 +4,11 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Enums\UserTypeEnum;
+
+// Define the mapping between user types and their values
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -45,7 +50,7 @@ Route::get('/search-line', function () {
 
 Route::get('/driver', function () {
     return Inertia::render('Base', ['c' => 'Driver', 'args' => ['driverId' => auth()->user()->Id]]);
-})->name('driver')->middleware(['auth', 'verified', 'usertype:1']);
+})->name('driver')->middleware(['auth', 'verified', 'usertype:' . UserTypeEnum::DRIVER->value]);
 
 Route::get('/line/{lineId}', function ($lineId) {
     return Inertia::render('Base', ['c' => 'LineDetail', 'args' => ['lineId' => $lineId]]);

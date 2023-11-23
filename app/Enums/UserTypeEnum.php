@@ -2,11 +2,11 @@
 
 namespace App\Enums;
 
-enum UserTypeEnum
+enum UserTypeEnum : int
 {
-    const DRIVER = 1;
-    const DISPATCHER = 2;
-    const TECHNITIAN = 3;
-    const SUPERVISOR = 4;
-    const ADMIN = 5;
+    case DRIVER = 1;
+    case DISPATCHER = 2;
+    case TECHNICIAN = 3;
+    case SUPERVISOR = 4;
+    case ADMIN = 5;
 }

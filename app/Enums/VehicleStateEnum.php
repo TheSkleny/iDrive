@@ -2,9 +2,9 @@
 
 namespace App\Enums;
 
-enum VehicleStateEnum
+enum VehicleStateEnum: int
 {
-    const OPERATIONAL = 1;
-    const AT_SERVICE_STATION = 2;
-    const OUT_OF_SERVICE = 3;
+    case OPERATIONAL = 1;
+    case AT_SERVICE_STATION = 2;
+    case OUT_OF_SERVICE = 3;
 }
