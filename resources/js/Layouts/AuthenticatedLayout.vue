@@ -6,8 +6,36 @@ import DropdownLink from '@/Components/Default/DropdownLink.vue';
 import NavLink from '@/Components/Default/NavLink.vue';
 import ResponsiveNavLink from '@/Components/Default/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
+import Driver from "@/Pages/Driver.vue";
+import SearchLine from "@/Pages/SearchLine.vue";
+import ReportTypes from "@/Pages/ReportTypes.vue";
+import LineDetail from "@/Pages/LineDetail.vue";
+import VehicleDetail from "@/Pages/VehicleDetail.vue";
 
 const showingNavigationDropdown = ref(false);
+
+const props = defineProps({
+    c: String,
+    args: Object
+})
+
+const comp = () => {
+    switch (props.c) {
+        case 'Driver':
+            return Driver
+        case 'SearchLine':
+            return SearchLine
+        case 'ReportTypes':
+            return ReportTypes
+        case 'LineDetail':
+            return LineDetail
+        case 'VehicleDetail':
+            return VehicleDetail
+        default:
+            return Driver //TODO: error page or home page
+    }
+}
+
 </script>
 
 <template>
@@ -145,7 +173,20 @@ const showingNavigationDropdown = ref(false);
 
             <!-- Page Content -->
             <main>
-                <slot />
+                <Suspense style="flex: 100">
+                    <component :is="comp()" :args="args"/>
+                    <template #fallback>
+                        <div class="center">
+                            <h1 style="font-weight: bold; font-size: larger">Loading</h1>
+                            <br>
+                            <v-progress-circular style="display: block;
+                                                margin-left: auto;
+                                                margin-right: auto;"
+                                                 indeterminate
+                            />
+                        </div>
+                    </template>
+                </Suspense>
             </main>
         </div>
     </div>
