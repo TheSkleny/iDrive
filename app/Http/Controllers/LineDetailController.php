@@ -22,4 +22,10 @@ class LineDetailController extends Controller
                 'data' => $this->LineDetailRepository->getLineStops($lineId)
             ]);
     }
+    public function getLineMatrixData($lineId) : JsonResponse
+    {
+            return response()->json([
+                'data' => $this->LineDetailRepository->getLineMatrixData($lineId)
+            ]);
+    }
 }
