@@ -2,7 +2,7 @@
     <v-container>
         <v-row>
             <v-col>
-                <v-icon size="50px" style="margin-top: -20px">
+                <v-icon size="50px" color="teal" style="margin-top: -20px">
                     mdi-car-turbocharger
                 </v-icon>
             </v-col>

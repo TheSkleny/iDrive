@@ -75,12 +75,12 @@ const comp = () => {
                                     Shifts
                                 </NavLink>
                                 <NavLink>
-                                    Lines
+                                    (Lines)
                                 </NavLink>
                                 <NavLink>
-                                    Links
+                                    (Links)
                                 </NavLink>
-                                <NavLink>
+                                <NavLink :href="route('vehicles')" :active="route().current('vehicles')">
                                     Vehicles
                                 </NavLink>
 
@@ -212,7 +212,7 @@ const comp = () => {
                         <div class="center">
                             <h1 style="font-weight: bold; font-size: larger">Loading</h1>
                             <br>
-                            <v-progress-circular style="display: block;
+                            <v-progress-circular color="teal" style="display: block;
                                                 margin-left: auto;
                                                 margin-right: auto;"
                                                  indeterminate

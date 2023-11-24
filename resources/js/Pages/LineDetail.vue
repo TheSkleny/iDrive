@@ -26,17 +26,26 @@
 </script>
 
 <template>
-    <div>
-        <div>
-            <v-icon>{{ line.VehicleTypeIcon }}</v-icon>
-            <h1>Line {{ line.LineName }}</h1>
+    <header class="bg-white shadow">
+        <div class="max-w-7xl py-6 px-4 sm:px-6 lg:px-8/">
+            <v-row style="margin-left: 50px">
+                <v-icon size="50px">{{ line.VehicleTypeIcon }}</v-icon>
+                <h1 class="text-3xl font-bold leading-tight text-gray-900"
+                    style="margin-left: 20px; margin-top: 7px"
+                >
+                    Line {{ line.LineName }}
+                </h1>
+            </v-row>
+
         </div>
+    </header>
+    <v-container>
         <v-timeline direction="vertical" side="end" truncate-line="both">
             <v-timeline-item v-for="stop in line.Stops"
                              icon="mdi-map-marker"
-                             dot-color="red">
+                             dot-color="teal">
                 {{ stop.Name }}
             </v-timeline-item>
         </v-timeline>
-    </div>
+    </v-container>
 </template>
