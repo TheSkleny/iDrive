@@ -21,6 +21,10 @@ if (error) {
     console.log(error.value)
 }
 
+if (vehicle.value.VehicleImageUri === null) {
+    vehicle.value.VehicleImageUri = 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png'
+}
+
 async function sendReport() {
     const {response, error} = await useApi('POST', `reports`, {
         'submitterId': props.args.submitterId,
@@ -51,7 +55,8 @@ async function sendReport() {
                 <v-spacer/>
             </v-col>
             <v-col>
-                <v-img :src="vehicle.VehicleImageUri" width="300" ></v-img>
+                <v-img :src="vehicle.VehicleImageUri" width="300" >
+                </v-img>
 
             </v-col>
             <v-col>
