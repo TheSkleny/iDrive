@@ -39,7 +39,7 @@ async function testReport($decision) {
     console.log($decision)
 }
 async function updateReport($decision) {
-    const {response: responseSend, error: errorSend} = await useApi('PATCH', `reports/${props.args.reportId}`, {
+    const {response: responseSend, error: errorSend} = await useApi('PATCH', `handle-report/${props.args.reportId}`, {
         'reportId': props.args.reportId,
         'technicianId': props.args.technicianId,
         'maintenanceDate': props.args.maintenanceDate,

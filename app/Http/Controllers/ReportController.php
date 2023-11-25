@@ -15,6 +15,13 @@ class ReportController extends Controller
         $this->ReportRepository = $ReportRepository;
     }
 
+    public function getReportByTechnicianId($technicianId) : JsonResponse
+    {
+            return response()->json([
+                'data' => $this->ReportRepository->getReportByTechnicianId($technicianId)
+            ]);
+    }
+
     public function getReportsByState($stateId) : JsonResponse
     {
             return response()->json([

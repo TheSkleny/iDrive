@@ -23,6 +23,33 @@ class ReportRepository
             ');
         }
     }
+
+    public function getReportByTechnicianId($technicianId) : array
+    {
+        return DB::select('
+            select
+        "R"."Id" as "ReportId",
+        "R"."ReportDate" as "ReportDate",
+        "R"."TypeId" as "ReportTypeId",
+        "R"."MaintenanceDate" as "ReportMaintenanceDate",
+        "U"."name" as "SubmitterName",
+        "VL"."Id" as "VehicleId",
+        "VL"."Name" as "VehicleName",
+        "VL"."LicensePlate" as "VehicleLicensePlate",
+        "VL"."LastMaintenance" as "VehicleLastMaintenance",
+        "VT"."Icon" as "VehicleIcon"
+        from
+        "Report" "R"
+        left join "users" "U" on "R"."SubmitterId" = "U"."Id"
+        left join "Vehicle" "VL" on "R"."VehicleId" = "VL"."Id"
+        left join "VehicleType" "VT" on "VL"."TypeId" = "VT"."Id"
+        where
+            "TechnicianId" = :technicianId
+        order by "R"."MaintenanceDate"
+        ', ['technicianId' => $technicianId]
+        );
+    }
+
     public function getReportsByStateWithVehicleInfo($stateId) : array
     {
         return DB::select('
@@ -105,7 +132,7 @@ class ReportRepository
                 update "Report"
                 set
                     "StateId" = 3,
-                    "TechnicianId" = :technicianId
+                    "TechnicianId" = :technicianId,
                     "MaintenanceDate" = :maintenanceDate
                 where "Id" = :reportId
             ', ['technicianId' => $technicianId, 'maintenanceDate' => $maintenanceDate, 'reportId' => $reportId]
@@ -114,7 +141,7 @@ class ReportRepository
         else if ($decision == 'reject') {
             DB::update('
                 update "Report"
-                set "StateId" = 2,
+                set "StateId" = 2
                 where "Id" = :reportId
             ', ['reportId' => $reportId]
             );

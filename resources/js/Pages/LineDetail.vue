@@ -112,6 +112,7 @@
                 {{ stop.Name }}
             </v-timeline-item>
         </v-timeline>
+        <v-spacer style="margin: 20px"/>
         <v-data-table :headers="headers" :items="formattedMatrix">
             <template v-slot:item="{ item }">
                 <tr>
