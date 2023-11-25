@@ -20,6 +20,11 @@ h2 {
     font-weight: 900;
 }
 
+h3 {
+    font-size: 20px;
+    font-weight: 900;
+}
+
 .card_header {
     margin-left: 10px;
     margin-top: 10px;

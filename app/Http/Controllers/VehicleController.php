@@ -16,6 +16,12 @@ class VehicleController extends Controller
         $this->VehicleRepository = $VehicleRepository;
     }
 
+    public function getVehiclesByState($stateId) : JsonResponse
+    {
+            return response()->json([
+                'data' => $this->VehicleRepository->getVehiclesByState($stateId)
+            ]);
+    }
     public function getVehicleInfo($vehicleId) : JsonResponse
     {
             return response()->json([

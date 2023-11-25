@@ -7,6 +7,7 @@ use App\Http\Controllers\VehicleTypeController;
 use App\Http\Controllers\LineDetailController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\UserController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,16 +30,25 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('report-types', [ReportTypeController::class, 'index']);
 Route::get('lines', [SearchLineController::class, 'getLineList']);
 Route::get('line-types', [SearchLineController::class, 'getLineTypes']);
-Route::get('shifts/{DriverId}', [DriverController::class, 'getDriverShifts'])->where('DriverId', '.*');
+Route::get('shifts/{DriverId}', [DriverController::class, 'getDriverShifts'])
+    ->where('DriverId', '.*');
 Route::get('vehicle-type', [VehicleTypeController::class, 'index']);
-Route::get('line/{LineId}', [LineDetailController::class, 'getLineStops'])->where('LineId', '.*');
-Route::get('vehicle/{VehicleId}', [VehicleController::class, 'getVehicleInfo'])->where('VehicleId', '.*');
+Route::get('line/{LineId}', [LineDetailController::class, 'getLineStops'])
+    ->where('LineId', '.*');
+Route::get('vehicle/{VehicleId}', [VehicleController::class, 'getVehicleInfo'])
+    ->where('VehicleId', '.*');
 Route::post('reports', [VehicleController::class, 'reportVehicleMalfunction']);
-Route::get('reports/{StateId}', [ReportController::class, 'getReportsByState'])->where('StateId', '.*');
+Route::get('reports/{StateId}', [ReportController::class, 'getReportsByState'])
+    ->where('StateId', '.*');
 Route::post('reports/main', [ReportController::class, 'createMaintenanceReport']);
 Route::patch('reports/{ReportId}', [ReportController::class, 'handleReport']);
 Route::patch('reports/{ReportId}', [ReportController::class, 'closeReport']);
 Route::get('reports_with_vehicle_info/{StateId}', [ReportController::class, 'getReportsByStateWithVehicleInfo'])
     ->where('StateId', '.*');
-Route::get('report/{ReportId}', [ReportController::class, 'getReportById'])->where('ReportId', '.*');
+Route::get('report/{ReportId}', [ReportController::class, 'getReportById'])
+    ->where('ReportId', '.*');
+Route::get('vehicles-by-state/{StateId}', [VehicleController::class, 'getVehiclesByState'])
+    ->where('StateId', '.*');
+Route::get('user-by-type/{TypeId}', [UserController::class, 'getUsersByType'])
+    ->where('TypeId', '.*');
 

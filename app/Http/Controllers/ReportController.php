@@ -49,6 +49,7 @@ class ReportController extends Controller
             'data' => $this->ReportRepository->handleReport(
                 $request->input('reportId'),
                 $request->input('technicianId'),
+                $request->input('maintenanceDate'),
                 $request->input('decision')
             )
         ]);

@@ -48,7 +48,7 @@ Route::get('/search-line', function () {
 
 Route::get('/shifts', function () {
     return Inertia::render('Base', ['c' => 'Driver', 'args' => ['driverId' => auth()->user()->Id]]);
-})->name('shifts')->middleware(['auth', 'verified', 'usertype:1']); // TODO: @Skleny - change to enum
+})->name('shifts')->middleware(['auth', 'verified', 'usertype:' . UserTypeEnum::DRIVER->value]); // TODO: @Skleny - change to enum
 
 Route::get('/line/{lineId}', function ($lineId) {
     return Inertia::render('Base', ['c' => 'LineDetail', 'args' => ['lineId' => $lineId]]);

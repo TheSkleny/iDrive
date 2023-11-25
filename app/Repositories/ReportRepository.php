@@ -99,15 +99,16 @@ class ReportRepository
         ', ['submitterId' => $submitterId, 'vehicleId' => $vehicleId, 'technicianId' => $technicianId]
         );
     }
-    public function handleReport($reportId, $technicianId, $decision) {
+    public function handleReport($reportId, $technicianId, $maintenanceDate, $decision) {
         if ($decision == 'accept') {
             DB::update('
                 update "Report"
                 set
                     "StateId" = 3,
                     "TechnicianId" = :technicianId
+                    "MaintenanceDate" = :maintenanceDate
                 where "Id" = :reportId
-            ', ['technicianId' => $technicianId, 'reportId' => $reportId]
+            ', ['technicianId' => $technicianId, 'maintenanceDate' => $maintenanceDate, 'reportId' => $reportId]
             );
         }
         else if ($decision == 'reject') {

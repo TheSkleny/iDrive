@@ -11,6 +11,25 @@ use App\Models\Report;
 
 class VehicleRepository
 {
+    public function getVehiclesByState($StateId) : array
+    {
+        return DB::select('
+        select
+        "VL"."Id" as "VehicleId",
+        "VL"."Name" as "VehicleName",
+        "VL"."LicensePlate" as "VehicleLicensePlate",
+        "VL"."LastMaintenance" as "VehicleLastMaintenance",
+        "VT"."Icon" as "VehicleIcon",
+        "VS"."Id" as "VehicleStateId",
+        "VS"."Description" as "VehicleStateDescription"
+        from
+        "Vehicle" as "VL"
+        left join "VehicleType" as "VT" on "VL"."TypeId" = "VT"."Id"
+        left join "VehicleState" as "VS" on "VL"."StateId" = "VS"."Id"
+        where "VL"."StateId" = :StateId
+        ', ['StateId' => $StateId]);
+
+    }
     public function getVehicleInfo($vehicleId) : array
     {
         return DB::select('
@@ -40,25 +59,25 @@ class VehicleRepository
             insert into "Report"
                 (
                     "ReportDate",
-                    "SubmitterId", 
-                    "Description", 
-                    "VehicleId", 
-                    "TechnicianId", 
-                    "TechnicianDescription", 
-                    "MaintenanceDate", 
-                    "StateId", 
+                    "SubmitterId",
+                    "Description",
+                    "VehicleId",
+                    "TechnicianId",
+                    "TechnicianDescription",
+                    "MaintenanceDate",
+                    "StateId",
                     "TypeId"
                 )
             values
                 (
-                    cast(NOW() as date), 
-                    :submitterId, 
-                    :description, 
-                    :vehicleId, 
+                    cast(NOW() as date),
+                    :submitterId,
+                    :description,
+                    :vehicleId,
                     NULL,
-                    NULL, 
-                    NULL, 
-                    1, 
+                    NULL,
+                    NULL,
+                    1,
                     1
                 )
         ', ['submitterId' => $submitterId, 'description' => $description, 'vehicleId' => $vehicleId]);
