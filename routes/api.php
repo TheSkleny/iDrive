@@ -33,10 +33,13 @@ Route::get('line-types', [SearchLineController::class, 'getLineTypes']);
 Route::get('shifts/{DriverId}', [DriverController::class, 'getDriverShifts'])
     ->where('DriverId', '.*');
 Route::get('vehicle-type', [VehicleTypeController::class, 'index']);
-Route::get('line/{LineId}', [LineDetailController::class, 'getLineStops'])
-    ->where('LineId', '.*');
-Route::get('vehicle/{VehicleId}', [VehicleController::class, 'getVehicleInfo'])
-    ->where('VehicleId', '.*');
+Route::get('line/{LineId}', function ($lineId) {
+    return [
+        'lineStops' => app(LineDetailController::class)->getLineStops($lineId),
+        'lineMatrixData' => app(LineDetailController::class)->getLineMatrixData($lineId)
+    ];
+})->where('LineId', '.*');
+Route::get('vehicle/{VehicleId}', [VehicleController::class, 'getVehicleInfo'])->where('VehicleId', '.*');
 Route::post('reports', [VehicleController::class, 'reportVehicleMalfunction']);
 Route::get('reports/{StateId}', [ReportController::class, 'getReportsByState'])
     ->where('StateId', '.*');
@@ -45,10 +48,5 @@ Route::patch('reports/{ReportId}', [ReportController::class, 'handleReport']);
 Route::patch('reports/{ReportId}', [ReportController::class, 'closeReport']);
 Route::get('reports_with_vehicle_info/{StateId}', [ReportController::class, 'getReportsByStateWithVehicleInfo'])
     ->where('StateId', '.*');
-Route::get('report/{ReportId}', [ReportController::class, 'getReportById'])
-    ->where('ReportId', '.*');
-Route::get('vehicles-by-state/{StateId}', [VehicleController::class, 'getVehiclesByState'])
-    ->where('StateId', '.*');
-Route::get('user-by-type/{TypeId}', [UserController::class, 'getUsersByType'])
-    ->where('TypeId', '.*');
+Route::get('report/{ReportId}', [ReportController::class, 'getReportById'])->where('ReportId', '.*');
 
