@@ -54,7 +54,6 @@ class VehicleRepository
     }
     public function reportVehicleMalfunction($submitterId, $description, $vehicleId) : void
     {
-        // TODO - rename DriverId to SubmitterId and DriverDescription to Description
         DB::insert('
             insert into "Report"
                 (
@@ -81,5 +80,56 @@ class VehicleRepository
                     1
                 )
         ', ['submitterId' => $submitterId, 'description' => $description, 'vehicleId' => $vehicleId]);
+    }
+    public function addVehicle($name, $brand, $imageUri, $capacity, $speedLimit, $licensePlate, $typeId) : void
+    {
+        DB::insert('
+            insert into "Vehicle"
+                (
+                    "Name",
+                    "Brand",
+                    "ImageUri",
+                    "LastMaintenance",
+                    "Capacity",
+                    "SpeedLimit",
+                    "LicensePlate",
+                    "TypeId",
+                    "StateId"
+                )
+            values
+                (
+                    :name,
+                    :brand,
+                    :imageUri,
+                    NULL,
+                    :capacity,
+                    :speedLimit,
+                    :licensePlate,
+                    :typeId,
+                    1
+                )
+        ', ['name' => $name, 'brand' => $brand, 'imageUri' => $imageUri, 'capacity' => $capacity, 'speedLimit' => $speedLimit, 'licensePlate' => $licensePlate, 'typeId' => $typeId]);
+    }
+    public function updateVehicleInfo($vehicleId, $name, $brand, $imageUri, $capacity, $speedLimit, $licensePlate, $typeId) : void
+    {
+        DB::update('
+            update "Vehicle"
+            set
+                "Name" = :name,
+                "Brand" = :brand,
+                "ImageUri" = :imageUri,
+                "Capacity" = :capacity,
+                "SpeedLimit" = :speedLimit,
+                "LicensePlate" = :licensePlate,
+                "TypeId" = :typeId
+            where "Id" = :vehicleId
+        ', ['vehicleId' => $vehicleId, 'name' => $name, 'brand' => $brand, 'imageUri' => $imageUri, 'capacity' => $capacity, 'speedLimit' => $speedLimit, 'licensePlate' => $licensePlate, 'typeId' => $typeId]);
+    }
+    public function deleteVehicle($vehicleId) : void
+    {
+        DB::delete('
+            delete from "Vehicle"
+            where "Id" = :vehicleId
+        ', ['vehicleId' => $vehicleId]);
     }
 }

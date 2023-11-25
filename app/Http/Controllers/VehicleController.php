@@ -38,4 +38,41 @@ class VehicleController extends Controller
             )
         ]);
     }
+    public function updateVehicleInfo(Request $request) : JsonResponse
+    {
+        return response()->json([
+            'data' => $this->VehicleRepository->updateVehicleInfo(
+                $request->input('vehicleId'),
+                $request->input('name'),
+                $request->input('brand'),
+                $request->input('imageUri'),
+                $request->input('capacity'),
+                $request->input('speedLimit'),
+                $request->input('licensePlate'),
+                $request->input('typeId')
+            )
+        ]);
+    }
+    public function addVehicle(Request $request) : JsonResponse
+    {
+        return response()->json([
+            'data' => $this->VehicleRepository->addVehicle(
+                $request->input('name'),
+                $request->input('brand'),
+                $request->input('imageUri'),
+                $request->input('capacity'),
+                $request->input('speedLimit'),
+                $request->input('licensePlate'),
+                $request->input('typeId')
+            )
+        ]);
+    }
+    public function deleteVehicle(Request $request) : JsonResponse
+    {
+        return response()->json([
+            'data' => $this->VehicleRepository->deleteVehicle(
+                $request->input('vehicleId')
+            )
+        ]);
+    }
 }

@@ -52,3 +52,6 @@ Route::get('report/{ReportId}', [ReportController::class, 'getReportById'])->whe
 Route::get('vehicles-by-state/{StateId}', [VehicleController::class, 'getVehiclesByState'])->where('StateId', '.*');
 Route::get('user-by-type/{UserType}', [UserController::class, 'getUsersByType'])->where('UserType', '.*');
 Route::get('reports-by-technician/{TechnicianId}', [ReportController::class, 'getReportByTechnicianId'])->where('TechnicianId', '.*');
+Route::patch('vehicles/{VehicleId}', [VehicleController::class, 'updateVehicleInfo']);
+Route::post('vehicles', [VehicleController::class, 'addVehicle']);
+Route::delete('vehicles/{VehicleId}', [VehicleController::class, 'deleteVehicle']);
