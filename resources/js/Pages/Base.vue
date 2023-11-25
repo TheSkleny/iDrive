@@ -14,13 +14,15 @@ import VehicleDetail from "@/Pages/VehicleDetail.vue";
 import Edit from "@/Pages/Edit.vue";
 import SupervisorVehicleList from "@/Pages/SupervisorVehicleList.vue";
 import ReportDetail from "@/Pages/ReportDetail.vue";
+import Repairs from "@/Pages/Repairs.vue";
 
 
 const showingNavigationDropdown = ref(false);
 
 const props = defineProps({
     c: String,
-    args: Object
+    args: Object,
+    UserType: Number
 })
 
 const comp = () => {
@@ -41,11 +43,64 @@ const comp = () => {
             return SupervisorVehicleList
         case 'ReportDetail':
             return ReportDetail
+        case 'Repairs':
+            return Repairs
         default:
             console.log("default")
             return SearchLine
     }
 }
+
+const nav_items = [
+    [
+        //index 0
+    ],
+    [
+        //index 1
+        {
+            title: 'Shifts',
+            link: 'shifts',
+            icon: 'mdi-clock-time-eight-outline',
+        }
+    ],
+    [
+        //index 2
+    ],
+    [
+        //index 3
+        {
+            title: 'Repairs',
+            link: 'repairs',
+            icon: 'mdi-wrench',
+        }
+    ],
+    [
+        //index 4
+        {
+            title: 'Vehicles',
+            link: 'vehicles',
+            icon: 'mdi-bus',
+        }
+    ],
+    [
+        //index 5
+        {
+            title: 'Shifts',
+            link: 'shifts',
+            icon: 'mdi-clock-time-eight-outline',
+        },
+        {
+            title: 'Repairs',
+            link: 'repairs',
+            icon: 'mdi-wrench',
+        },
+        {
+            title: 'Vehicles',
+            link: 'vehicles',
+            icon: 'mdi-bus',
+        }
+    ]
+]
 
 </script>
 
@@ -69,19 +124,17 @@ const comp = () => {
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink :href="route('search-line')" :active="route().current('search-line')">
+                                    <v-icon style="margin-right: 5px">
+                                        mdi-magnify
+                                    </v-icon>
                                     Search line
                                 </NavLink>
-                                <NavLink :href="route('shifts')" :active="route().current('shifts')">
-                                    Shifts
-                                </NavLink>
-                                <NavLink>
-                                    (Lines)
-                                </NavLink>
-                                <NavLink>
-                                    (Links)
-                                </NavLink>
-                                <NavLink :href="route('vehicles')" :active="route().current('vehicles')">
-                                    Vehicles
+                                <NavLink v-for="item in nav_items[props.UserType]" :key="item.title" :href="route(item.link)"
+                                         :active="route().current(item.link)">
+                                    <v-icon style="margin-right: 5px">
+                                        {{ item.icon }}
+                                    </v-icon>
+                                    {{ item.title }}
                                 </NavLink>
 
                             </div>

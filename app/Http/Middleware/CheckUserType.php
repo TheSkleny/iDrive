@@ -10,7 +10,7 @@ class CheckUserType
     public function handle(Request $request, Closure $next, int $userType)
     {
         $user = auth()->user();
-        
+
         // if user is admin he can get anywhere
         if ($user && $user->type->Id == UserTypeEnum::ADMIN) {
             return $next($request);
@@ -20,6 +20,6 @@ class CheckUserType
             return $next($request);
         }
         // Redirect the user to a specific route or return a response indicating they are not authorized
-        return redirect()->route('welcome');
+        return redirect()->route('search-line');
     }
 }
