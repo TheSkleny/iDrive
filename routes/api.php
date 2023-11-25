@@ -31,20 +31,12 @@ Route::get('lines', [SearchLineController::class, 'getLineList']);
 Route::get('line-types', [SearchLineController::class, 'getLineTypes']);
 Route::get('shifts/{DriverId}', [DriverController::class, 'getDriverShifts'])->where('DriverId', '.*');
 Route::get('vehicle-type', [VehicleTypeController::class, 'index']);
-Route::get('line/{LineId}', [LineDetailController::class, 'getLineStops'])->where('LineId', '.*');
-// TODO - Tohle funguje, akorát to chce předělat na straně frontendu
-// už to nevrací data, ale 'lineStops', nebo 'lineMatrixData' a až v tom je atribut 'data'
-// pak smazat line/{LineId} a linee/{LineId}
-
-// Route::get('line/{LineId}', function ($lineId) {
-//     $lineStops = app(LineDetailController::class)->getLineStops($lineId);
-//     $lineMatrixData = app(LineDetailController::class)->getLineMatrixData($lineId);
-
-//     return [
-//         'lineStops' => $lineStops,
-//         'lineMatrixData' => $lineMatrixData,
-//     ];
-// })->where('LineId', '.*');
+Route::get('line/{LineId}', function ($lineId) {
+    return [
+        'lineStops' => app(LineDetailController::class)->getLineStops($lineId),
+        'lineMatrixData' => app(LineDetailController::class)->getLineMatrixData($lineId)
+    ];
+})->where('LineId', '.*');
 Route::get('vehicle/{VehicleId}', [VehicleController::class, 'getVehicleInfo'])->where('VehicleId', '.*');
 Route::post('reports', [VehicleController::class, 'reportVehicleMalfunction']);
 Route::get('reports/{StateId}', [ReportController::class, 'getReportsByState'])->where('StateId', '.*');
@@ -54,4 +46,3 @@ Route::patch('reports/{ReportId}', [ReportController::class, 'closeReport']);
 Route::get('reports_with_vehicle_info/{StateId}', [ReportController::class, 'getReportsByStateWithVehicleInfo'])
     ->where('StateId', '.*');
 Route::get('report/{ReportId}', [ReportController::class, 'getReportById'])->where('ReportId', '.*');
-Route::get('linee/{LineId}', [LineDetailController::class, 'getLineMatrixData'])->where('LineId', '.*');
