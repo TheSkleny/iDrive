@@ -12,7 +12,7 @@ class CheckUserType
         $user = auth()->user();
 
         // if user is admin he can get anywhere
-        if ($user && $user->type->Id == UserTypeEnum::ADMIN) {
+        if ($user && $user->type_id == UserTypeEnum::ADMIN) {
             return $next($request);
         }
 

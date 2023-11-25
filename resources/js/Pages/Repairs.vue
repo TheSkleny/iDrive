@@ -4,7 +4,8 @@ import {ref} from "vue";
 import useRedirect from "@/Composables/useRedirect.js";
 
 const props = defineProps({
-        args: Object
+        args: Object,
+        UserType: Number
     }
 )
 
@@ -53,6 +54,7 @@ technicians.value.forEach(technician => {
     })
 })
 
+const admin_card = (props.UserType === 5)
 
 </script>
 
@@ -66,7 +68,7 @@ technicians.value.forEach(technician => {
     </header>
     <div>
         <v-container>
-            <v-card>
+            <v-card v-if="admin_card">
                 <v-form>
                     <v-row>
                         <v-col>
