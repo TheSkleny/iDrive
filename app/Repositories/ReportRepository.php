@@ -45,6 +45,7 @@ class ReportRepository
         left join "VehicleType" "VT" on "VL"."TypeId" = "VT"."Id"
         where
             "TechnicianId" = :technicianId
+        and "R"."StateId" = 3
         order by "R"."MaintenanceDate"
         ', ['technicianId' => $technicianId]
         );
@@ -80,6 +81,8 @@ class ReportRepository
         "R"."Id" as "ReportId",
         "R"."ReportDate" as "ReportDate",
         "R"."Description" as "ReportDescription",
+        "R"."MaintenanceDate" as "ReportMaintenanceDate",
+        "R"."StateId" as "ReportStateId",
         "U"."name" as "SubmitterName",
         "VL"."Id" as "VehicleId",
         "VL"."Name" as "VehicleName",

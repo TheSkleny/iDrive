@@ -16,35 +16,38 @@ const props = defineProps({
  *
  * @type {Ref<UnwrapRef<Shift[]>>}
  */
-const shifts = ref([])
+const shifts = ref([]);
+const result = ref([]);
 
-const {response, error} = await useApi('GET', `shifts/${props.args.driverId}`)
-if (response.data) {
-    shifts.value = response.data.data
-}
-if (error) {
-    console.log(error.value)
-}
 
-// Resulting data structure
-const result = [];
+async function getShifts(driverId) {
+    const {response, error} = await useApi('GET', `shifts/${driverId}`)
+    if (response.data) {
+        shifts.value = response.data.data
+    }
+    if (error) {
+        console.log(error.value)
+    }
 
 // Loop through each shift
-shifts.value.forEach(shift => {
-    const [date, time] = shift.DepartureDate.split(' ');
+    shifts.value.forEach(shift => {
+        const [date, time] = shift.DepartureDate.split(' ');
 
-    // Check if the date already exists in the result array
-    const existingDateIndex = result.findIndex((entry) => entry.date === date);
+        // Check if the date already exists in the result array
+        const existingDateIndex = result.value.findIndex((entry) => entry.date === date);
 
-    if (existingDateIndex !== -1) {
-        // Date already exists, add time and data
-        result[existingDateIndex].times.push({time, data: shift});
-    } else {
-        // Date doesn't exist, create a new entry
-        result.push({date, times: [{time, data: shift}]});
-    }
-});
-
+        if (existingDateIndex !== -1) {
+            // Date already exists, add time and data
+            result.value[existingDateIndex].times.push({time, data: shift});
+        } else {
+            // Date doesn't exist, create a new entry
+            result.value.push({date, times: [{time, data: shift}]});
+        }
+    });
+    return result.value;
+}
+getShifts(props.args.driverId);
+console.log('result');
 console.log(result);
 
 const routeToLine = (id) => {
@@ -54,6 +57,25 @@ const routeToLine = (id) => {
 const routeToVehicle = (id) => {
     useRedirect.vehicle(id)
 }
+
+const drivers = ref([])
+const {response: responseDriver, error: errorDriver} = await useApi('GET', 'user-by-type/1')
+if (responseDriver.data) {
+    drivers.value = responseDriver.data.data
+}
+if (errorDriver) {
+    console.log(errorDriver.value)
+}
+
+const driverList = []
+drivers.value.forEach(driver => {
+    driverList.push({
+        title: driver.UserName,
+        value: driver.UserId
+    })
+})
+const adminCard = props.args.UserType === 5
+
 
 </script>
 
@@ -67,14 +89,38 @@ const routeToVehicle = (id) => {
     </header>
     <div>
         <v-container>
-            <!--            <div v-for="day in result" :key="day['date']" >-->
-            <!--                {{ day.date }}-->
-            <!--                <div v-for="time in day['times']" :key="time['time']">-->
-            <!--                    {{ time.time }} : {{ time.data }}-->
-            <!--                </div>-->
-            <!--            </div>-->
-            <div v-for="day in result" :key="day['date']" style="margin-bottom: 50px">
-                <v-card>
+            <v-card v-if="adminCard" style="margin-bottom: 50px">
+                <v-form>
+                    <v-row>
+                        <v-col>
+                            <h2 style="margin-top: 25px; margin-left: 20px">
+                                Admin
+                            </h2>
+                        </v-col>
+                        <v-col>
+                            <v-select style="width: 300px; margin-top: 20px"
+                                      label="Select technician"
+                                      :items="driverList"
+                                      v-model="props.args.adminDriverId"
+                                      required
+                            />
+                        </v-col>
+                        <v-col>
+                            <v-btn @click="() => getShifts(props.args.adminDriverId)"
+                                   variant="tonal"
+                                   style="margin-top: 30px; margin-right: 20px"
+                            >
+                                Display technician's reports
+                            </v-btn>
+
+                        </v-col>
+                    </v-row>
+                </v-form>
+
+            </v-card>
+
+            <div>
+                <v-card v-for="day in result" :key="day['date']" style="margin-bottom: 50px">
                     <h2 class="card_header">{{ day.date }}</h2>
                     <v-table fixed-header>
                         <thead>

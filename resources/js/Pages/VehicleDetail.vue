@@ -33,6 +33,58 @@ async function sendReport() {
     })
 }
 
+async function updateReport($decision) {
+    const {response: responseSend, error: errorSend} = await useApi('PATCH', `handle-report/${props.args.reportId}`, {
+        'reportId': props.args.reportId,
+        'technicianId': props.args.technicianId,
+        'maintenanceDate': props.args.maintenanceDate,
+        'decision': $decision
+    })
+    if (responseSend) {
+        console.log(responseSend.data)
+    }
+    if (errorSend) {
+        console.log(errorSend.value)
+    }
+}
+
+// if (props.args.UserType >= 4 ) {
+//     const report = ref(null)
+     const technicians = ref([])
+//
+//     const {response: responseReportInfo, error: errorReportInfo} = await useApi('GET', `report/${props.args.reportId}`)
+//     console.log('responseReportInfo')
+//     console.log(responseReportInfo)
+//     if (responseReportInfo.data) {
+//         report.value = responseReportInfo.data.data[0]
+//     }
+//     if (errorReportInfo) {
+//         console.log('error')
+//         console.log(errorReportInfo.value)
+//     }
+//
+//
+//     // TODO: 3 user.typeId = 'technician'
+    const {response: responseTechnicians, error: errorTechnicians} = await useApi('GET', 'user-by-type/3')
+    if (responseTechnicians.data) {
+        technicians.value = responseTechnicians.data.data
+    }
+    if (errorTechnicians) {
+        console.log(errorTechnicians.value)
+    }
+
+    const technician_list = []
+    technicians.value.forEach(technician => {
+        technician_list.push({
+            title: technician.UserName,
+            value: technician.UserId
+        })
+    })
+
+const userType = props.args.UserType
+const driver = userType === 1
+const admin = userType === 5
+
 </script>
 
 <template>
@@ -55,7 +107,7 @@ async function sendReport() {
                 <v-spacer/>
             </v-col>
             <v-col>
-                <v-img :src="vehicle.VehicleImageUri" width="300" >
+                <v-img :src="vehicle.VehicleImageUri" width="300">
                 </v-img>
 
             </v-col>
@@ -85,11 +137,12 @@ async function sendReport() {
                 <v-spacer/>
             </v-col>
             <v-col>
-                <v-card style="margin: 100px; padding: 20px" width="500">
+                <v-card  v-if="driver || admin"
+                    style="margin: 100px; padding: 20px" width="500">
                     <v-card-title>
-                        <span class="headline">Report</span>
+                        <span class="headline">Create report</span>
                     </v-card-title>
-                    <v-card-text>
+                    <v-card-item>
                         <v-container>
                             <v-form @submit.prevent="sendReport">
                                 <v-textarea
@@ -100,23 +153,13 @@ async function sendReport() {
                                 <v-btn type="submit">Send report</v-btn>
                             </v-form>
                         </v-container>
-                    </v-card-text>
+                    </v-card-item>
                 </v-card>
             </v-col>
             <v-col>
                 <v-spacer/>
             </v-col>
         </v-row>
-        <div class="parent">
-            <div class="child">
-            </div>
-            <div class="child">
-
-
-            </div>
-            <div class="child">
-            </div>
-        </div>
     </div>
 </template>
 

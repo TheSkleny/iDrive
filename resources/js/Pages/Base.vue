@@ -22,7 +22,6 @@ const showingNavigationDropdown = ref(false);
 const props = defineProps({
     c: String,
     args: Object,
-    UserType: Number
 })
 
 const comp = () => {
@@ -129,7 +128,7 @@ const nav_items = [
                                     </v-icon>
                                     Search line
                                 </NavLink>
-                                <NavLink v-for="item in nav_items[props.UserType]" :key="item.title" :href="route(item.link)"
+                                <NavLink v-for="item in nav_items[props.args.UserType]" :key="item.title" :href="route(item.link)"
                                          :active="route().current(item.link)">
                                     <v-icon style="margin-right: 5px">
                                         {{ item.icon }}

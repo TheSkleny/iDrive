@@ -45,10 +45,11 @@ Route::get('reports/{StateId}', [ReportController::class, 'getReportsByState'])
     ->where('StateId', '.*');
 Route::post('reports/main', [ReportController::class, 'createMaintenanceReport']);
 Route::patch('handle-report/{ReportId}', [ReportController::class, 'handleReport']);
-Route::patch('reports/{ReportId}', [ReportController::class, 'closeReport']);
+Route::patch('close-report/{ReportId}', [ReportController::class, 'closeReport']);
 Route::get('reports_with_vehicle_info/{StateId}', [ReportController::class, 'getReportsByStateWithVehicleInfo'])
     ->where('StateId', '.*');
-Route::get('report/{ReportId}', [ReportController::class, 'getReportById'])->where('ReportId', '.*');
+Route::get('report/{ReportId}', [ReportController::class, 'getReportById'])
+    ->where('ReportId', '.*');
 Route::get('vehicles-by-state/{StateId}', [VehicleController::class, 'getVehiclesByState'])->where('StateId', '.*');
 Route::get('user-by-type/{UserType}', [UserController::class, 'getUsersByType'])->where('UserType', '.*');
 Route::get('reports-by-technician/{TechnicianId}', [ReportController::class, 'getReportByTechnicianId'])->where('TechnicianId', '.*');

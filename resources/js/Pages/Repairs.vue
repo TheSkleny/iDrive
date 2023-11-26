@@ -5,7 +5,6 @@ import useRedirect from "@/Composables/useRedirect.js";
 
 const props = defineProps({
         args: Object,
-        UserType: Number
     }
 )
 
@@ -46,15 +45,14 @@ if (errorTechnicians) {
     console.log(errorTechnicians.value)
 }
 
-const technician_list = []
+const technicianList = []
 technicians.value.forEach(technician => {
-    technician_list.push({
+    technicianList.push({
         title: technician.UserName,
         value: technician.UserId
     })
 })
-
-const admin_card = (props.UserType === 5)
+const adminCard = props.args.UserType === 5
 
 </script>
 
@@ -68,7 +66,7 @@ const admin_card = (props.UserType === 5)
     </header>
     <div>
         <v-container>
-            <v-card v-if="admin_card">
+            <v-card v-if="adminCard">
                 <v-form>
                     <v-row>
                         <v-col>
@@ -79,13 +77,13 @@ const admin_card = (props.UserType === 5)
                         <v-col>
                             <v-select style="width: 300px; margin-top: 20px"
                                       label="Select technician"
-                                      :items="technician_list"
-                                      v-model="props.args.technicianId2"
+                                      :items="technicianList"
+                                      v-model="props.args.adminTechnicianId"
                                       required
                             />
                         </v-col>
                         <v-col>
-                            <v-btn @click="() => getReports(props.args.technicianId2)"
+                            <v-btn @click="() => getReports(props.args.adminTechnicianId)"
                                    variant="tonal"
                                       style="margin-top: 30px; margin-right: 20px"
                             >
