@@ -49,7 +49,7 @@ Route::get('/shifts', function () {
 
 Route::get('/line/{lineId}', function ($lineId) {
     return Inertia::render('Base', ['c' => 'LineDetail',
-        'args' => ['lineId' => $lineId, 'UserType' => auth()->user()->type_id]]);
+        'args' => ['lineId' => $lineId, 'UserType' => auth()->user() ? auth()->user()->type_id : 0]]);
 })->where('lineId', '.*');
 
 Route::get('/vehicle/{vehicleId}', function ($vehicleId) {
@@ -72,6 +72,7 @@ Route::get('/repairs', function () {
     return Inertia::render('Base', ['c' => 'Repairs',
         'args' => ['technicianId' => auth()->user()->Id, 'UserType' => auth()->user()->type_id]]);
 })->name('repairs')->middleware(['auth', 'verified', 'usertype:' . UserTypeEnum::TECHNICIAN->value]);
+
 
 
 require __DIR__.'/auth.php';
