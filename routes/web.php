@@ -49,7 +49,7 @@ Route::get('/shifts', function () {
 
 Route::get('/line/{lineId}', function ($lineId) {
     return Inertia::render('Base', ['c' => 'LineDetail',
-        'args' => ['lineId' => $lineId, 'UserType' => auth()->user()->type_id]]);
+        'args' => ['lineId' => $lineId, 'UserType' => auth()->user() ? auth()->user()->type_id : 0]]);
 })->where('lineId', '.*');
 
 Route::get('/vehicle/{vehicleId}', function ($vehicleId) {
