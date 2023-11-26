@@ -22,7 +22,15 @@ use App\Enums\UserTypeEnum;
 */
 
 Route::get('/', function () {
-    return redirect('/search-line');
+    return Inertia::render(
+        'Welcome',
+        [
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'userType' => auth()->user() ? auth()->user()->type_id : 0
+        ]
+    );
+    //return redirect('/search-line');
 });
 
 Route::get('/dashboard', function () {
