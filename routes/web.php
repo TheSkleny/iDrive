@@ -74,4 +74,5 @@ Route::get('/repairs', function () {
 })->name('repairs')->middleware(['auth', 'verified', 'usertype:' . UserTypeEnum::TECHNICIAN->value]);
 
 
+
 require __DIR__.'/auth.php';
