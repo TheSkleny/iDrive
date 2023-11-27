@@ -46,7 +46,6 @@ technicians.value.forEach(technician => {
         value: technician.UserId
     })
 })
-console.log(technicianList)
 const adminCard = props.args.UserType === 5
 
 </script>

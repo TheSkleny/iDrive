@@ -42,6 +42,7 @@ class VehicleRepository
         "VL"."Capacity" as "VehicleCapacity",
         "VL"."SpeedLimit" as "VehicleSpeedLimit",
         "VL"."LicensePlate" as "VehicleLicensePlate",
+        "VT"."Id" as "VehicleTypeId",
         "VT"."Description" as "VehicleTypeDescription",
         "VT"."Icon" as "VehicleTypeIcon",
         "VS"."Description" as "VehicleStateDescription"

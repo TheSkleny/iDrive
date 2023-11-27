@@ -56,7 +56,8 @@ Route::get('lines/{LineId}', function ($lineId) {
 Route::get('vehicles/{VehicleId}', function ($vehicleId) {
     return [
         'vehicleInfo' => app(VehicleController::class)->getVehicleInfo($vehicleId),
-        'techniciansList' => app(UserController::class)->getUsersByType(UserTypeEnum::TECHNICIAN->value)
+        'techniciansList' => app(UserController::class)->getUsersByType(UserTypeEnum::TECHNICIAN->value),
+        'vehicleTypes' => app(VehicleTypeController::class)->index(),
     ];
 });
 Route::post('reports/malfunctions', [VehicleController::class, 'reportVehicleMalfunction']);
@@ -96,13 +97,21 @@ Route::get('user-by-type/{UserType}', [UserController::class, 'getUsersByType'])
 
 // Endpoint: /users
 Route::get('users', [UserController::class, 'getUsers']);
-
-// Endpoint: /users/{UserId}
-Route::get('users/{UserId}', [UserController::class, 'getUser']);
+Route::get('users/{UserId}', function($userId) {
+    return [
+        'userInfo' => app(UserController::class)->getUser($userId),
+        'userTypes' => app(UserController::class)->getUserTypes()
+    ];
+});
 Route::patch('users/{UserId}', [UserController::class, 'updateUserInfo']);
 Route::delete('users/{UserId}', [UserController::class, 'deleteUser']);
 
-// Endpoint: /allocate
+// Jsou tyhle endpointy potřeba?
+Route::get('reports/{StateId}', [ReportController::class, 'getReportsByState'])
+    ->where('StateId', '.*');
+Route::patch('reports/{ReportId}', [ReportController::class, 'closeReport']);
+Route::get('vehicle-type', [VehicleTypeController::class, 'index']);
+
 Route::get('allocations', function () {
     return [
         'allocatedLinks' => app(LinksController::class)->getAllocatedLinks(),

@@ -51,21 +51,28 @@ class UserRepository
         ', ['userId' => $userId]);
     }
     
-    public function updateUserInfo($userId, $name, $email, $password, $typeId) : void
+    public function getUserTypes()
+    {
+        return DB::select('
+            select
+            "Id" as "UserTypeId",
+            "Description" as "UserType"
+            from
+            "UserType"
+        ');
+    }
+    
+    public function updateUserInfo($userId, $name, $typeId) : void
     {
         DB::update('
             update "users"
             set
                 "name" = :name,
-                "email" = :email,
-                "password" = :password,
                 "type_id" = :typeId
             where "Id" = :userId
         ', [
             'userId' => $userId,
             'name' => $name,
-            'email' => $email,
-            'password' => $password,
             'typeId' => $typeId
         ]);
     }
