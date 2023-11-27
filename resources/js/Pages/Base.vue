@@ -16,6 +16,7 @@ import Vehicles from "@/Pages/Vehicles.vue";
 import ReportDetail from "@/Pages/ReportDetail.vue";
 import Repairs from "@/Pages/Repairs.vue";
 import DispatcherAllocate from "@/Pages/DispatcherAllocate.vue";
+import Users from "@/Pages/Users.vue";
 
 
 const showingNavigationDropdown = ref(false);
@@ -45,6 +46,8 @@ const comp = () => {
             return ReportDetail
         case 'Repairs':
             return Repairs
+        case 'Users':
+            return Users
         case 'DispatcherAllocate':
             return DispatcherAllocate
         default:
@@ -110,6 +113,11 @@ const nav_items = [
             title: 'Vehicles',
             link: 'vehicles',
             icon: 'mdi-bus',
+        },
+        {
+            title: 'Users',
+            link: 'users',
+            icon: 'mdi-account',
         }
     ]
 ]
