@@ -53,8 +53,8 @@ class LinksRepository {
 
     public function createLink($lineId, $departureDate) {
         DB::insert('
-            insert into "Link" ("LineId", "DepartureDate", "VehicleId", "DriverId")
-            values (:lineId, :departureDate, NULL, NULL)
+            insert into "Link" ("LineId", "DepartureDate", "VehicleId", "DriverId", "IsReverse")
+            values (:lineId, :departureDate, NULL, NULL, FALSE)
         ', [
             'lineId' => $lineId,
             'departureDate' => $departureDate
