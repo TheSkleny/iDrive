@@ -59,18 +59,19 @@ technicians.value.forEach(technician => {
 })
 
 const userType = props.args.UserType
-const driver   = userType === 1
-const admin    = userType === 5
-const manager  = userType === 4
+const driver = userType === 1
+const admin = userType === 5
+const manager = userType === 4
 
 const routeToEdit = (id) => {
     useRedirect.editVehicle(id)
+
 }
 
 </script>
 
 <template>
-    <Head title="Vehicle" />
+    <Head title="Vehicle"/>
 
     <header class="bg-white shadow">
         <div class="max-w-7xl py-6 px-4 sm:px-6 lg:px-8/">
@@ -114,7 +115,11 @@ const routeToEdit = (id) => {
                                 <v-spacer/>
                             </v-col>
                             <v-col cols="4">
-                                <v-btn icon="mdi-pencil" @click="() => routeToEdit(props.args.vehicleId)"/>
+                                    <v-btn
+                                        v-if="manager || admin"
+                                        icon="mdi-pencil"
+                                        @click="() => routeToEdit(props.args.vehicleId)"
+                                    />
                             </v-col>
                         </v-row>
                     </v-card-text>
@@ -129,8 +134,8 @@ const routeToEdit = (id) => {
                 <v-spacer/>
             </v-col>
             <v-col>
-                <v-card  v-if="driver || admin"
-                    style="margin: 100px; padding: 20px" width="500">
+                <v-card v-if="driver || admin"
+                        style="margin: 100px; padding: 20px" width="500">
                     <v-card-title>
                         <span class="headline">Create report</span>
                     </v-card-title>

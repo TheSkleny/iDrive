@@ -29,6 +29,10 @@ const routeToVehicle = (id) => {
     useRedirect.vehicle(id)
 }
 
+const routeToNewVehicle = () => {
+    useRedirect.newVehicle()
+}
+
 const headers = ref([])
 
 headers.value = [
@@ -89,6 +93,25 @@ headers.value = [
                     </tbody>
                 </v-table>
             </v-card>
+
+            <v-row>
+                <v-col>
+                    <v-spacer/>
+                </v-col>
+                <v-col>
+                    <v-btn @click="() => routeToNewVehicle()"
+                           variant="tonal"
+                           style="margin-top: 20px"
+                           class="center"
+                    >
+                        Add new vehicle
+                    </v-btn>
+                </v-col>
+                <v-col>
+                    <v-spacer/>
+                </v-col>
+            </v-row>
+
             <v-card style="margin-top: 50px">
                 <h2 class="card_header">
                     Operational vehicles
