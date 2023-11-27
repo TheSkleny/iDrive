@@ -7,6 +7,7 @@ const allocatedLinks = ref([])
 const nonAllocatedLinks = ref([])
 const drivers = ref([])
 const vehicles = ref([])
+const linkId = ref(null)
 
 const {response, error} = await useApi('GET', 'allocations')
 if (response) {
@@ -41,7 +42,8 @@ if (error) {
 }
 
 async function allocate() {
-    const {response, error} = await useApi('PATCH', `allocations/${}`, {
+    console.log(linkId.value)
+    const {response, error} = await useApi('PATCH', 'allocsations', {
         LinkId: 1,
         VehicleId: 1,
         UserId: 1
@@ -78,13 +80,14 @@ headers.value = [
                 <h2 class="card_header">
                     prdel
                 </h2>
-                <v-form>
+                <v-form @submit.prevent="allocate">
                     <v-row>
                         <v-col>
                             <v-select
                                 label="Departure time"
                                 required
                                 :items="nonAllocatedLinks"
+                                v-model="linkId"
                             />
                         </v-col>
                         <v-col>
@@ -103,6 +106,7 @@ headers.value = [
                         </v-col>
                         <v-col>
                             <v-btn
+                                type="submit"
                                 class="center"
                                 color="teal"
                             >
