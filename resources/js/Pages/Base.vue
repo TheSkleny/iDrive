@@ -135,7 +135,11 @@ const nav_items = [
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+<<<<<<< HEAD
                                 <NavLink :href="route('search-line')" :active="route().current('search-lines')">
+=======
+                                <NavLink :href="route('search-lines')" :active="route().current('search-lines')">
+>>>>>>> dadd3f541bc83a7272e364959b1434796c1f3669
                                     <v-icon style="margin-right: 5px">
                                         mdi-magnify
                                     </v-icon>

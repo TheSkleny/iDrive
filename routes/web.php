@@ -42,7 +42,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/search-lines', function () {
     return Inertia::render('Base', ['c' => 'SearchLine',
         'args' => ['UserType' => auth()->user() ? auth()->user()->type_id : 0]]);
-})->name('search-line');
+})->name('search-lines');
 
 Route::get('/shifts', function () {
     return Inertia::render('Base', ['c' => 'DriverShifts',

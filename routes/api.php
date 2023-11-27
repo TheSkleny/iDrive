@@ -74,11 +74,17 @@ Route::get('vehicles', function() {
 });
 Route::post('vehicles', [VehicleController::class, 'addVehicle']);
 Route::delete('vehicles/{VehicleId}', [VehicleController::class, 'deleteVehicle']);
-Route::patch('close-report/{ReportId}', [ReportController::class, 'closeReport']);
 
 // Endpoint: /reports/{ReportId}
-Route::get('report/{ReportId}', [ReportController::class, 'getReportById'])->where('ReportId', '.*');
+// Route::get('report/{ReportId}', [ReportController::class, 'getReportById'])->where('ReportId', '.*');
+Route::get('reports/{ReportId}', function($reportId) {
+    return [
+        'reportInfo' => app(ReportController::class)->getReportById($reportId),
+        'techniciansList' => app(UserController::class)->getUsersByType(UserTypeEnum::TECHNICIAN->value)
+    ];
+});
 Route::patch('handle-report/{ReportId}', [ReportController::class, 'handleReport']);
+Route::patch('close-report/{ReportId}', [ReportController::class, 'closeReport']);
 
 // Endpoint: /reports
 // TODO změnit na /reports a možná nějakej general user-by-type endpoint
