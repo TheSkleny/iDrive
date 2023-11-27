@@ -105,6 +105,11 @@ Route::get('/links', function () {
         'args' => ['UserType' => auth()->user()->type_id]]);
 })->name('links')->middleware(['auth', 'verified', 'usertype:' . UserTypeEnum::MANAGER->value]);
 
+Route::get('/new-vehicle' , function () {
+    return Inertia::render('Base', ['c' => 'AddVehicle',
+        'args' => ['UserType' => auth()->user()->type_id]]);
+})->name('new-vehicle')->middleware(['auth', 'verified', 'usertype:' . UserTypeEnum::MANAGER->value]);
+
 Route::get('/edit-link/{linkId}', function ($linkId) {
     return Inertia::render('Base', ['c' => 'EditLink',
         'args' => ['linkId' => $linkId, 'UserType' => auth()->user()->type_id]]);

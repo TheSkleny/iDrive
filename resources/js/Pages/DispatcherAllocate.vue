@@ -53,6 +53,7 @@ async function allocate() {
         vehicleId: vehicleId.value,
         driverId: driverId.value
     })
+    location.reload()
 }
 
 const headers = ref([]);

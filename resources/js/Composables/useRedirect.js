@@ -11,4 +11,6 @@ export default {
     users: () => doRedirect('/users'),
     editLink: (id) => doRedirect(`/edit-link/${id}`),
     links: () => doRedirect('/links'),
+    vehicles: () => doRedirect('/vehicles'),
+    newVehicle: () => doRedirect('/new-vehicle'),
 }
