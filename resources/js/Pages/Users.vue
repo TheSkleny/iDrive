@@ -21,7 +21,6 @@ if (error) {
 const deleteUser = async (id) => {
     const {response: responseSend, error: errorSend} = await useApi('DELETE', `users/${id}`)
     if (responseSend) {
-        console.log(responseSend.data)
         location.reload() // Reload the page
     }
     if (errorSend) {

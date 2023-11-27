@@ -100,4 +100,9 @@ Route::get('/lines', function () {
         'args' => ['UserType' => auth()->user()->type_id]]);
 })->name('lines')->middleware(['auth', 'verified', 'usertype:' . UserTypeEnum::MANAGER->value]);
 
+Route::get('/links', function () {
+    return Inertia::render('Base', ['c' => 'Links',
+        'args' => ['UserType' => auth()->user()->type_id]]);
+})->name('links')->middleware(['auth', 'verified', 'usertype:' . UserTypeEnum::MANAGER->value]);
+
 require __DIR__.'/auth.php';
