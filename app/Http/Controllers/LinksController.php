@@ -40,4 +40,31 @@ class LinksController extends Controller
             )
         ]);
     }
+    public function createLink(Request $request) : JsonResponse
+    {
+        return response()->json([
+            'data' => $this->LinksRepository->createLink(
+                $request->input('lineId'),
+                $request->input('departureDate')
+            )
+        ]);
+    }
+
+    public function deleteLink($linkId) : JsonResponse
+    {
+        return response()->json([
+            'data' => $this->LinksRepository->deleteLink($linkId)
+        ]);
+    }
+
+    public function updateLink(Request $request) : JsonResponse
+    {
+        return response()->json([
+            'data' => $this->LinksRepository->updateLink(
+                $request->input('linkId'),
+                $request->input('lineId'),
+                $request->input('departureDate')
+            )
+        ]);
+    }
 }

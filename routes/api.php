@@ -94,18 +94,15 @@ Route::get('repairs/{TechnicianId}', function($technicianId) {
 Route::get('reports-by-technician/{TechnicianId}', [ReportController::class, 'getReportByTechnicianId'])->where('TechnicianId', '.*');
 Route::get('user-by-type/{UserType}', [UserController::class, 'getUsersByType'])->where('UserType', '.*');
 
-// Správa uživatelů
+// Endpoint: /users
 Route::get('users', [UserController::class, 'getUsers']);
+
+// Endpoint: /users/{UserId}
 Route::get('users/{UserId}', [UserController::class, 'getUser']);
 Route::patch('users/{UserId}', [UserController::class, 'updateUserInfo']);
 Route::delete('users/{UserId}', [UserController::class, 'deleteUser']);
 
-// Jsou tyhle endpointy potřeba?
-Route::get('reports/{StateId}', [ReportController::class, 'getReportsByState'])
-    ->where('StateId', '.*');
-Route::patch('reports/{ReportId}', [ReportController::class, 'closeReport']);
-Route::get('vehicle-type', [VehicleTypeController::class, 'index']);
-
+// Endpoint: /allocate
 Route::get('allocations', function () {
     return [
         'allocatedLinks' => app(LinksController::class)->getAllocatedLinks(),
@@ -114,5 +111,24 @@ Route::get('allocations', function () {
         'drivers' => app(UserController::class)->getUsersByType(UserTypeEnum::DRIVER->value)
     ];
 });
+
+// Endpoint: /links
+Route::get('links', function() {
+    return [
+        'unallocatedLinks' => app(LinksController::class)->getNonAllocatedLinks(),
+        'allocatedLinks' => app(LinksController::class)->getAllocatedLinks()
+    ];
+});
+Route::post('links', [LinksController::class, 'createLink']);
+
+// Endpoint: /links/{linkId}
+Route::delete('links/{linkId}', [LinksController::class, 'deleteLink']);
+Route::patch('links/{linkId}', [LinksController::class, 'updateLink']);
+
 Route::patch('allocations/{linkId}', [LinksController::class, 'allocateLink']);
 
+// Jsou tyhle endpointy potřeba?
+Route::get('reports/{StateId}', [ReportController::class, 'getReportsByState'])
+    ->where('StateId', '.*');
+Route::patch('reports/{ReportId}', [ReportController::class, 'closeReport']);
+Route::get('vehicle-type', [VehicleTypeController::class, 'index']);
