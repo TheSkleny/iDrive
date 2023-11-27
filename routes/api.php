@@ -147,7 +147,6 @@ Route::post('lines', [LineController::class, 'createLine']);
 Route::post('lines/stops', [LineController::class, 'createLineStops']);
 
 // Endpoint: /lines/{lineId}
-Route::get('lines/{LineId}', [LineController::class, 'getLine']);
 Route::patch('lines/{LineId}', [LineController::class, 'updateLine']);
 Route::patch('lines/stops/{LineId}', [LineController::class, 'updateLineStops']);
 Route::delete('lines/{LineId}', [LineController::class, 'deleteLine']);

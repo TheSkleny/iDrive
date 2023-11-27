@@ -19,19 +19,6 @@ class LinesRepository {
         ');
     }
 
-    public function getLine($lineId) {
-        return DB::select('
-            select
-                "Line"."Id" as "LineId",
-                "Line"."Name" as "LineName",
-                "VehicleType"."Description" as "LineType",
-                "Line"."TypeId" as "LineTypeId"
-            from "Line"
-                left join "VehicleType" on "Line"."TypeId" = "VehicleType"."Id"
-            where "Line"."Id" = :lineId
-        ', ['lineId' => $lineId]);
-    }
-
     public function createLine($lineName, $lineTypeId) {
         DB::insert('
             insert into "Line" ("Name", "TypeId")
