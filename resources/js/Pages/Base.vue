@@ -15,6 +15,7 @@ import Edit from "@/Pages/Edit.vue";
 import SupervisorVehicleList from "@/Pages/SupervisorVehicleList.vue";
 import ReportDetail from "@/Pages/ReportDetail.vue";
 import Repairs from "@/Pages/Repairs.vue";
+import DispatcherAllocate from "@/Pages/DispatcherAllocate.vue";
 
 
 const showingNavigationDropdown = ref(false);
@@ -44,6 +45,8 @@ const comp = () => {
             return ReportDetail
         case 'Repairs':
             return Repairs
+        case 'DispatcherAllocate':
+            return DispatcherAllocate
         default:
             console.log("default")
             return SearchLine

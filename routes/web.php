@@ -75,6 +75,10 @@ Route::get('/repairs', function () {
         'args' => ['technicianId' => auth()->user()->Id, 'UserType' => auth()->user()->type_id]]);
 })->name('repairs')->middleware(['auth', 'verified', 'usertype:' . UserTypeEnum::TECHNICIAN->value]);
 
+Route::get('/allocate', function () {
+    return Inertia::render('Base', ['c' => 'DispatcherAllocate',
+        'args' => ['UserType' => auth()->user()->type_id]]);
+})->name('allocate')->middleware(['auth', 'verified', 'usertype:' . UserTypeEnum::SUPERVISOR->value]);
 
 
 require __DIR__.'/auth.php';

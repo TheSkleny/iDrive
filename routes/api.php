@@ -8,6 +8,7 @@ use App\Http\Controllers\LineDetailController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\LinksController;
 use App\Enums\UserTypeEnum;
 
 use Illuminate\Http\Request;
@@ -87,8 +88,12 @@ Route::post('users', [UserController::class, 'addUser']);
 Route::patch('users/{UserId}', [UserController::class, 'updateUserInfo']);
 Route::delete('users/{UserId}', [UserController::class, 'deleteUser']);
 
+// Endpoint: /links
+Route::get('links', [LinksController::class, 'getLinks']);
+
 // Jsou tyhle endpointy potřeba?
 Route::get('reports/{StateId}', [ReportController::class, 'getReportsByState'])
     ->where('StateId', '.*');
 Route::patch('reports/{ReportId}', [ReportController::class, 'closeReport']);
 Route::get('vehicle-type', [VehicleTypeController::class, 'index']);
+

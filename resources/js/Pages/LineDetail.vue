@@ -17,7 +17,7 @@
     const line = ref(null)
     const matrix = ref(null)
 
-    const {response, error} = await useApi('GET', `line/${props.args.lineId}`)
+    const {response, error} = await useApi('GET', `lines/${props.args.lineId}`)
     if (response) {
         line.value = response.data.lineStops.original.data
         matrix.value = response.data.lineMatrixData.original.data
