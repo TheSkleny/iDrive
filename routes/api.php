@@ -132,6 +132,7 @@ Route::get('links', function() {
 Route::post('links', [LinksController::class, 'createLink']);
 
 // Endpoint: /links/{linkId}
+Route::get('links/{linkId}', [LinksController::class, 'getLink']);
 Route::delete('links/{linkId}', [LinksController::class, 'deleteLink']);
 Route::patch('links/{linkId}', [LinksController::class, 'updateLink']);
 

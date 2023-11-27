@@ -30,6 +30,13 @@ class LinksController extends Controller
             ]);
     }
 
+    public function getLink($linkId) : JsonResponse
+    {
+            return response()->json([
+                'data' => $this->LinksRepository->getLink($linkId)
+            ]);
+    }
+
     public function allocateLink(Request $request) : JsonResponse
     {
         return response()->json([

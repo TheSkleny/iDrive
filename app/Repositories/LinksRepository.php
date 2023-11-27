@@ -37,6 +37,22 @@ class LinksRepository {
         ');
     }
 
+    public function getLink($linkId) {
+        return DB::select('
+        select
+            "Link"."Id" as "LinkId",
+            "Line"."Name" as "LineName",
+            "Link"."DepartureDate" as "DepartureDate"
+        from "Link"
+            left join "Line" on "Link"."LineId" = "Line"."Id"
+            left join "Vehicle" on "Link"."VehicleId" = "Vehicle"."Id"
+            left join "users" on "Link"."DriverId" = "users"."Id"
+        where "Link"."Id" = :linkId
+        ', [
+            'linkId' => $linkId
+        ]);
+    }
+
     public function allocateLink($linkId, $driverId, $vehicleId) {
         DB::update('
             update "Link"
