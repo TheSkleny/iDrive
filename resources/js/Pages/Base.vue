@@ -17,6 +17,7 @@ import ReportDetail from "@/Pages/ReportDetail.vue";
 import Repairs from "@/Pages/Repairs.vue";
 import DispatcherAllocate from "@/Pages/DispatcherAllocate.vue";
 import Users from "@/Pages/Users.vue";
+import EditUser from "@/Pages/EditUser.vue";
 import VehicleEdit from "@/Pages/VehicleEdit.vue";
 
 
@@ -53,6 +54,8 @@ const comp = () => {
             return DispatcherAllocate
         case 'VehicleEdit':
             return VehicleEdit
+        case 'EditUser':
+            return EditUser
         default:
             console.log("default")
             return SearchLine

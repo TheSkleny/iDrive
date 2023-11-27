@@ -25,36 +25,16 @@ class UserRepository
             select
             "U"."Id" as "UserId",
             "U"."name" as "UserName",
-            "U"."email" as "UserEmail"
+            "U"."email" as "UserEmail",
+            "U"."type_id" as "UserTypeId",
+            "UT"."Description" as "UserType"
             from
             "users" as "U"
+            left join "UserType" as "UT"
+            on "U"."type_id" = "UT"."Id"
         ');
     }
-    // Potřebujeme to vůbec, nebo stačí registrace?
-    public function addUser($name, $email, $password, $typeId) : void
-    {
-        DB::insert('
-            insert into "users"
-                (
-                    "name",
-                    "email",
-                    "password",
-                    "type_id"
-                )
-            values
-                (
-                    :name,
-                    :email,
-                    :password,
-                    :typeId
-                )
-        ', [
-            'name' => $name,
-            'email' => $email,
-            'password' => $password,
-            'typeId' => $typeId
-        ]);
-    }
+    
     public function updateUserInfo($userId, $name, $email, $password, $typeId) : void
     {
         DB::update('

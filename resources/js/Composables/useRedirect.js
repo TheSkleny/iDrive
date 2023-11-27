@@ -7,4 +7,5 @@ export default {
     vehicle: (id) => doRedirect(`/vehicles/${id}`),
     report: (id) => doRedirect(`/reports/${id}`),
     editVehicle: (id) => doRedirect(`/vehicles/${id}/edit`),
+    edituser: (id) => doRedirect(`/users/${id}/edit`),
 }
