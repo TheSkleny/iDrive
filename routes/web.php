@@ -77,13 +77,22 @@ Route::get('/repairs', function () {
 
 Route::get('/users', function () {
     return Inertia::render('Base', ['c' => 'Users',
-        'args' => ['User' => auth()->user()->Id]]);
+        'args' => ['UserId' => auth()->user()->Id, 'UserType' => auth()->user()->type_id]]);
 })->name('users')->middleware(['auth', 'verified', 'usertype:' . UserTypeEnum::ADMIN->value]);
+
+Route::get('/users/{userId}/edit', function ($userId) {
+    return Inertia::render('Base', ['c' => 'EditUser',
+        'args' => ['UserType' => auth()->user()->type_id]]);
+})->name('edit-user')->middleware(['auth', 'verified', 'usertype:' . UserTypeEnum::ADMIN->value]);
+
 Route::get('/allocate', function () {
     return Inertia::render('Base', ['c' => 'DispatcherAllocate',
         'args' => ['UserType' => auth()->user()->type_id]]);
 })->name('allocate')->middleware(['auth', 'verified', 'usertype:' . UserTypeEnum::DISPATCHER->value]);
 
-
+Route::get('/vehicles/{vehicleId}/edit', function ($vehicleId) {
+    return Inertia::render('Base', ['c' => 'VehicleEdit',
+        'args' => ['vehicleId' => $vehicleId, 'UserType' => auth()->user()->type_id]]);
+})->where('vehicleId', '.*')->middleware(['auth', 'verified', 'usertype:' . UserTypeEnum::MANAGER->value]);
 
 require __DIR__.'/auth.php';

@@ -1,6 +1,8 @@
 <script setup>
 import {ref} from 'vue'
 import useApi from "@/Composables/useApi.js";
+import {Head} from "@inertiajs/vue3";
+import useRedirect from "@/Composables/useRedirect.js";
 
 const maintenanceDate = ref(null);
 const technicianId = ref(null);
@@ -61,9 +63,15 @@ const driver   = userType === 1
 const admin    = userType === 5
 const manager  = userType === 4
 
+const routeToEdit = (id) => {
+    useRedirect.editVehicle(id)
+}
+
 </script>
 
 <template>
+    <Head title="Vehicle" />
+
     <header class="bg-white shadow">
         <div class="max-w-7xl py-6 px-4 sm:px-6 lg:px-8/">
             <v-row style="margin-left: 20px">
@@ -101,6 +109,14 @@ const manager  = userType === 4
                                 <li>Last maintenance: {{ vehicle.VehicleLastMaintenance }}</li>
                             </ul>
                         </v-container>
+                        <v-row>
+                            <v-col cols="20">
+                                <v-spacer/>
+                            </v-col>
+                            <v-col cols="4">
+                                <v-btn icon="mdi-pencil" @click="() => routeToEdit(props.args.vehicleId)"/>
+                            </v-col>
+                        </v-row>
                     </v-card-text>
                 </v-card>
             </v-col>

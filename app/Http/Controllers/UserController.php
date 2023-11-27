@@ -27,18 +27,6 @@ class UserController extends Controller
                 'data' => $this->UserRepository->getUsers()
             ]);
     }
-    // Možná stačí jen registrace
-    public function addUser(Request $request) : JsonResponse
-    {
-        return response()->json([
-            'data' => $this->UserRepository->addUser(
-                $request->input('name'),
-                $request->input('email'),
-                $request->input('password'),
-                $request->input('typeId')
-            )
-        ]);
-    }
     public function updateUserInfo(Request $request) : JsonResponse
     {
         return response()->json([
