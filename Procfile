@@ -1,2 +1,1 @@
-web: php artisan serve
-
+web: heroku-php-apache2 public/
