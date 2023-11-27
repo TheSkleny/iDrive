@@ -59,8 +59,13 @@ async function cancelEdit() {
 }
 
 async function deleteVehicle() {
-    console.log(props.args.vehicleId)
-    await useApi('DELETE', `vehicles/${props.args.vehicleId}`)
+    const {response, error} = await useApi('DELETE', `vehicles/${props.args.vehicleId}`)
+    if (response) {
+        console.log(response.data)
+    }
+    if (error) {
+        console.log(error.value)
+    }
     await useRedirect.searchLine()
 }
 
