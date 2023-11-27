@@ -16,10 +16,10 @@ class LinksController extends Controller
         $this->LinksRepository = $LinksRepository;
     }
 
-    public function getLinks() : JsonResponse
+    public function getAllocatedLinks() : JsonResponse
     {
             return response()->json([
-                'data' => $this->LinksRepository->getLinks()
+                'data' => $this->LinksRepository->getAllocatedLinks()
             ]);
     }
 
@@ -28,5 +28,16 @@ class LinksController extends Controller
             return response()->json([
                 'data' => $this->LinksRepository->getNonAllocatedLinks()
             ]);
+    }
+
+    public function allocateLink(Request $request) : JsonResponse
+    {
+        return response()->json([
+            'data' => $this->LinksRepository->allocateLink(
+                $request->input('linkId'),
+                $request->input('driverId'),
+                $request->input('vehicleId')
+            )
+        ]);
     }
 }

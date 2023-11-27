@@ -3,14 +3,55 @@
 import {ref} from "vue";
 import useApi from "@/Composables/useApi.js";
 
-const links = ref(null)
+const allocatedLinks = ref([])
+const nonAllocatedLinks = ref([])
+const drivers = ref([])
+const vehicles = ref([])
 
-const {response, error} = await useApi('GET', `links`)
+const {response, error} = await useApi('GET', 'allocations')
 if (response) {
-    links.value = response.data.data
+    allocatedLinks.value = response.data.allocatedLinks.original.data
+    nonAllocatedLinks.value = response.data.nonAllocatedLinks.original.data
+    drivers.value = response.data.drivers.original.data
+    vehicles.value = response.data.vehicles.original.data
+
+    nonAllocatedLinks.value = nonAllocatedLinks.value.map(link => {
+        return {
+            title: 'Line '.concat(link.LineName,': ', link.DepartureDate),
+            value: link.LinkId
+        }
+    })
+
+    drivers.value = drivers.value.map(driver => {
+        return {
+            title: driver.UserName,
+            value: driver.UserId
+        }
+    })
+
+    vehicles.value = vehicles.value.map(vehicle => {
+        return {
+            title: vehicle.VehicleName.concat(' / ', vehicle.VehicleLicensePlate),
+            value: vehicle.VehicleId
+        }
+    })
 }
 if (error) {
     console.log(error.value)
+}
+
+async function allocate() {
+    const {response, error} = await useApi('PATCH', `allocations/${}`, {
+        LinkId: 1,
+        VehicleId: 1,
+        UserId: 1
+    })
+    if (response) {
+        console.log(response.data)
+    }
+    if (error) {
+        console.log(error.value)
+    }
 }
 
 const headers = ref([]);
@@ -20,17 +61,6 @@ headers.value = [
     {title: 'Vehicle', key: 'VehicleName'},
     {title: 'Driver', key: 'DriverName'},
 ]
-
-const item = {
-    LineName: 'Line 1',
-    DepartureDate: '2021-05-05 12:00:00',
-    VehicleName: 'Vehicle 1',
-    DriverName: 'Driver 1',
-    ArrivalDate: '2021-05-05 12:00:00',
-}
-
-const items = [
-    item]
 
 </script>
 
@@ -52,20 +82,23 @@ const items = [
                     <v-row>
                         <v-col>
                             <v-select
-                                label="Link departure time"
+                                label="Departure time"
                                 required
+                                :items="nonAllocatedLinks"
                             />
                         </v-col>
                         <v-col>
                             <v-select
                                 label="Vehicle"
                                 required
+                                :items="vehicles"
                             />
                         </v-col>
                         <v-col>
                             <v-select
                                 label="Driver"
                                 required
+                                :items="drivers"
                             />
                         </v-col>
                         <v-col>
@@ -83,7 +116,7 @@ const items = [
                 <h2 class="card_header">
                     prdel
                 </h2>
-                <v-data-table :headers="headers" :items="links">
+                <v-data-table :headers="headers" :items="allocatedLinks">
 
                 </v-data-table>
             </v-card>

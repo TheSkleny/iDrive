@@ -92,12 +92,19 @@ Route::post('users', [UserController::class, 'addUser']);
 Route::patch('users/{UserId}', [UserController::class, 'updateUserInfo']);
 Route::delete('users/{UserId}', [UserController::class, 'deleteUser']);
 
-// Endpoint: /links
-Route::get('links', [LinksController::class, 'getLinks']);
-
 // Jsou tyhle endpointy potřeba?
 Route::get('reports/{StateId}', [ReportController::class, 'getReportsByState'])
     ->where('StateId', '.*');
 Route::patch('reports/{ReportId}', [ReportController::class, 'closeReport']);
 Route::get('vehicle-type', [VehicleTypeController::class, 'index']);
+
+Route::get('allocations', function () {
+    return [
+        'allocatedLinks' => app(LinksController::class)->getAllocatedLinks(),
+        'nonAllocatedLinks' => app(LinksController::class)->getNonAllocatedLinks(),
+        'vehicles' => app(VehicleController::class)->getVehiclesByState(VehicleStateEnum::OPERATIONAL->value),
+        'drivers' => app(UserController::class)->getUsersByType(UserTypeEnum::DRIVER->value)
+    ];
+});
+Route::patch('allocations/{linkId}', [LinksController::class, 'allocateLink']);
 

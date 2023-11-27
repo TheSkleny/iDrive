@@ -7,10 +7,10 @@ use Illuminate\Support\Facades\DB;
 
 
 class LinksRepository {
-    public function getLinks() {
+    public function getAllocatedLinks() {
         return DB::select('
         select
-            "Link"."Id",
+            "Link"."Id" as "LinkId",
             "Line"."Name" as "LineName",
             "Vehicle"."Name" as "VehicleName",
             "users"."name" as "DriverName",
@@ -25,7 +25,7 @@ class LinksRepository {
     public function getNonAllocatedLinks() {
         return DB::select('
         select
-            "Link"."Id",
+            "Link"."Id" as "LinkId",
             "Line"."Name" as "LineName",
             "Link"."DepartureDate" as "DepartureDate"
         from "Link"
@@ -34,5 +34,19 @@ class LinksRepository {
             left join "users" on "Link"."DriverId" = "users"."Id"
         where "Link"."DriverId" is null
         ');
+    }
+
+    public function allocateLink($linkId, $driverId, $vehicleId) {
+        DB::update('
+            update "Link"
+            set
+                "DriverId" = :driverId,
+                "VehicleId" = :vehicleId
+            where "Id" = :linkId
+        ', [
+            'linkId' => $linkId,
+            'driverId' => $driverId,
+            'vehicleId' => $vehicleId
+        ]);
     }
 }

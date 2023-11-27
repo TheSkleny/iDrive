@@ -22,7 +22,7 @@ use App\Enums\UserTypeEnum;
 */
 
 Route::get('/', function () {
-    return redirect('/search-line');
+    return redirect('/search-lines');
 });
 
 Route::get('/dashboard', function () {
