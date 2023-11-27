@@ -89,6 +89,16 @@ Route::patch('handle-report/{ReportId}', [ReportController::class, 'handleReport
 Route::get('reports-by-technician/{TechnicianId}', [ReportController::class, 'getReportByTechnicianId'])->where('TechnicianId', '.*');
 Route::get('user-by-type/{UserType}', [UserController::class, 'getUsersByType'])->where('UserType', '.*');
 
+// Správa uživatelů
+// GET /admin ... zatím jen users, řešil bych to přes jedno query, který si pak rozeberem podle user type
+// POST /admin
+// PATCH /admin/{UserId}
+// DELETE /admin/{UserId}
+Route::get('admin', [UserController::class, 'getUsers']);
+Route::post('admin', [UserController::class, 'addUser']);
+Route::patch('admin/{UserId}', [UserController::class, 'updateUserInfo']);
+Route::delete('admin/{UserId}', [UserController::class, 'deleteUser']);
+
 // Jsou tyhle endpointy potřeba?
 Route::get('report-types', [ReportTypeController::class, 'index']);
 Route::get('reports/{StateId}', [ReportController::class, 'getReportsByState'])
