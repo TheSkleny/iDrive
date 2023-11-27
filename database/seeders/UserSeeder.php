@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
             'name' => 'spravce',
             'email' => 'spravce@idrive.com',
             'password' => 'spravce',
-            'type_id' => UserTypeEnum::SUPERVISOR,
+            'type_id' => UserTypeEnum::MANAGER,
         ]);
 
         \App\Models\User::factory()->create([

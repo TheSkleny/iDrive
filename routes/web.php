@@ -63,7 +63,7 @@ Route::get('/vehicles/{vehicleId}', function ($vehicleId) {
 Route::get('/vehicles', function () {
     return Inertia::render('Base', ['c' => 'Vehicles',
         'args' => ['UserType' => auth()->user()->type_id]]);
-})->name('vehicles')->middleware(['auth', 'verified', 'usertype:' . UserTypeEnum::SUPERVISOR->value]);
+})->name('vehicles')->middleware(['auth', 'verified', 'usertype:' . UserTypeEnum::MANAGER->value]);
 
 Route::get('/reports/{reportId}', function ($reportId) {
     return Inertia::render('Base', ['c' => 'ReportDetail',
@@ -78,7 +78,7 @@ Route::get('/repairs', function () {
 Route::get('/allocate', function () {
     return Inertia::render('Base', ['c' => 'DispatcherAllocate',
         'args' => ['UserType' => auth()->user()->type_id]]);
-})->name('allocate')->middleware(['auth', 'verified', 'usertype:' . UserTypeEnum::SUPERVISOR->value]);
+})->name('allocate')->middleware(['auth', 'verified', 'usertype:' . UserTypeEnum::DISPATCHER->value]);
 
 
 require __DIR__.'/auth.php';

@@ -8,6 +8,8 @@ const nonAllocatedLinks = ref([])
 const drivers = ref([])
 const vehicles = ref([])
 const linkId = ref(null)
+const vehicleId = ref(null)
+const driverId = ref(null)
 
 const {response, error} = await useApi('GET', 'allocations')
 if (response) {
@@ -43,17 +45,13 @@ if (error) {
 
 async function allocate() {
     console.log(linkId.value)
-    const {response, error} = await useApi('PATCH', 'allocsations', {
-        LinkId: 1,
-        VehicleId: 1,
-        UserId: 1
+    console.log(vehicleId.value)
+    console.log(driverId.value)
+    await useApi('PATCH', `allocations/${linkId.value}`, {
+        linkId: linkId.value,
+        vehicleId: vehicleId.value,
+        driverId: driverId.value
     })
-    if (response) {
-        console.log(response.data)
-    }
-    if (error) {
-        console.log(error.value)
-    }
 }
 
 const headers = ref([]);
@@ -95,6 +93,7 @@ headers.value = [
                                 label="Vehicle"
                                 required
                                 :items="vehicles"
+                                v-model="vehicleId"
                             />
                         </v-col>
                         <v-col>
@@ -102,6 +101,7 @@ headers.value = [
                                 label="Driver"
                                 required
                                 :items="drivers"
+                                v-model="driverId"
                             />
                         </v-col>
                         <v-col>
