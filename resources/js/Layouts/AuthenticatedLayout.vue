@@ -6,7 +6,7 @@ import DropdownLink from '@/Components/Default/DropdownLink.vue';
 import NavLink from '@/Components/Default/NavLink.vue';
 import ResponsiveNavLink from '@/Components/Default/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
-import Driver from "@/Pages/Driver.vue";
+import DriverShifts from "@/Pages/DriverShifts.vue";
 import SearchLine from "@/Pages/SearchLine.vue";
 import ReportTypes from "@/Pages/ReportTypes.vue";
 import LineDetail from "@/Pages/LineDetail.vue";
@@ -21,8 +21,8 @@ const props = defineProps({
 
 const comp = () => {
     switch (props.c) {
-        case 'Driver':
-            return Driver
+        case 'DriverShifts':
+            return DriverShifts
         case 'SearchLine':
             return SearchLine
         case 'ReportTypes':
