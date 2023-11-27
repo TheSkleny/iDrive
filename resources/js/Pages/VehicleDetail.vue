@@ -1,7 +1,6 @@
 <script setup>
 import {ref} from 'vue'
 import useApi from "@/Composables/useApi.js";
-import USER_TYPES from "@/Composables/enums.js";
 
 const maintenanceDate = ref(null);
 const technicianId = ref(null);
@@ -58,9 +57,9 @@ technicians.value.forEach(technician => {
 })
 
 const userType = props.args.UserType
-const driver   = userType === USER_TYPES.DRIVER
-const admin    = userType === USER_TYPES.ADMIN
-const manager  = userType === USER_TYPES.MANAGER
+const driver   = userType === 1
+const admin    = userType === 5
+const manager  = userType === 4
 
 </script>
 

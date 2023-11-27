@@ -39,7 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/search-line', function () {
+Route::get('/search-lines', function () {
     return Inertia::render('Base', ['c' => 'SearchLine',
         'args' => ['UserType' => auth()->user() ? auth()->user()->type_id : 0]]);
 })->name('search-line');
@@ -49,7 +49,7 @@ Route::get('/shifts', function () {
         'args' => ['driverId' => auth()->user()->Id, 'UserType' => auth()->user()->type_id]]);
 })->name('shifts')->middleware(['auth', 'verified', 'usertype:' . UserTypeEnum::DRIVER->value]);
 
-Route::get('/line/{lineId}', function ($lineId) {
+Route::get('/lines/{lineId}', function ($lineId) {
     return Inertia::render('Base', ['c' => 'LineDetail',
         'args' => ['lineId' => $lineId, 'UserType' => auth()->user() ? auth()->user()->type_id : 0]]);
 })->where('lineId', '.*');
@@ -65,7 +65,7 @@ Route::get('/vehicles', function () {
         'args' => ['UserType' => auth()->user()->type_id]]);
 })->name('vehicles')->middleware(['auth', 'verified', 'usertype:' . UserTypeEnum::SUPERVISOR->value]);
 
-Route::get('/report/{reportId}', function ($reportId) {
+Route::get('/reports/{reportId}', function ($reportId) {
     return Inertia::render('Base', ['c' => 'ReportDetail',
         'args' => ['reportId' => $reportId, 'UserType' => auth()->user()->type_id]]);
 })->where('reportId', '.*')->middleware(['auth', 'verified']);
