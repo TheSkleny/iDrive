@@ -67,12 +67,10 @@ class VehicleController extends Controller
             )
         ]);
     }
-    public function deleteVehicle(Request $request) : JsonResponse
+    public function deleteVehicle($vehicleId) : JsonResponse
     {
         return response()->json([
-            'data' => $this->VehicleRepository->deleteVehicle(
-                $request->input('vehicleId')
-            )
+            'data' => $this->VehicleRepository->deleteVehicle($vehicleId)
         ]);
     }
 }
