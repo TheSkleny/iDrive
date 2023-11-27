@@ -52,5 +52,13 @@ class UserSeeder extends Seeder
             'password' => 'ridic',
             'type_id' => UserTypeEnum::DRIVER,
         ]);
+
+        \App\Models\User::factory()->create([
+            'Id' => '9ab6b6e4-8bb4-4340-814e-22d59f0dd48c',
+            'name' => 'uzivatel',
+            'email' => 'uzivatel@idrive.com',
+            'password' => 'uzivatel',
+            'type_id' => UserTypeEnum::REGISTERED,
+        ]);
     }
 }
