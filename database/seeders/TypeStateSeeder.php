@@ -41,7 +41,7 @@ class TypeStateSeeder extends Seeder
 
         DB::table('VehicleType')->insert([
             ['Description' => 'Tramvaj', 'Icon' => 'mdi-tram'],
-            ['Description' => 'Trolejbus', 'Icon' => 'mdi-bus-electric'],
+            ['Description' => 'Trolejbus', 'Icon' => 'mdi-rickshaw-electric'],
             ['Description' => 'Autobus', 'Icon' => 'mdi-bus'],
             ['Description' => 'Metro', 'Icon' => 'mdi-subway'],
             ['Description' => 'Lod', 'Icon' => 'mdi-ferry'],
