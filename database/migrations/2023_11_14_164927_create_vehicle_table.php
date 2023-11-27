@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('Name')->nullable()->unique();
             $table->string('Brand');
             $table->string('ImageUri')->nullable();
-            $table->date('LastMaintenance');
+            $table->date('LastMaintenance')->nullable();
             $table->integer('Capacity');
             $table->integer('SpeedLimit');
             $table->string('LicensePlate');
