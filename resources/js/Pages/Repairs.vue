@@ -2,6 +2,7 @@
 import useApi from "@/Composables/useApi.js";
 import {ref} from "vue";
 import useRedirect from "@/Composables/useRedirect.js";
+import {Head} from "@inertiajs/vue3";
 
 const props = defineProps({
         args: Object,
@@ -10,39 +11,32 @@ const props = defineProps({
 
 const malfunctions = ref([])
 const maintenances = ref([])
+const technicians = ref([])
 
-async function getReports(technicianId) {
-     const {response, error} = await useApi('GET', `reports-by-technician/${technicianId}`)
+async function getRepairs(technicianId) {
+    const {response, error} = await useApi('GET', `repairs/${technicianId}`)
     if (response.data) {
-        response.data.data.forEach(report => {
-            if (report.ReportTypeId === 1) {
+        malfunctions.value = []
+        maintenances.value = []
+        response.data.repairsList.original.data.forEach(report => {
+            if (report.ReportTypeId === 1) {    
                 malfunctions.value.push(report)
             } else {
                 maintenances.value.push(report)
             }
         })
+        technicians.value = response.data.techniciansList.original.data
+        console.log(technicians.value)
     }
     if (error) {
         console.log(error.value)
     }
 }
 
-getReports(props.args.technicianId)
+await getRepairs(props.args.technicianId)
 
 const routeToReport = (id) => {
     useRedirect.report(id)
-}
-
-
-const technicians = ref([])
-
-// TODO: 3 user.typeId = 'technician'
-const {response: responseTechnicians, error: errorTechnicians} = await useApi('GET', 'user-by-type/3')
-if (responseTechnicians.data) {
-    technicians.value = responseTechnicians.data.data
-}
-if (errorTechnicians) {
-    console.log(errorTechnicians.value)
 }
 
 const technicianList = []
@@ -57,6 +51,8 @@ const adminCard = props.args.UserType === 5
 </script>
 
 <template>
+    <Head title="Repairs" />
+
     <header class="bg-white shadow">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
             <h1 class="text-3xl font-bold leading-tight text-gray-900">
@@ -83,7 +79,7 @@ const adminCard = props.args.UserType === 5
                             />
                         </v-col>
                         <v-col>
-                            <v-btn @click="() => getReports(props.args.adminTechnicianId)"
+                            <v-btn @click="() => getRepairs(props.args.adminTechnicianId)"
                                    variant="tonal"
                                       style="margin-top: 30px; margin-right: 20px"
                             >

@@ -1,6 +1,7 @@
 <script setup>
     import {ref, computed} from 'vue'
     import useApi from "@/Composables/useApi.js";
+    import {Head} from "@inertiajs/vue3";
 
     /**
      *
@@ -17,7 +18,7 @@
     const line = ref(null)
     const matrix = ref(null)
 
-    const {response, error} = await useApi('GET', `line/${props.args.lineId}`)
+    const {response, error} = await useApi('GET', `lines/${props.args.lineId}`)
     if (response) {
         line.value = response.data.lineStops.original.data
         matrix.value = response.data.lineMatrixData.original.data
@@ -91,6 +92,8 @@
 </script>
 
 <template>
+    <Head title="Line" />
+
     <header class="bg-white shadow">
         <div class="max-w-7xl py-6 px-4 sm:px-6 lg:px-8/">
             <v-row style="margin-left: 50px">

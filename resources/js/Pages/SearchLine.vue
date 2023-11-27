@@ -2,25 +2,19 @@
 import { ref, computed } from 'vue'
 import useApi from "@/Composables/useApi.js";
 import useRedirect from "@/Composables/useRedirect.js";
+import {Head} from "@inertiajs/vue3";
 
 const lines = ref([])
 const types = ref([])
 const tab = ref(null)
 
-const {response: responseLines, error: errorLines } = await useApi('GET', 'lines')
-if (responseLines.data) {
-    lines.value = responseLines.data.data
+const {response, error} = await useApi('GET', `search-lines`)
+if (response) {
+    lines.value = response.data.lineList.original.data
+    types.value = response.data.lineTypes.original.data
 }
-if (errorLines) {
-    console.log(errorLines.value)
-}
-
-const { response: responseTypes, error: errorTypes } = await useApi('GET', 'line-types')
-if (responseTypes.data) {
-    types.value = responseTypes.data.data
-}
-if (errorTypes) {
-    console.log(errorTypes.value)
+if (error) {
+    console.log(error.value)
 }
 
 const filteredLines = computed(() => {
@@ -39,6 +33,8 @@ const routeToLine = (id) => {
 
 
 <template>
+    <Head title="Search line" />
+
     <header class="bg-white shadow">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
             <h1 class="text-3xl font-bold leading-tight text-gray-900">

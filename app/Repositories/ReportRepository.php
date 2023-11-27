@@ -100,7 +100,7 @@ class ReportRepository
         );
     }
 
-    public function createMaintenanceReport($submitterId, $vehicleId, $technicianId) {
+    public function createMaintenanceReport($submitterId, $vehicleId, $technicianId, $maintenanceDate) {
         DB::insert('
             insert into "Report"
                 (
@@ -122,11 +122,11 @@ class ReportRepository
                     :vehicleId,
                     :technicianId,
                     NULL,
-                    NULL,
+                    :maintenanceDate,
                     3,
                     2
                 )
-        ', ['submitterId' => $submitterId, 'vehicleId' => $vehicleId, 'technicianId' => $technicianId]
+        ', ['submitterId' => $submitterId, 'vehicleId' => $vehicleId, 'technicianId' => $technicianId, 'maintenanceDate' => $maintenanceDate]
         );
     }
     public function handleReport($reportId, $technicianId, $maintenanceDate, $decision) {

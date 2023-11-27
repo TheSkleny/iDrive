@@ -6,15 +6,23 @@ import DropdownLink from '@/Components/Default/DropdownLink.vue';
 import NavLink from '@/Components/Default/NavLink.vue';
 import ResponsiveNavLink from '@/Components/Default/ResponsiveNavLink.vue';
 import {Link} from '@inertiajs/vue3';
-import Driver from "@/Pages/Driver.vue";
+import DriverShifts from "@/Pages/DriverShifts.vue";
 import SearchLine from "@/Pages/SearchLine.vue";
 import ReportTypes from "@/Pages/ReportTypes.vue";
 import LineDetail from "@/Pages/LineDetail.vue";
 import VehicleDetail from "@/Pages/VehicleDetail.vue";
 import Edit from "@/Pages/Edit.vue";
-import SupervisorVehicleList from "@/Pages/SupervisorVehicleList.vue";
+import Vehicles from "@/Pages/Vehicles.vue";
 import ReportDetail from "@/Pages/ReportDetail.vue";
 import Repairs from "@/Pages/Repairs.vue";
+import DispatcherAllocate from "@/Pages/DispatcherAllocate.vue";
+import Users from "@/Pages/Users.vue";
+import EditUser from "@/Pages/EditUser.vue";
+import VehicleEdit from "@/Pages/VehicleEdit.vue";
+import Lines from "@/Pages/Lines.vue";
+import Links from "@/Pages/Links.vue";
+import EditLink from "@/Pages/EditLink.vue";
+
 
 
 const showingNavigationDropdown = ref(false);
@@ -26,8 +34,8 @@ const props = defineProps({
 
 const comp = () => {
     switch (props.c) {
-        case 'Driver':
-            return Driver
+        case 'DriverShifts':
+            return DriverShifts
         case 'SearchLine':
             return SearchLine
         case 'ReportTypes':
@@ -39,13 +47,26 @@ const comp = () => {
         case 'Edit':
             return Edit
         case 'Vehicles':
-            return SupervisorVehicleList
+            return Vehicles
         case 'ReportDetail':
             return ReportDetail
         case 'Repairs':
             return Repairs
+        case 'Users':
+            return Users
+        case 'DispatcherAllocate':
+            return DispatcherAllocate
+        case 'VehicleEdit':
+            return VehicleEdit
+        case 'EditUser':
+            return EditUser
+        case 'Lines':
+            return Lines
+        case 'Links':
+            return Links
+        case 'EditLink':
+            return EditLink
         default:
-            console.log("default")
             return SearchLine
     }
 }
@@ -64,6 +85,11 @@ const nav_items = [
     ],
     [
         //index 2
+        {
+            title: 'Allocations',
+            link: 'allocate',
+            icon: 'mdi-bus-clock',
+        }
     ],
     [
         //index 3
@@ -79,6 +105,16 @@ const nav_items = [
             title: 'Vehicles',
             link: 'vehicles',
             icon: 'mdi-bus',
+        },
+        {
+            title: 'Lines',
+            link: 'lines',
+            icon: 'mdi-bus-multiple',
+        },
+        {
+            title: 'Links',
+            link: 'links',
+            icon: 'mdi-link-variant-plus',
         }
     ],
     [
@@ -89,6 +125,11 @@ const nav_items = [
             icon: 'mdi-clock-time-eight-outline',
         },
         {
+            title: 'Allocations',
+            link: 'allocate',
+            icon: 'mdi-bus-clock',
+        },
+        {
             title: 'Repairs',
             link: 'repairs',
             icon: 'mdi-wrench',
@@ -97,6 +138,21 @@ const nav_items = [
             title: 'Vehicles',
             link: 'vehicles',
             icon: 'mdi-bus',
+        },
+        {
+            title: 'Links',
+            link: 'links',
+            icon: 'mdi-link-variant-plus',
+        },
+        {
+            title: 'Users',
+            link: 'users',
+            icon: 'mdi-account',
+        },
+        {
+            title: 'Lines',
+            link: 'lines',
+            icon: 'mdi-bus-multiple',
         }
     ]
 ]
@@ -113,7 +169,7 @@ const nav_items = [
                         <div class="flex">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
-                                <Link :href="route('search-line')">
+                                <Link :href="route('search-lines')">
                                     <ApplicationLogo
                                         class="block h-9 w-auto fill-current text-gray-800"
                                     />
@@ -122,7 +178,7 @@ const nav_items = [
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink :href="route('search-line')" :active="route().current('search-line')">
+                                <NavLink :href="route('search-lines')" :active="route().current('search-lines')">
                                     <v-icon style="margin-right: 5px">
                                         mdi-magnify
                                     </v-icon>
@@ -229,8 +285,18 @@ const nav_items = [
                     class="sm:hidden"
                 >
                     <div class="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                            Dashboard
+                        <ResponsiveNavLink :href="route('search-lines')" :active="route().current('search-lines')">
+                            <v-icon style="margin-right: 5px">
+                                mdi-magnify
+                            </v-icon>
+                            Search line
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink v-for="item in nav_items[props.args.UserType]" :key="item.title" :href="route(item.link)"
+                                 :active="route().current(item.link)">
+                            <v-icon style="margin-right: 5px">
+                                {{ item.icon }}
+                            </v-icon>
+                            {{ item.title }}
                         </ResponsiveNavLink>
                     </div>
 

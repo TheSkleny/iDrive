@@ -19,10 +19,12 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->foreignuuid('VehicleId')
+                ->nullable()
                 ->constrained('Vehicle', 'Id')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->foreignuuid('DriverId')
+                ->nullable()
                 ->constrained('users', 'Id')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');

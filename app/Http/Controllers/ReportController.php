@@ -46,7 +46,8 @@ class ReportController extends Controller
             'data' => $this->ReportRepository->createMaintenanceReport(
                 $request->input('submitterId'),
                 $request->input('vehicleId'),
-                $request->input('technicianId')
+                $request->input('technicianId'),
+                $request->input('maintenanceDate'),
             )
         ]);
     }

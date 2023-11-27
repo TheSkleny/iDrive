@@ -8,6 +8,11 @@ use App\Http\Controllers\LineDetailController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\LinksController;
+use App\Http\Controllers\LinesController;
+use App\Enums\UserTypeEnum;
+use App\Enums\VehicleStateEnum;
+use App\Enums\ReportStateEnum;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,76 +28,126 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth:sanctum')->get('user', function (Request $request) {
     return $request->user();
 });
 
 
-// Endpoint: /search-line
-// GET /search-line ... vracet bude lines a lineTypes
-Route::get('lines', [SearchLineController::class, 'getLineList']);
-Route::get('line-types', [SearchLineController::class, 'getLineTypes']);
+// Endpoint: /search-lines
+Route::get('search-lines', function() {
+    return [
+        'lineList' => app(SearchLineController::class)->getLineList(),
+        'lineTypes' => app(SearchLineController::class)->getLineTypes()
+    ];
+});
 
-// Endpoint: /shifts
-// GET /shifts 
-Route::get('shifts/{DriverId}', [DriverController::class, 'getDriverShifts'])
-    ->where('DriverId', '.*');
+// Endpoint: /shifts/{DriverId}
+Route::get('shifts/{DriverId}', [DriverController::class, 'getDriverShifts']);
 
 // Endpoint: /lines/{LineId}
-// TODO změnit na /lines/{LineId}
-// GET /lines/{LineId} ... takhle nějak to psát
-Route::get('line/{LineId}', function ($lineId) {
+Route::get('lines/{LineId}', function ($lineId) {
     return [
         'lineStops' => app(LineDetailController::class)->getLineStops($lineId),
         'lineMatrixData' => app(LineDetailController::class)->getLineMatrixData($lineId)
     ];
-})->where('LineId', '.*');
+});
 
-// Endpoint: /vehicle/{VehicleId}
-// TODO: Rename to vehicles/{VehicleId}
-// GET /vehicles/{VehicleId}
-// POST /reports
-// TODO: Update a delete doimplementovat
-// PATCH /vehicles/{VehicleId}
-// DELETE /vehicles/{VehicleId}
-Route::get('vehicle/{VehicleId}', [VehicleController::class, 'getVehicleInfo'])->where('VehicleId', '.*');
-Route::post('reports', [VehicleController::class, 'reportVehicleMalfunction']);
-Route::get('reports/{StateId}', [ReportController::class, 'getReportsByState'])
-    ->where('StateId', '.*');
-Route::post('reports/main', [ReportController::class, 'createMaintenanceReport']);
-Route::patch('handle-report/{ReportId}', [ReportController::class, 'handleReport']);
-Route::patch('close-report/{ReportId}', [ReportController::class, 'closeReport']);
+// Endpoint: /vehicles/{VehicleId}
+// TODO: Update vehicles doimplementovat FE
+Route::get('vehicles/{VehicleId}', function ($vehicleId) {
+    return [
+        'vehicleInfo' => app(VehicleController::class)->getVehicleInfo($vehicleId),
+        'techniciansList' => app(UserController::class)->getUsersByType(UserTypeEnum::TECHNICIAN->value),
+        'vehicleTypes' => app(VehicleTypeController::class)->index(),
+    ];
+});
+Route::post('reports/malfunctions', [VehicleController::class, 'reportVehicleMalfunction']);
+Route::post('reports/maintenances', [ReportController::class, 'createMaintenanceReport']);
 Route::patch('vehicles/{VehicleId}', [VehicleController::class, 'updateVehicleInfo']);
 Route::delete('vehicles/{VehicleId}', [VehicleController::class, 'deleteVehicle']);
 
 // Endpoint: /vehicles
-// GET /vehicles ... zbytek přes query parametry a aby to vracelo vehicles a reports
-// POST /vehicles ... doimplementovat
-Route::get('reports_with_vehicle_info/{StateId}', [ReportController::class, 'getReportsByStateWithVehicleInfo'])
-    ->where('StateId', '.*');
-Route::get('report/{ReportId}', [ReportController::class, 'getReportById'])
-    ->where('ReportId', '.*');
-Route::get('vehicles-by-state/{StateId}', [VehicleController::class, 'getVehiclesByState'])->where('StateId', '.*');
-Route::get('vehicles-by-state/{StateId}', [VehicleController::class, 'getVehiclesByState'])->where('StateId', '.*');
+Route::get('vehicles', function() {
+    return [
+        'vehicleReports' => app(ReportController::class)->getReportsByStateWithVehicleInfo(ReportStateEnum::REPORTED->value),
+        'operationalVehicles' => app(VehicleController::class)->getVehiclesByState(VehicleStateEnum::OPERATIONAL->value),
+        'outOfServiceVehicles' => app(VehicleController::class)->getVehiclesByState(VehicleStateEnum::OUT_OF_SERVICE->value)
+    ];
+});
 Route::post('vehicles', [VehicleController::class, 'addVehicle']);
 
 // Endpoint: /reports/{ReportId}
-// TODO změnit na /reports/{ReportId}
-// GET /reports/{ReportId}
-// PATCH /reports/{ReportId}
-Route::get('report/{ReportId}', [ReportController::class, 'getReportById'])->where('ReportId', '.*');
+Route::get('reports/{ReportId}', function($reportId) {
+    return [
+        'reportInfo' => app(ReportController::class)->getReportById($reportId),
+        'techniciansList' => app(UserController::class)->getUsersByType(UserTypeEnum::TECHNICIAN->value)
+    ];
+});
 Route::patch('handle-report/{ReportId}', [ReportController::class, 'handleReport']);
+Route::patch('close-report/{ReportId}', [ReportController::class, 'closeReport']);
 
-// Endpoint: /reports
-// TODO změnit na /reports a možná nějakej general user-by-type endpoint
-// GET /reports ... zbytek přes query parametry
+// Endpoint: /repairs
+Route::get('repairs/{TechnicianId}', function($technicianId) {
+    return [
+        'repairsList' => app(ReportController::class)->getReportByTechnicianId($technicianId),
+        'techniciansList' => app(UserController::class)->getUsersByType(UserTypeEnum::TECHNICIAN->value)
+    ];
+});
 Route::get('reports-by-technician/{TechnicianId}', [ReportController::class, 'getReportByTechnicianId'])->where('TechnicianId', '.*');
 Route::get('user-by-type/{UserType}', [UserController::class, 'getUsersByType'])->where('UserType', '.*');
 
-// Jsou tyhle endpointy potřeba?
-Route::get('report-types', [ReportTypeController::class, 'index']);
-Route::get('reports/{StateId}', [ReportController::class, 'getReportsByState'])
-    ->where('StateId', '.*');
-Route::post('reports/main', [ReportController::class, 'createMaintenanceReport']);
-Route::patch('reports/{ReportId}', [ReportController::class, 'closeReport']);
-Route::get('vehicle-type', [VehicleTypeController::class, 'index']);
+// Endpoint: /users
+Route::get('users', [UserController::class, 'getUsers']);
+
+// Endpoint: /users/{UserId}
+Route::get('users/{UserId}', function($userId) {
+    return [
+        'userInfo' => app(UserController::class)->getUser($userId),
+        'userTypes' => app(UserController::class)->getUserTypes()
+    ];
+});
+Route::patch('users/{UserId}', [UserController::class, 'updateUserInfo']);
+Route::delete('users/{UserId}', [UserController::class, 'deleteUser']);
+
+// Endpoint: /allocate
+Route::get('allocations', function () {
+    return [
+        'allocatedLinks' => app(LinksController::class)->getAllocatedLinks(),
+        'nonAllocatedLinks' => app(LinksController::class)->getNonAllocatedLinks(),
+        'vehicles' => app(VehicleController::class)->getVehiclesByState(VehicleStateEnum::OPERATIONAL->value),
+        'drivers' => app(UserController::class)->getUsersByType(UserTypeEnum::DRIVER->value)
+    ];
+});
+
+// Endpoint: /allocations/{linkId}
+Route::patch('allocations/{linkId}', [LinksController::class, 'allocateLink']);
+
+// Endpoint: /links
+Route::get('links', function() {
+    return [
+        'unallocatedLinks' => app(LinksController::class)->getNonAllocatedLinks(),
+        'allocatedLinks' => app(LinksController::class)->getAllocatedLinks()
+    ];
+});
+Route::post('links', [LinksController::class, 'createLink']);
+
+// Endpoint: /links/{linkId}
+Route::get('links/{linkId}', [LinksController::class, 'getLink']);
+Route::delete('links/{linkId}', [LinksController::class, 'deleteLink']);
+Route::patch('links/{linkId}', [LinksController::class, 'updateLink']);
+
+// Endpoint: /lines
+Route::get('lines', function() {
+    return [
+        'lineList' => app(LinesController::class)->getLines(),
+        'lineTypes' => app(SearchLineController::class)->getLineTypes()
+    ];
+});
+Route::post('lines', [LineController::class, 'createLine']);
+Route::post('lines/stops', [LineController::class, 'createLineStops']);
+
+// Endpoint: /lines/{lineId}
+Route::get('lines/{LineId}', [LineController::class, 'getLine']);
+Route::patch('lines/{LineId}', [LineController::class, 'updateLine']);
+Route::patch('lines/stops/{LineId}', [LineController::class, 'updateLineStops']);
+Route::delete('lines/{LineId}', [LineController::class, 'deleteLine']);

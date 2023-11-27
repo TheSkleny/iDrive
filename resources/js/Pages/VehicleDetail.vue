@@ -1,6 +1,12 @@
 <script setup>
 import {ref} from 'vue'
 import useApi from "@/Composables/useApi.js";
+import {Head} from "@inertiajs/vue3";
+import useRedirect from "@/Composables/useRedirect.js";
+
+const maintenanceDate = ref(null);
+const technicianId = ref(null);
+const report_description = ref(null);
 
 /**
  *
@@ -12,10 +18,12 @@ const props = defineProps({
 )
 
 const vehicle = ref(null)
+const technicians = ref([])
 
-const {response, error} = await useApi('GET', `vehicle/${props.args.vehicleId}`)
+const {response, error} = await useApi('GET', `vehicles/${props.args.vehicleId}`)
 if (response) {
-    vehicle.value = response.data.data[0]
+    vehicle.value = response.data.vehicleInfo.original.data[0]
+    technicians.value = response.data.techniciansList.original.data
 }
 if (error) {
     console.log(error.value)
@@ -25,69 +33,45 @@ if (vehicle.value.VehicleImageUri === null) {
     vehicle.value.VehicleImageUri = 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png'
 }
 
-async function sendReport() {
-    const {response, error} = await useApi('POST', `reports`, {
+async function reportMalfunction() {
+    await useApi('POST', `reports/malfunctions`, {
         'submitterId': props.args.submitterId,
-        'description': props.args.description,
+        'description': report_description.value,
         'vehicleId': props.args.vehicleId
     })
 }
 
-async function updateReport($decision) {
-    const {response: responseSend, error: errorSend} = await useApi('PATCH', `handle-report/${props.args.reportId}`, {
-        'reportId': props.args.reportId,
-        'technicianId': props.args.technicianId,
-        'maintenanceDate': props.args.maintenanceDate,
-        'decision': $decision
+async function reportMaintenance() {
+    await useApi('POST', `reports/maintenances`, {
+        'submitterId': props.args.submitterId,
+        'vehicleId': props.args.vehicleId,
+        'technicianId': technicianId.value,
+        'maintenanceDate': maintenanceDate.value.toISOString().split('T')[0]
     })
-    if (responseSend) {
-        console.log(responseSend.data)
-    }
-    if (errorSend) {
-        console.log(errorSend.value)
-    }
 }
 
-// if (props.args.UserType >= 4 ) {
-//     const report = ref(null)
-     const technicians = ref([])
-//
-//     const {response: responseReportInfo, error: errorReportInfo} = await useApi('GET', `report/${props.args.reportId}`)
-//     console.log('responseReportInfo')
-//     console.log(responseReportInfo)
-//     if (responseReportInfo.data) {
-//         report.value = responseReportInfo.data.data[0]
-//     }
-//     if (errorReportInfo) {
-//         console.log('error')
-//         console.log(errorReportInfo.value)
-//     }
-//
-//
-//     // TODO: 3 user.typeId = 'technician'
-    const {response: responseTechnicians, error: errorTechnicians} = await useApi('GET', 'user-by-type/3')
-    if (responseTechnicians.data) {
-        technicians.value = responseTechnicians.data.data
-    }
-    if (errorTechnicians) {
-        console.log(errorTechnicians.value)
-    }
-
-    const technician_list = []
-    technicians.value.forEach(technician => {
-        technician_list.push({
-            title: technician.UserName,
-            value: technician.UserId
-        })
+const technician_list = []
+technicians.value.forEach(technician => {
+    technician_list.push({
+        title: technician.UserName,
+        value: technician.UserId
     })
+})
 
 const userType = props.args.UserType
-const driver = userType === 1
-const admin = userType === 5
+const driver   = userType === 1
+const admin    = userType === 5
+const manager  = userType === 4
+
+const routeToEdit = (id) => {
+    useRedirect.editVehicle(id)
+}
 
 </script>
 
 <template>
+    <Head title="Vehicle" />
+
     <header class="bg-white shadow">
         <div class="max-w-7xl py-6 px-4 sm:px-6 lg:px-8/">
             <v-row style="margin-left: 20px">
@@ -125,6 +109,14 @@ const admin = userType === 5
                                 <li>Last maintenance: {{ vehicle.VehicleLastMaintenance }}</li>
                             </ul>
                         </v-container>
+                        <v-row>
+                            <v-col cols="20">
+                                <v-spacer/>
+                            </v-col>
+                            <v-col cols="4">
+                                <v-btn icon="mdi-pencil" @click="() => routeToEdit(props.args.vehicleId)"/>
+                            </v-col>
+                        </v-row>
                     </v-card-text>
                 </v-card>
             </v-col>
@@ -144,13 +136,44 @@ const admin = userType === 5
                     </v-card-title>
                     <v-card-item>
                         <v-container>
-                            <v-form @submit.prevent="sendReport">
+                            <v-form @submit.prevent="reportMalfunction">
                                 <v-textarea
                                     label="Describe problem"
-                                    v-model="props.args.description"
+                                    v-model="report_description"
                                     required
                                 />
                                 <v-btn type="submit">Send report</v-btn>
+                            </v-form>
+                        </v-container>
+                    </v-card-item>
+                </v-card>
+                <v-card v-if="manager || admin"
+                        style="margin: 100px; padding: 20px" width="500">
+                    <v-card-title>
+                        <span class="headline">Maintenance</span>
+                    </v-card-title>
+                    <v-card-item>
+                        <v-container>
+                            <v-form @submit.prevent="reportMaintenance">
+                                <v-select style="width: 360px"
+                                          label="Select technician"
+                                          v-model="technicianId"
+                                          :items="technician_list"
+                                          required
+                                />
+                                <v-date-picker
+                                    required
+                                    v-model="maintenanceDate"
+                                    label="Maintenance date"
+                                    color="grey-lighten-2"
+                                    style="border: 1px solid lightgrey"
+                                />
+                                <v-btn color="teal"
+                                       type="submit"
+                                       style="margin-top: 20px; "
+                                >
+                                    Send maintenance
+                                </v-btn>
                             </v-form>
                         </v-container>
                     </v-card-item>

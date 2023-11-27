@@ -1,6 +1,7 @@
 <script setup>
 import useApi from "@/Composables/useApi.js";
 import {ref} from "vue";
+import {Head} from "@inertiajs/vue3";
 
 const props = defineProps({
         args: Object,
@@ -15,37 +16,22 @@ const technician = userType === 3
 const manager = userType === 4
 const admin = userType === 5
 
-if (technician || admin) {
-    const {response: responseReport, error: errorReport} = await useApi('GET', `report/${props.args.reportId}`)
-    if (responseReport.data) {
-        reportTechnician.value = responseReport.data.data[0]
+const {response, error} = await useApi('GET', `reports/${props.args.reportId}`)
+if (response) {
+    if (technician || admin) {
+        reportTechnician.value = response.data.reportInfo.original.data[0]
     }
-    if (errorReport) {
-        console.log(errorReport.value)
+    if (manager || admin) {
+        reportManager.value = response.data.reportInfo.original.data[0]
     }
+    technicians.value = response.data.techniciansList.original.data
 }
-if (manager || admin) {
-    const {response: responseReport, error: errorReport} = await useApi('GET', `report/${props.args.reportId}`)
-    if (responseReport.data) {
-        reportManager.value = responseReport.data.data[0]
-    }
-    if (errorReport) {
-        console.log(errorReport.value)
-    }
+if (error) {
+    console.log(error.value)
 }
 
 const stateReported = reportManager.value.ReportStateId === 1
 const stateTechnician = reportManager.value.ReportStateId === 3
-
-
-// TODO: 3 user.typeId = 'technician'
-const {response: responseTechnicians, error: errorTechnicians} = await useApi('GET', 'user-by-type/3')
-if (responseTechnicians.data) {
-    technicians.value = responseTechnicians.data.data
-}
-if (errorTechnicians) {
-    console.log(errorTechnicians.value)
-}
 
 const technician_list = []
 technicians.value.forEach(technician => {
@@ -98,6 +84,9 @@ async function updateReport($decision) {
 </script>
 
 <template>
+    <Head title="Report" />
+
+
     <header class="bg-white shadow">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
             <h1 class="text-3xl font-bold leading-tight text-gray-900">
