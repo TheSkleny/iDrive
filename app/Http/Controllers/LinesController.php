@@ -22,13 +22,6 @@ class LinesController extends Controller
                 'data' => $this->LinesRepository->getLines()
             ]);
     }
-    
-    public function getLine($lineId) : JsonResponse
-    {
-            return response()->json([
-                'data' => $this->LinesRepository->getLine($lineId)
-            ]);
-    }
 
     public function createLine(Request $request) : JsonResponse
     {
