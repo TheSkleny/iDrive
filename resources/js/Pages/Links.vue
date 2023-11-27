@@ -11,6 +11,9 @@ const hour = ref(null)
 const minute = ref(null)
 let timestamp = null
 
+const links = ref(null)
+const links2 = ref(null)
+
 const props = defineProps({
     args: Object
 })
@@ -21,6 +24,15 @@ if (response) {
 }
 if (error) {
     console.log(error.value)
+}
+
+const {response: responseLinks, error: errorLinks} = await useApi('GET', `links`)
+if (responseLinks) {
+    links.value = responseLinks.data.unallocatedLinks.original.data
+    links2.value = responseLinks.data.allocatedLinks.original.data
+}
+if (errorLinks) {
+    console.log(errorLinks.value)
 }
 
 const linesList = []
@@ -46,18 +58,36 @@ function makeTimestamp(dateString, hour, minute) {
     date.setHours(hour);
     date.setMinutes(minute);
     date.setUTCHours(date.getUTCHours() + 1); // Set timezone to +01
-    console.log(date)
     const formattedTimestamp = date.toISOString().replace(/T/, ' ').replace(/\..+/, '');
     return formattedTimestamp;
 }
 
 async function createLink() {
     timestamp = makeTimestamp(date.value, hour.value, minute.value)
-    await useApi('POST', `links`, {
+    const {response: response3, error: error3} = await useApi('POST', `links`, {
         'lineId': line.value,
         'departureDate': timestamp
     })
-    //location.reload()
+    if (response3) {
+        location.reload() // Reload the page
+    }
+    if (error3) {
+        console.log(error3.value)
+    }
+}
+
+const deleteLink = async (id) => {
+    const {response: responseSend, error: errorSend} = await useApi('DELETE', `links/${id}`)
+    if (responseSend) {
+        location.reload() // Reload the page
+    }
+    if (errorSend) {
+        console.log(errorSend.value)
+    }
+}
+
+const routeToLink = (id) => {
+    useRedirect.editLink(id)
 }
 
 </script>
@@ -114,6 +144,74 @@ async function createLink() {
                         </v-btn>
                     </v-form>
                 </v-card-text>
+            </v-card>
+
+            <v-card style="margin-top: 50px">
+                <h2 class="card_header">
+                    Unallocated Links
+                </h2>
+                <v-table fixed-header>
+                    <thead>
+                    <tr>
+                        <td>Line</td>
+                        <td>Departure date</td>
+                        <td>Link detail</td>
+                        <td>Delete link</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="link in links" :key="link.LinkId">
+                        <td>{{ link.LineName }}</td>
+                        <td>{{ link.DepartureDate }}</td>
+                        <td>
+                            <v-btn @click="() => routeToLink(link.LinkId)" variant="tonal">
+                                Edit link
+                            </v-btn>
+                        </td>
+                        <td>
+                            <v-btn @click="() => deleteLink(link.LinkId)" color="red">
+                                DELETE
+                            </v-btn>
+                        </td>
+                    </tr>
+                    </tbody>
+                </v-table>
+            </v-card>
+
+            <v-card style="margin-top: 50px">
+                <h2 class="card_header">
+                    Allocated Links
+                </h2>
+                <v-table fixed-header>
+                    <thead>
+                    <tr>
+                        <td>Line</td>
+                        <td>Departure date</td>
+                        <td>Vehicle name</td>
+                        <td>Driver name</td>
+                        <td>Link detail</td>
+                        <td>Delete link</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="link in links2" :key="link.LinkId">
+                        <td>{{ link.LineName }}</td>
+                        <td>{{ link.DepartureDate }}</td>
+                        <td>{{ link.VehicleName }}</td>
+                        <td>{{ link.DriverName }}</td>
+                        <td>
+                            <v-btn @click="() => routeToLink(link.LinkId)" variant="tonal">
+                                Edit link
+                            </v-btn>
+                        </td>
+                        <td>
+                            <v-btn @click="() => deleteLink(link.LinkId)" color="red">
+                                DELETE
+                            </v-btn>
+                        </td>
+                    </tr>
+                    </tbody>
+                </v-table>
             </v-card>
         </v-container>
     </div>

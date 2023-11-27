@@ -38,12 +38,17 @@ newRole.value = user.value.UserTypeId
 
 // Edit the user
 async function editUser(id) {
-    await useApi('PATCH', `users/${id}`, {
+    const {response: response3, error: error3} = await useApi('PATCH', `users/${id}`, {
         'userId': id,
         'name': newName.value,
         'typeId': newRole.value
     })
-    useRedirect.users()
+    if (response3) {
+        useRedirect.users()
+    }
+    if (error3) {
+        console.log(error3.value)
+    }
 }
 
 </script>

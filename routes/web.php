@@ -105,4 +105,9 @@ Route::get('/links', function () {
         'args' => ['UserType' => auth()->user()->type_id]]);
 })->name('links')->middleware(['auth', 'verified', 'usertype:' . UserTypeEnum::MANAGER->value]);
 
+Route::get('/edit-link/{linkId}', function ($linkId) {
+    return Inertia::render('Base', ['c' => 'EditLink',
+        'args' => ['linkId' => $linkId, 'UserType' => auth()->user()->type_id]]);
+})->where('linkId', '.*')->middleware(['auth', 'verified', 'usertype:' . UserTypeEnum::MANAGER->value]);
+
 require __DIR__.'/auth.php';
