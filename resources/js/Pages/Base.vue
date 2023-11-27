@@ -21,6 +21,7 @@ import EditUser from "@/Pages/EditUser.vue";
 import VehicleEdit from "@/Pages/VehicleEdit.vue";
 import Lines from "@/Pages/Lines.vue";
 import Links from "@/Pages/Links.vue";
+import EditLink from "@/Pages/EditLink.vue";
 
 
 
@@ -63,6 +64,8 @@ const comp = () => {
             return Lines
         case 'Links':
             return Links
+        case 'EditLink':
+            return EditLink
         default:
             return SearchLine
     }
