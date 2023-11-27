@@ -113,7 +113,7 @@ const nav_items = [
                         <div class="flex">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
-                                <Link :href="route('search-line')">
+                                <Link :href="route('search-lines')">
                                     <ApplicationLogo
                                         class="block h-9 w-auto fill-current text-gray-800"
                                     />
@@ -122,7 +122,7 @@ const nav_items = [
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink :href="route('search-line')" :active="route().current('search-line')">
+                                <NavLink :href="route('search-lines')" :active="route().current('search-lines')">
                                     <v-icon style="margin-right: 5px">
                                         mdi-magnify
                                     </v-icon>
