@@ -23,24 +23,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth:sanctum')->get('user', function (Request $request) {
     return $request->user();
 });
 
 
 // Endpoint: /search-line
-// GET /search-line ... vracet bude lines a lineTypes
 Route::get('lines', [SearchLineController::class, 'getLineList']);
 Route::get('line-types', [SearchLineController::class, 'getLineTypes']);
 
 // Endpoint: /shifts
-// GET /shifts 
 Route::get('shifts/{DriverId}', [DriverController::class, 'getDriverShifts'])
     ->where('DriverId', '.*');
 
 // Endpoint: /lines/{LineId}
 // TODO změnit na /lines/{LineId}
-// GET /lines/{LineId} ... takhle nějak to psát
 Route::get('line/{LineId}', function ($lineId) {
     return [
         'lineStops' => app(LineDetailController::class)->getLineStops($lineId),
@@ -50,36 +47,25 @@ Route::get('line/{LineId}', function ($lineId) {
 
 // Endpoint: /vehicle/{VehicleId}
 // TODO: Rename to vehicles/{VehicleId}
-// GET /vehicles/{VehicleId}
-// POST /reports
-// TODO: Update a delete doimplementovat
-// PATCH /vehicles/{VehicleId}
-// DELETE /vehicles/{VehicleId}
+// TODO: Update a delete vehicles doimplementovat
 Route::get('vehicle/{VehicleId}', [VehicleController::class, 'getVehicleInfo'])->where('VehicleId', '.*');
 Route::post('reports', [VehicleController::class, 'reportVehicleMalfunction']);
 Route::get('reports/{StateId}', [ReportController::class, 'getReportsByState'])
     ->where('StateId', '.*');
 Route::post('reports/main', [ReportController::class, 'createMaintenanceReport']);
-Route::patch('handle-report/{ReportId}', [ReportController::class, 'handleReport']);
 Route::patch('close-report/{ReportId}', [ReportController::class, 'closeReport']);
 Route::patch('vehicles/{VehicleId}', [VehicleController::class, 'updateVehicleInfo']);
-Route::delete('vehicles/{VehicleId}', [VehicleController::class, 'deleteVehicle']);
 
 // Endpoint: /vehicles
-// GET /vehicles ... zbytek přes query parametry a aby to vracelo vehicles a reports
-// POST /vehicles ... doimplementovat
+// TODO: Post /vehicles ... doimplementovat
 Route::get('reports_with_vehicle_info/{StateId}', [ReportController::class, 'getReportsByStateWithVehicleInfo'])
     ->where('StateId', '.*');
-Route::get('report/{ReportId}', [ReportController::class, 'getReportById'])
-    ->where('ReportId', '.*');
-Route::get('vehicles-by-state/{StateId}', [VehicleController::class, 'getVehiclesByState'])->where('StateId', '.*');
 Route::get('vehicles-by-state/{StateId}', [VehicleController::class, 'getVehiclesByState'])->where('StateId', '.*');
 Route::post('vehicles', [VehicleController::class, 'addVehicle']);
+Route::delete('vehicles/{VehicleId}', [VehicleController::class, 'deleteVehicle']);
 
 // Endpoint: /reports/{ReportId}
 // TODO změnit na /reports/{ReportId}
-// GET /reports/{ReportId}
-// PATCH /reports/{ReportId}
 Route::get('report/{ReportId}', [ReportController::class, 'getReportById'])->where('ReportId', '.*');
 Route::patch('handle-report/{ReportId}', [ReportController::class, 'handleReport']);
 
@@ -90,19 +76,13 @@ Route::get('reports-by-technician/{TechnicianId}', [ReportController::class, 'ge
 Route::get('user-by-type/{UserType}', [UserController::class, 'getUsersByType'])->where('UserType', '.*');
 
 // Správa uživatelů
-// GET /admin ... zatím jen users, řešil bych to přes jedno query, který si pak rozeberem podle user type
-// POST /admin
-// PATCH /admin/{UserId}
-// DELETE /admin/{UserId}
-Route::get('admin', [UserController::class, 'getUsers']);
-Route::post('admin', [UserController::class, 'addUser']);
-Route::patch('admin/{UserId}', [UserController::class, 'updateUserInfo']);
-Route::delete('admin/{UserId}', [UserController::class, 'deleteUser']);
+Route::get('users', [UserController::class, 'getUsers']);
+Route::post('users', [UserController::class, 'addUser']);
+Route::patch('users/{UserId}', [UserController::class, 'updateUserInfo']);
+Route::delete('users/{UserId}', [UserController::class, 'deleteUser']);
 
 // Jsou tyhle endpointy potřeba?
-Route::get('report-types', [ReportTypeController::class, 'index']);
 Route::get('reports/{StateId}', [ReportController::class, 'getReportsByState'])
     ->where('StateId', '.*');
-Route::post('reports/main', [ReportController::class, 'createMaintenanceReport']);
 Route::patch('reports/{ReportId}', [ReportController::class, 'closeReport']);
 Route::get('vehicle-type', [VehicleTypeController::class, 'index']);
