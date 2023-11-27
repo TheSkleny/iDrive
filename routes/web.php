@@ -31,7 +31,8 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', function () {
-        return Inertia::render('Base', ['c' => 'Edit', 'args' => ['UserType' => auth()->user() ? auth()->user()->type_id : 0]]);
+        return Inertia::render('Base', ['c' => 'Edit',
+            'args' => ['UserType' => auth()->user() ? auth()->user()->type_id : 0]]);
     })->name('profile');
 
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -39,7 +40,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/search-line', function () {
-    return Inertia::render('Base', ['c' => 'SearchLine', 'args' => ['UserType' => auth()->user() ? auth()->user()->type_id : 0]]);
+    return Inertia::render('Base', ['c' => 'SearchLine',
+        'args' => ['UserType' => auth()->user() ? auth()->user()->type_id : 0]]);
 })->name('search-line');
 
 Route::get('/shifts', function () {
