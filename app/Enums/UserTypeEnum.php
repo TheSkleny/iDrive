@@ -9,4 +9,5 @@ enum UserTypeEnum : int
     case TECHNICIAN = 3;
     case SUPERVISOR = 4;
     case ADMIN = 5;
+    case REGISTERED = 6;
 }

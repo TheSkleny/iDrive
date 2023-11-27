@@ -19,6 +19,7 @@ class TypeStateSeeder extends Seeder
             ['Description' => 'Technik'],
             ['Description' => 'Spravce'],
             ['Description' => 'Admin'],
+            ['Description' => 'Uzivatel']
         ]);
 
         DB::table('ReportState')->insert([
