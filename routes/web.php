@@ -54,7 +54,7 @@ Route::get('/line/{lineId}', function ($lineId) {
         'args' => ['lineId' => $lineId, 'UserType' => auth()->user() ? auth()->user()->type_id : 0]]);
 })->where('lineId', '.*');
 
-Route::get('/vehicle/{vehicleId}', function ($vehicleId) {
+Route::get('/vehicles/{vehicleId}', function ($vehicleId) {
     return Inertia::render('Base', ['c' => 'VehicleDetail',
         'args' => ['submitterId' => auth()->user()->Id, 'vehicleId' => $vehicleId,
             'UserType' => auth()->user()->type_id]]);

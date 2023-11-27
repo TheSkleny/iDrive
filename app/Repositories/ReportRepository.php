@@ -121,8 +121,8 @@ class ReportRepository
                     \'Maintenance report\',
                     :vehicleId,
                     :technicianId,
-                    :maintenanceDate
                     NULL,
+                    :maintenanceDate,
                     3,
                     2
                 )

@@ -17,10 +17,12 @@ const props = defineProps({
 )
 
 const vehicle = ref(null)
+const technicians = ref([])
 
-const {response, error} = await useApi('GET', `vehicle/${props.args.vehicleId}`)
+const {response, error} = await useApi('GET', `vehicles/${props.args.vehicleId}`)
 if (response) {
-    vehicle.value = response.data.data[0]
+    vehicle.value = response.data.vehicleInfo.original.data[0]
+    technicians.value = response.data.techniciansList.original.data
 }
 if (error) {
     console.log(error.value)
@@ -30,41 +32,30 @@ if (vehicle.value.VehicleImageUri === null) {
     vehicle.value.VehicleImageUri = 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png'
 }
 
-async function sendReport() {
-    await useApi('POST', `reports`, {
+async function reportMalfunction() {
+    await useApi('POST', `reports/malfunctions`, {
         'submitterId': props.args.submitterId,
-        'description': report_description,
+        'description': report_description.value,
         'vehicleId': props.args.vehicleId
     })
 }
 
-async function createMaintenance() {
-    await useApi('POST', 'reports/main', {
+async function reportMaintenance() {
+    await useApi('POST', `reports/maintenances`, {
         'submitterId': props.args.submitterId,
         'vehicleId': props.args.vehicleId,
-        'technicianId': technicianId,
-        'maintenanceDate': maintenanceDate
+        'technicianId': technicianId.value,
+        'maintenanceDate': maintenanceDate.value.toISOString().split('T')[0]
     })
 }
 
-
-    const technicians = ref([])
-    // TODO: 3 user.typeId = 'technician'
-    const {response: responseTechnicians, error: errorTechnicians} = await useApi('GET', 'user-by-type/'.concat(USER_TYPES.TECHNICIAN))
-    if (responseTechnicians.data) {
-        technicians.value = responseTechnicians.data.data
-    }
-    if (errorTechnicians) {
-        console.log(errorTechnicians.value)
-    }
-
-    const technician_list = []
-    technicians.value.forEach(technician => {
-        technician_list.push({
-            title: technician.UserName,
-            value: technician.UserId
-        })
+const technician_list = []
+technicians.value.forEach(technician => {
+    technician_list.push({
+        title: technician.UserName,
+        value: technician.UserId
     })
+})
 
 const userType = props.args.UserType
 const driver   = userType === USER_TYPES.DRIVER
@@ -130,7 +121,7 @@ const manager  = userType === USER_TYPES.MANAGER
                     </v-card-title>
                     <v-card-item>
                         <v-container>
-                            <v-form @submit.prevent="sendReport">
+                            <v-form @submit.prevent="reportMalfunction">
                                 <v-textarea
                                     label="Describe problem"
                                     v-model="report_description"
@@ -148,7 +139,7 @@ const manager  = userType === USER_TYPES.MANAGER
                     </v-card-title>
                     <v-card-item>
                         <v-container>
-                            <v-form @submit.prevent="createMaintenance">
+                            <v-form @submit.prevent="reportMaintenance">
                                 <v-select style="width: 360px"
                                           label="Select technician"
                                           v-model="technicianId"

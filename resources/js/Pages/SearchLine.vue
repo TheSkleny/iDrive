@@ -8,20 +8,13 @@ const lines = ref([])
 const types = ref([])
 const tab = ref(null)
 
-const {response: responseLines, error: errorLines } = await useApi('GET', 'lines')
-if (responseLines.data) {
-    lines.value = responseLines.data.data
+const {response, error} = await useApi('GET', `search-lines`)
+if (response) {
+    lines.value = response.data.lineList.original.data
+    types.value = response.data.lineTypes.original.data
 }
-if (errorLines) {
-    console.log(errorLines.value)
-}
-
-const { response: responseTypes, error: errorTypes } = await useApi('GET', 'line-types')
-if (responseTypes.data) {
-    types.value = responseTypes.data.data
-}
-if (errorTypes) {
-    console.log(errorTypes.value)
+if (error) {
+    console.log(error.value)
 }
 
 const filteredLines = computed(() => {
