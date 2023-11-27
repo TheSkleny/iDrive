@@ -31,6 +31,14 @@ class LinesRepository {
     }
     public function createLineStops($lineName, $stopName1, $stopName2, $timeBetweenStops, $order) {
         DB::insert('
+            insert into "Stop" ("Name")',
+            ['stopName' => $stopName1]
+        );
+        DB::insert('
+            insert into "Stop" ("Name")',
+            ['stopName' => $stopName2]
+        );
+        DB::insert('
             insert into "LineStop" ("LineId", "StopId", "Order")
             values ((select "Id" from "Line" where "Name" = :lineName), (select "Id" from "Stop" where "Name" = :stopName), :order)
         ', [
@@ -47,14 +55,6 @@ class LinesRepository {
             'stopName' => $stopName2,
             'order' => $order + 1
             ]
-        );
-        DB::insert('
-            insert into "Stop" ("Name")',
-            ['stopName' => $stopName1]
-        );
-        DB::insert('
-            insert into "Stop" ("Name")',
-            ['stopName' => $stopName2]
         );
         DB::insert('
             insert into "TimeBetweenStops" ("FirstStopId", "SecondStopId", "TimeBetweenStops")

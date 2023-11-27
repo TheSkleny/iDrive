@@ -102,7 +102,7 @@ const adminCard = props.args.UserType === 5
                         </v-col>
                         <v-col>
                             <v-select style="width: 300px; margin-top: 20px"
-                                      label="Select technician"
+                                      label="Select driver"
                                       :items="driverList"
                                       v-model="props.args.adminDriverId"
                                       required
@@ -113,7 +113,7 @@ const adminCard = props.args.UserType === 5
                                    variant="tonal"
                                    style="margin-top: 30px; margin-right: 20px"
                             >
-                                Display technician's reports
+                                Display driver's shifts
                             </v-btn>
 
                         </v-col>

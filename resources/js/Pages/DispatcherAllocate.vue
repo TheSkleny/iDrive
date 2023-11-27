@@ -79,7 +79,7 @@ headers.value = [
         <v-container>
             <v-card style="padding: 15px">
                 <h2 class="card_header">
-                    prdel
+                    Allocate resources
                 </h2>
                 <v-form @submit.prevent="allocate">
                     <v-row>
@@ -121,7 +121,7 @@ headers.value = [
             </v-card>
             <v-card style="margin-top: 50px; padding: 15px">
                 <h2 class="card_header">
-                    prdel
+                    Allocated links
                 </h2>
                 <v-data-table :headers="headers" :items="allocatedLinks">
 
