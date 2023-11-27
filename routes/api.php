@@ -56,7 +56,8 @@ Route::get('lines/{LineId}', function ($lineId) {
 Route::get('vehicles/{VehicleId}', function ($vehicleId) {
     return [
         'vehicleInfo' => app(VehicleController::class)->getVehicleInfo($vehicleId),
-        'techniciansList' => app(UserController::class)->getUsersByType(UserTypeEnum::TECHNICIAN->value)
+        'techniciansList' => app(UserController::class)->getUsersByType(UserTypeEnum::TECHNICIAN->value),
+        'vehicleTypes' => app(VehicleTypeController::class)->index(),
     ];
 });
 Route::post('reports/malfunctions', [VehicleController::class, 'reportVehicleMalfunction']);
@@ -103,7 +104,6 @@ Route::delete('users/{UserId}', [UserController::class, 'deleteUser']);
 Route::get('reports/{StateId}', [ReportController::class, 'getReportsByState'])
     ->where('StateId', '.*');
 Route::patch('reports/{ReportId}', [ReportController::class, 'closeReport']);
-Route::get('vehicle-type', [VehicleTypeController::class, 'index']);
 
 Route::get('allocations', function () {
     return [

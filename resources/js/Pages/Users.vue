@@ -30,7 +30,7 @@ const deleteUser = async (id) => {
 }
 
 const editUser = (id) => {
-    useRedirect.edituser(id)
+    useRedirect.editUser(id)
 }
 
 const filteredUsers = computed(() => {

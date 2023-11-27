@@ -6,6 +6,6 @@ export default {
     line: (id) => doRedirect(`/lines/${id}`),
     vehicle: (id) => doRedirect(`/vehicles/${id}`),
     report: (id) => doRedirect(`/reports/${id}`),
-    editVehicle: (id) => doRedirect(`/vehicles/${id}/edit`),
-    edituser: (id) => doRedirect(`/users/${id}/edit`),
+    editVehicle: (id) => doRedirect(`/edit-vehicles/${id}`),
+    editUser: (id) => doRedirect(`/users/${id}/edit`),
 }
