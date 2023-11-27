@@ -80,9 +80,9 @@ Route::get('/users', function () {
         'args' => ['UserId' => auth()->user()->Id, 'UserType' => auth()->user()->type_id]]);
 })->name('users')->middleware(['auth', 'verified', 'usertype:' . UserTypeEnum::ADMIN->value]);
 
-Route::get('/users/{userId}/edit', function ($userId) {
+Route::get('/edit-user/{userId}', function ($userId) {
     return Inertia::render('Base', ['c' => 'EditUser',
-        'args' => ['UserType' => auth()->user()->type_id]]);
+        'args' => ['UserId' => $userId, 'UserType' => auth()->user()->type_id]]);
 })->name('edit-user')->middleware(['auth', 'verified', 'usertype:' . UserTypeEnum::ADMIN->value]);
 
 Route::get('/allocate', function () {

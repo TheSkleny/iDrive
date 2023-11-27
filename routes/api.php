@@ -97,6 +97,13 @@ Route::get('user-by-type/{UserType}', [UserController::class, 'getUsersByType'])
 
 // Správa uživatelů
 Route::get('users', [UserController::class, 'getUsers']);
+Route::get('users/{UserId}', function($userId) {
+    return [
+        'userInfo' => app(UserController::class)->getUser($userId),
+        'userTypes' => app(UserController::class)->getUserTypes()
+    ];
+});
+// Route::get('users/{UserId}', [UserController::class, 'getUser']);
 Route::patch('users/{UserId}', [UserController::class, 'updateUserInfo']);
 Route::delete('users/{UserId}', [UserController::class, 'deleteUser']);
 
