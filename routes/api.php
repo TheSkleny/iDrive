@@ -71,7 +71,8 @@ Route::get('vehicles', function() {
     return [
         'vehicleReports' => app(ReportController::class)->getReportsByStateWithVehicleInfo(ReportStateEnum::REPORTED->value),
         'operationalVehicles' => app(VehicleController::class)->getVehiclesByState(VehicleStateEnum::OPERATIONAL->value),
-        'outOfServiceVehicles' => app(VehicleController::class)->getVehiclesByState(VehicleStateEnum::OUT_OF_SERVICE->value)
+        'outOfServiceVehicles' => app(VehicleController::class)->getVehiclesByState(VehicleStateEnum::OUT_OF_SERVICE->value),
+        'vehicleTypes' => app(VehicleTypeController::class)->index()
     ];
 });
 Route::post('vehicles', [VehicleController::class, 'addVehicle']);
