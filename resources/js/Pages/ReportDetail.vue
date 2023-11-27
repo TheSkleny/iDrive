@@ -30,8 +30,6 @@ if (error) {
     console.log(error.value)
 }
 
-const stateReported = reportManager.value.ReportStateId === 1
-const stateTechnician = reportManager.value.ReportStateId === 3
 
 const technician_list = []
 technicians.value.forEach(technician => {
@@ -100,7 +98,7 @@ async function updateReport($decision) {
                 <v-spacer/>
             </v-col>
             <v-col>
-                <v-card width="800" v-if="(manager || admin) && stateReported">
+                <v-card width="800" v-if="(technician || admin)">
                     <v-card-item>
                         <h3 style="margin-top: 10px">
                             {{ reportTechnician.SubmitterName }}'s description:
@@ -165,7 +163,7 @@ async function updateReport($decision) {
                         </v-form>
                     </v-card-item>
                 </v-card>
-                <v-card style="margin-top: 50px" v-if="(technician || admin) && stateTechnician">
+                <v-card style="margin-top: 50px" v-if="(manager || admin)">
                     <v-card-item>
                         <v-row style="margin-top: 20px; margin-left: 10px">
                             <v-icon size="50px">{{ reportManager.VehicleIcon }}</v-icon>

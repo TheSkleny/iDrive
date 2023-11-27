@@ -54,7 +54,7 @@ async function sendAdd() {
         'licensePlate': vehicleLicensePlate.value,
         'typeId': vehicleType.value
     })
-    redirectToVehicles()
+    await redirectToVehicles()
 
 }
 const redirectToVehicles = () => {
