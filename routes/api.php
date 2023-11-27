@@ -62,9 +62,9 @@ Route::get('vehicles/{VehicleId}', function ($vehicleId) {
 Route::post('reports/malfunctions', [VehicleController::class, 'reportVehicleMalfunction']);
 Route::post('reports/maintenances', [ReportController::class, 'createMaintenanceReport']);
 Route::patch('vehicles/{VehicleId}', [VehicleController::class, 'updateVehicleInfo']);
+Route::delete('vehicles/{VehicleId}', [VehicleController::class, 'deleteVehicle']);
 
 // Endpoint: /vehicles
-// TODO: Post, patch, delete ... doimplementovat FE
 Route::get('vehicles', function() {
     return [
         'vehicleReports' => app(ReportController::class)->getReportsByStateWithVehicleInfo(ReportStateEnum::REPORTED->value),
@@ -73,7 +73,6 @@ Route::get('vehicles', function() {
     ];
 });
 Route::post('vehicles', [VehicleController::class, 'addVehicle']);
-Route::delete('vehicles/{VehicleId}', [VehicleController::class, 'deleteVehicle']);
 
 // Endpoint: /reports/{ReportId}
 // Route::get('report/{ReportId}', [ReportController::class, 'getReportById'])->where('ReportId', '.*');

@@ -1,6 +1,7 @@
 <script setup>
 import {ref} from 'vue'
 import useApi from "@/Composables/useApi.js";
+import {Head} from "@inertiajs/vue3";
 
 const maintenanceDate = ref(null);
 const technicianId = ref(null);
@@ -64,6 +65,8 @@ const manager  = userType === 4
 </script>
 
 <template>
+    <Head title="Vehicle" />
+
     <header class="bg-white shadow">
         <div class="max-w-7xl py-6 px-4 sm:px-6 lg:px-8/">
             <v-row style="margin-left: 20px">

@@ -1,6 +1,7 @@
 <script setup>
 import useApi from "@/Composables/useApi.js";
 import {ref} from "vue";
+import {Head} from "@inertiajs/vue3";
 
 const props = defineProps({
         args: Object,
@@ -83,6 +84,9 @@ async function updateReport($decision) {
 </script>
 
 <template>
+    <Head title="Report" />
+
+
     <header class="bg-white shadow">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
             <h1 class="text-3xl font-bold leading-tight text-gray-900">

@@ -2,6 +2,7 @@
 import useApi from "@/Composables/useApi.js";
 import {ref} from "vue";
 import useRedirect from "@/Composables/useRedirect.js";
+import {Head} from "@inertiajs/vue3";
 
 const props = defineProps({
         args: Object,
@@ -14,6 +15,8 @@ const maintenances = ref([])
 async function getReports(technicianId) {
      const {response, error} = await useApi('GET', `reports-by-technician/${technicianId}`)
     if (response.data) {
+        malfunctions.value = []
+        maintenances.value = []
         response.data.data.forEach(report => {
             if (report.ReportTypeId === 1) {
                 malfunctions.value.push(report)
@@ -57,6 +60,8 @@ const adminCard = props.args.UserType === 5
 </script>
 
 <template>
+    <Head title="Repairs" />
+
     <header class="bg-white shadow">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
             <h1 class="text-3xl font-bold leading-tight text-gray-900">

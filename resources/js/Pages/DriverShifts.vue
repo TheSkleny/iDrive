@@ -2,6 +2,7 @@
 import {ref} from "vue";
 import useApi from "@/Composables/useApi.js";
 import useRedirect from "@/Composables/useRedirect.js";
+import {Head} from "@inertiajs/vue3";
 
 /**
  *
@@ -28,7 +29,7 @@ async function getShifts(driverId) {
     if (error) {
         console.log(error.value)
     }
-
+    result.value = [];
 // Loop through each shift
     shifts.value.forEach(shift => {
         const [date, time] = shift.DepartureDate.split(' ');
@@ -80,6 +81,8 @@ const adminCard = props.args.UserType === 5
 </script>
 
 <template>
+    <Head title="Shifts" />
+
     <header class="bg-white shadow">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
             <h1 class="text-3xl font-bold leading-tight text-gray-900">
