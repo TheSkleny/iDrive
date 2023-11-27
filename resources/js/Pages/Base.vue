@@ -12,7 +12,7 @@ import ReportTypes from "@/Pages/ReportTypes.vue";
 import LineDetail from "@/Pages/LineDetail.vue";
 import VehicleDetail from "@/Pages/VehicleDetail.vue";
 import Edit from "@/Pages/Edit.vue";
-import SupervisorVehicleList from "@/Pages/SupervisorVehicleList.vue";
+import Vehicles from "@/Pages/Vehicles.vue";
 import ReportDetail from "@/Pages/ReportDetail.vue";
 import Repairs from "@/Pages/Repairs.vue";
 import DispatcherAllocate from "@/Pages/DispatcherAllocate.vue";
@@ -40,7 +40,7 @@ const comp = () => {
         case 'Edit':
             return Edit
         case 'Vehicles':
-            return SupervisorVehicleList
+            return Vehicles
         case 'ReportDetail':
             return ReportDetail
         case 'Repairs':

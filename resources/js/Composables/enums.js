@@ -1,4 +1,4 @@
-export default {
+export default myTypes = {
     USER_TYPES : {
         DRIVER: 1,
         DISPATCHER: 2,

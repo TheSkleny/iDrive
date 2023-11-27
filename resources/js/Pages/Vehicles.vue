@@ -3,36 +3,22 @@ import useApi from "@/Composables/useApi.js";
 import {ref} from "vue";
 import useRedirect from "@/Composables/useRedirect.js";
 
-const STATES_OPERATIONAL = 1
-const STATES_OUT_OF_ORDER = 3
-
 const reports = ref([])
-const vehicle_info = ref([])
+const operationalVehicles = ref([])
+const outOfServiceVehicles = ref([])
 
 const props = defineProps({
     args: Object}
 )
 
-const states = [STATES_OPERATIONAL, STATES_OUT_OF_ORDER]
-
-
-states.forEach(async (state) => {
-    const {response, error} = await useApi('GET', `vehicles-by-state/${state}`)
-    if (response.data) {
-        vehicle_info.value.push(response.data.data)
-    }
-    if (error) {
-        console.log(error.value)
-    }
-})
-
-// TODO: 1 report.stateId = 'reported'
-const {response: responseReports, error: errorReports} = await useApi('GET', 'reports_with_vehicle_info/1')
-if (responseReports.data) {
-    reports.value = responseReports.data.data
+const {response, error} = await useApi('GET', `vehicles`)
+if (response) {
+    operationalVehicles.value = response.data.operationalVehicles.original.data
+    outOfServiceVehicles.value = response.data.outOfServiceVehicles.original.data
+    reports.value = response.data.vehicleReports.original.data
 }
-if (errorReports) {
-    console.log(errorReports.value)
+if (error) {
+    console.log(error.value)
 }
 
 const routeToReport = (id) => {
@@ -114,7 +100,7 @@ headers.value = [
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="col in vehicle_info[0]" :key="col.VehicleId">
+                    <tr v-for="col in operationalVehicles" :key="col.VehicleId">
                         <td>
                             <v-icon>{{ col.VehicleIcon }}</v-icon>
                         </td>
@@ -147,7 +133,7 @@ headers.value = [
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="col in vehicle_info[1]" :key="col.VehicleId">
+                    <tr v-for="col in outOfServiceVehicles" :key="col.VehicleId">
                         <td>
                             <v-icon>{{ col.VehicleIcon }}</v-icon>
                         </td>

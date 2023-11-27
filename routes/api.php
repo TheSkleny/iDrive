@@ -10,6 +10,8 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LinksController;
 use App\Enums\UserTypeEnum;
+use App\Enums\VehicleStateEnum;
+use App\Enums\ReportStateEnum;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -50,7 +52,7 @@ Route::get('lines/{LineId}', function ($lineId) {
 });
 
 // Endpoint: /vehicles/{VehicleId}
-// TODO: Update vehicles doimplementovat
+// TODO: Update vehicles doimplementovat FE
 Route::get('vehicles/{VehicleId}', function ($vehicleId) {
     return [
         'vehicleInfo' => app(VehicleController::class)->getVehicleInfo($vehicleId),
@@ -62,17 +64,19 @@ Route::post('reports/maintenances', [ReportController::class, 'createMaintenance
 Route::patch('vehicles/{VehicleId}', [VehicleController::class, 'updateVehicleInfo']);
 
 // Endpoint: /vehicles
-// TODO: Post /vehicles ... doimplementovat
-Route::get('reports_with_vehicle_info/{StateId}', [ReportController::class, 'getReportsByStateWithVehicleInfo'])
-    ->where('StateId', '.*');
-Route::get('vehicles-by-state/{StateId}', [VehicleController::class, 'getVehiclesByState'])->where('StateId', '.*');
-Route::get('reports/{StateId}', [ReportController::class, 'getReportsByState']);
+// TODO: Post, patch, delete ... doimplementovat FE
+Route::get('vehicles', function() {
+    return [
+        'vehicleReports' => app(ReportController::class)->getReportsByStateWithVehicleInfo(ReportStateEnum::REPORTED->value),
+        'operationalVehicles' => app(VehicleController::class)->getVehiclesByState(VehicleStateEnum::OPERATIONAL->value),
+        'outOfServiceVehicles' => app(VehicleController::class)->getVehiclesByState(VehicleStateEnum::OUT_OF_SERVICE->value)
+    ];
+});
 Route::post('vehicles', [VehicleController::class, 'addVehicle']);
 Route::delete('vehicles/{VehicleId}', [VehicleController::class, 'deleteVehicle']);
 Route::patch('close-report/{ReportId}', [ReportController::class, 'closeReport']);
 
 // Endpoint: /reports/{ReportId}
-// TODO změnit na /reports/{ReportId}
 Route::get('report/{ReportId}', [ReportController::class, 'getReportById'])->where('ReportId', '.*');
 Route::patch('handle-report/{ReportId}', [ReportController::class, 'handleReport']);
 
