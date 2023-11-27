@@ -1,14 +1,7 @@
 <script setup>
 import {ref} from 'vue'
 import useApi from "@/Composables/useApi.js";
-
-const USER_TYPES = {
-    DRIVER: 1,
-    DISPATCHER: 2,
-    TECHNICIAN: 3,
-    MANAGER: 4,
-    ADMIN: 5
-}
+import USER_TYPES from "@/Composables/enums.js";
 
 const maintenanceDate = ref(null);
 const technicianId = ref(null);
