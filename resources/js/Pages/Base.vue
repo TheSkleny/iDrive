@@ -256,8 +256,18 @@ const nav_items = [
                     class="sm:hidden"
                 >
                     <div class="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                            Dashboard
+                        <ResponsiveNavLink :href="route('search-lines')" :active="route().current('search-lines')">
+                            <v-icon style="margin-right: 5px">
+                                mdi-magnify
+                            </v-icon>
+                            Search line
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink v-for="item in nav_items[props.args.UserType]" :key="item.title" :href="route(item.link)"
+                                 :active="route().current(item.link)">
+                            <v-icon style="margin-right: 5px">
+                                {{ item.icon }}
+                            </v-icon>
+                            {{ item.title }}
                         </ResponsiveNavLink>
                     </div>
 
