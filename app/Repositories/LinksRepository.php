@@ -19,6 +19,7 @@ class LinksRepository {
             left join "Line" on "Link"."LineId" = "Line"."Id"
             left join "Vehicle" on "Link"."VehicleId" = "Vehicle"."Id"
             left join "users" on "Link"."DriverId" = "users"."Id"
+        where "Link"."DriverId" is not null and "Link"."VehicleId" is not null
         ');
     }
 
@@ -32,7 +33,7 @@ class LinksRepository {
             left join "Line" on "Link"."LineId" = "Line"."Id"
             left join "Vehicle" on "Link"."VehicleId" = "Vehicle"."Id"
             left join "users" on "Link"."DriverId" = "users"."Id"
-        where "Link"."DriverId" is null
+        where "Link"."DriverId" is null and "Link"."VehicleId" is null
         ');
     }
 
@@ -47,6 +48,41 @@ class LinksRepository {
             'linkId' => $linkId,
             'driverId' => $driverId,
             'vehicleId' => $vehicleId
+        ]);
+    }
+
+    public function createLink($lineId, $departureDate) {
+        DB::insert('
+            insert into "Link" ("LineId", "DepartureDate", "VehicleId", "DriverId")
+            values (:lineId, :departureDate, NULL, NULL)
+        ', [
+            'lineId' => $lineId,
+            'departureDate' => $departureDate
+        ]);
+    }
+
+    public function deleteLink($linkId) {
+        DB::delete('
+            delete from "Link"
+            where "Id" = :linkId
+        ', [
+            'linkId' => $linkId
+        ]);
+    }
+
+    public function updateLink($linkId, $lineId, $departureDate) {
+        DB::update('
+            update "Link"
+            set
+                "LineId" = :lineId,
+                "DepartureDate" = :departureDate,
+                "VehicleId" = NULL,
+                "DriverId" = NULL
+            where "Id" = :linkId
+        ', [
+            'linkId' => $linkId,
+            'lineId' => $lineId,
+            'departureDate' => $departureDate
         ]);
     }
 }
