@@ -9,6 +9,7 @@ use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LinksController;
+use App\Http\Controllers\LineController;
 use App\Enums\UserTypeEnum;
 use App\Enums\VehicleStateEnum;
 use App\Enums\ReportStateEnum;
@@ -108,12 +109,6 @@ Route::get('users/{UserId}', function($userId) {
 Route::patch('users/{UserId}', [UserController::class, 'updateUserInfo']);
 Route::delete('users/{UserId}', [UserController::class, 'deleteUser']);
 
-// Jsou tyhle endpointy potřeba?
-Route::get('reports/{StateId}', [ReportController::class, 'getReportsByState'])
-    ->where('StateId', '.*');
-Route::patch('reports/{ReportId}', [ReportController::class, 'closeReport']);
-Route::get('vehicle-type', [VehicleTypeController::class, 'index']);
-
 // Endpoint: /allocate
 Route::get('allocations', function () {
     return [
@@ -140,8 +135,18 @@ Route::post('links', [LinksController::class, 'createLink']);
 Route::delete('links/{linkId}', [LinksController::class, 'deleteLink']);
 Route::patch('links/{linkId}', [LinksController::class, 'updateLink']);
 
-// Jsou tyhle endpointy potřeba?
-Route::get('reports/{StateId}', [ReportController::class, 'getReportsByState'])
-    ->where('StateId', '.*');
-Route::patch('reports/{ReportId}', [ReportController::class, 'closeReport']);
-Route::get('vehicle-type', [VehicleTypeController::class, 'index']);
+// Endpoint: /lines
+Route::get('lines', function() {
+    return [
+        'lineList' => app(LineController::class)->getLines(),
+        'lineTypes' => app(SearchLineController::class)->getLineTypes()
+    ];
+});
+Route::post('lines', [LineController::class, 'createLine']);
+Route::post('lines/stops', [LineController::class, 'createLineStops']);
+
+// Endpoint: /lines/{lineId}
+Route::get('lines/{LineId}', [LineController::class, 'getLine']);
+Route::patch('lines/{LineId}', [LineController::class, 'updateLine']);
+Route::patch('lines/stops/{LineId}', [LineController::class, 'updateLineStops']);
+Route::delete('lines/{LineId}', [LineController::class, 'deleteLine']);

@@ -95,4 +95,9 @@ Route::get('/edit-vehicles/{vehicleId}', function ($vehicleId) {
         'args' => ['vehicleId' => $vehicleId, 'UserType' => auth()->user()->type_id]]);
 })->where('vehicleId', '.*')->middleware(['auth', 'verified', 'usertype:' . UserTypeEnum::MANAGER->value]);
 
+Route::get('/lines', function () {
+    return Inertia::render('Base', ['c' => 'Lines',
+        'args' => ['UserType' => auth()->user()->type_id]]);
+})->name('lines')->middleware(['auth', 'verified', 'usertype:' . UserTypeEnum::MANAGER->value]);
+
 require __DIR__.'/auth.php';

@@ -19,6 +19,7 @@ import DispatcherAllocate from "@/Pages/DispatcherAllocate.vue";
 import Users from "@/Pages/Users.vue";
 import EditUser from "@/Pages/EditUser.vue";
 import VehicleEdit from "@/Pages/VehicleEdit.vue";
+import Lines from "@/Pages/Lines.vue";
 
 
 const showingNavigationDropdown = ref(false);
@@ -56,8 +57,9 @@ const comp = () => {
             return VehicleEdit
         case 'EditUser':
             return EditUser
+        case 'Lines':
+            return Lines
         default:
-            console.log("default")
             return SearchLine
     }
 }
@@ -96,6 +98,11 @@ const nav_items = [
             title: 'Vehicles',
             link: 'vehicles',
             icon: 'mdi-bus',
+        },
+        {
+            title: 'Lines',
+            link: 'lines',
+            icon: 'mdi-bus-multiple',
         }
     ],
     [
@@ -124,6 +131,11 @@ const nav_items = [
             title: 'Users',
             link: 'users',
             icon: 'mdi-account',
+        },
+        {
+            title: 'Lines',
+            link: 'lines',
+            icon: 'mdi-bus-multiple',
         }
     ]
 ]

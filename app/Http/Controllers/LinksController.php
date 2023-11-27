@@ -50,13 +50,6 @@ class LinksController extends Controller
         ]);
     }
 
-    public function deleteLink($linkId) : JsonResponse
-    {
-        return response()->json([
-            'data' => $this->LinksRepository->deleteLink($linkId)
-        ]);
-    }
-
     public function updateLink(Request $request) : JsonResponse
     {
         return response()->json([
@@ -65,6 +58,13 @@ class LinksController extends Controller
                 $request->input('lineId'),
                 $request->input('departureDate')
             )
+        ]);
+    }
+
+    public function deleteLink($linkId) : JsonResponse
+    {
+        return response()->json([
+            'data' => $this->LinksRepository->deleteLink($linkId)
         ]);
     }
 }
