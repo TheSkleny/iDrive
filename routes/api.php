@@ -9,7 +9,7 @@ use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LinksController;
-use App\Http\Controllers\LineController;
+use App\Http\Controllers\LinesController;
 use App\Enums\UserTypeEnum;
 use App\Enums\VehicleStateEnum;
 use App\Enums\ReportStateEnum;
@@ -138,7 +138,7 @@ Route::patch('links/{linkId}', [LinksController::class, 'updateLink']);
 // Endpoint: /lines
 Route::get('lines', function() {
     return [
-        'lineList' => app(LineController::class)->getLines(),
+        'lineList' => app(LinesController::class)->getLines(),
         'lineTypes' => app(SearchLineController::class)->getLineTypes()
     ];
 });
