@@ -33,14 +33,18 @@ class UserController extends Controller
                 'data' => $this->UserRepository->getUser($userId)
             ]);
     }
+    public function getUserTypes() : JsonResponse
+    {
+            return response()->json([
+                'data' => $this->UserRepository->getUserTypes()
+            ]);
+    }
     public function updateUserInfo(Request $request) : JsonResponse
     {
         return response()->json([
             'data' => $this->UserRepository->updateUserInfo(
                 $request->input('userId'),
                 $request->input('name'),
-                $request->input('email'),
-                $request->input('password'),
                 $request->input('typeId')
             )
         ]);
