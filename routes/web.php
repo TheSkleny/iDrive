@@ -84,6 +84,9 @@ Route::get('/allocate', function () {
         'args' => ['UserType' => auth()->user()->type_id]]);
 })->name('allocate')->middleware(['auth', 'verified', 'usertype:' . UserTypeEnum::DISPATCHER->value]);
 
-
+Route::get('/vehicles/{vehicleId}/edit', function ($vehicleId) {
+    return Inertia::render('Base', ['c' => 'VehicleEdit',
+        'args' => ['vehicleId' => $vehicleId, 'UserType' => auth()->user()->type_id]]);
+})->where('vehicleId', '.*')->middleware(['auth', 'verified', 'usertype:' . UserTypeEnum::MANAGER->value]);
 
 require __DIR__.'/auth.php';

@@ -2,6 +2,7 @@
 import {ref} from 'vue'
 import useApi from "@/Composables/useApi.js";
 import {Head} from "@inertiajs/vue3";
+import useRedirect from "@/Composables/useRedirect.js";
 
 const maintenanceDate = ref(null);
 const technicianId = ref(null);
@@ -62,6 +63,10 @@ const driver   = userType === 1
 const admin    = userType === 5
 const manager  = userType === 4
 
+const routeToEdit = (id) => {
+    useRedirect.editVehicle(id)
+}
+
 </script>
 
 <template>
@@ -104,6 +109,14 @@ const manager  = userType === 4
                                 <li>Last maintenance: {{ vehicle.VehicleLastMaintenance }}</li>
                             </ul>
                         </v-container>
+                        <v-row>
+                            <v-col cols="20">
+                                <v-spacer/>
+                            </v-col>
+                            <v-col cols="4">
+                                <v-btn icon="mdi-pencil" @click="() => routeToEdit(props.args.vehicleId)"/>
+                            </v-col>
+                        </v-row>
                     </v-card-text>
                 </v-card>
             </v-col>
