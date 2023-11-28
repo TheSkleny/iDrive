@@ -177,7 +177,7 @@ async function updateReport(decision) {
                             {{ reportInfo.ReportDescription }}
                         </v-card>
                         <h3 style="margin-top: 10px">
-                            {{ reportInfo.SubmitterName }}'s description:
+                            Your description:
                         </h3>
                         <v-form @submit.prevent>
                             <v-textarea v-model="technicianDescription">

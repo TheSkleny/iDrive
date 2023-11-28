@@ -111,37 +111,48 @@ const routeToLink = (id) => {
                 </h2>
                 <v-card-text>
                     <v-form>
-                        <v-select
-                            v-model="line"
-                            :items="linesList"
-                            label="Line"
-                            required
-                        ></v-select>
-                        <v-date-picker
-                            v-model="date"
-                            label="Date"
-                            required
-                        ></v-date-picker>
+                        <v-row>
+                            <v-col>
+                                <v-date-picker
+                                    color="grey-lighten-2"
+                                    style="border: 1px solid lightgrey; margin-bottom: 10px"
+                                    v-model="date"
+                                    label="Date"
+                                    required
+                                />
+                            </v-col>
+                            <v-col>
+                                <v-select
+                                    v-model="line"
+                                    :items="linesList"
+                                    label="Line"
+                                    required
+                                />
+                                <v-select
+                                    v-model="hour"
+                                    :items="hours"
+                                    label="Hour"
+                                    required
+                                />
 
-                        <v-select
-                            v-model="hour"
-                            :items="hours"
-                            label="Hour"
-                            required
-                        ></v-select>
+                                <v-select
+                                    v-model="minute"
+                                    :items="minutes"
+                                    label="Minute"
+                                    required
+                                />
+                                <v-btn
+                                    color="teal"
+                                    @click="createLink"
+                                >
+                                    Create
+                                </v-btn>
+                            </v-col>
+                        </v-row>
 
-                        <v-select
-                            v-model="minute"
-                            :items="minutes"
-                            label="Minute"
-                            required
-                        ></v-select>
-                        <v-btn
-                            color="primary"
-                            @click="createLink"
-                        >
-                            Create
-                        </v-btn>
+
+
+
                     </v-form>
                 </v-card-text>
             </v-card>
