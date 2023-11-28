@@ -7,9 +7,11 @@ const props = defineProps({
         args: Object,
     }
 )
-const reportTechnician = ref(null)
-const reportManager = ref(null)
+const reportInfo = ref(null)
 const technicians = ref([])
+const technicianId = ref(null)
+const maintenanceDate = ref(null)
+const technicianDescription = ref(null)
 
 const userType = props.args.UserType
 const technician = userType === 3
@@ -18,12 +20,8 @@ const admin = userType === 5
 
 const {response, error} = await useApi('GET', `reports/${props.args.reportId}`)
 if (response) {
-    if (technician || admin) {
-        reportTechnician.value = response.data.reportInfo.original.data[0]
-    }
-    if (manager || admin) {
-        reportManager.value = response.data.reportInfo.original.data[0]
-    }
+    reportInfo.value = response.data.reportInfo.original.data[0]
+    console.log(reportInfo.value)
     technicians.value = response.data.techniciansList.original.data
 }
 if (error) {
@@ -39,45 +37,36 @@ technicians.value.forEach(technician => {
     })
 })
 
-async function closeReport($decision) {
-    const {response: responseSend, error: errorSend} = await useApi('PATCH', `close-report/${props.args.reportId}`, {
+async function closeReport(decision) {
+    console.log(props.args.reportId)
+    console.log(props.args.technicianId)
+    console.log(reportInfo.value.VehicleId)
+    console.log(technicianDescription.value)
+    console.log(decision)
+
+    await useApi('PATCH', `close-report/${props.args.reportId}`, {
         'reportId': props.args.reportId,
         'technicianId': props.args.technicianId,
-        'technicianDescription': props.args.technicianDescription,
+        'vehicleId': reportInfo.value.VehicleId,
+        'technicianDescription': technicianDescription.value,
+        'decision': decision
     })
-    if (responseSend) {
-        console.log(responseSend.data)
-    }
-    if (errorSend) {
-        console.log(errorSend.value)
-    }
-    if ($decision === 'kaputt') {
-        console.log('kaputt')
-        // TODO: update vehicle state to 'kaputt'
-    }
-    else {
-        console.log('operational')
-        // TODO: update vehicle state to 'operational'
-    }
 }
 
-async function updateReport($decision) {
-    const {response: responseSend, error: errorSend} = await useApi('PATCH', `handle-report/${props.args.reportId}`, {
+async function updateReport(decision) {
+    console.log(props.args.reportId)
+    console.log(technicianId.value)
+    console.log(reportInfo.value.VehicleId)
+    console.log(maintenanceDate.value)
+    console.log(decision)
+
+    await useApi('PATCH', `handle-report/${props.args.reportId}`, {
         'reportId': props.args.reportId,
-        'technicianId': props.args.technicianId,
-        'maintenanceDate': props.args.maintenanceDate,
-        'decision': $decision
+        'technicianId': technicianId.value,
+        'vehicleId': reportInfo.value.VehicleId,
+        'maintenanceDate': maintenanceDate.value.toISOString().split('T')[0],
+        'decision': decision
     })
-    if (responseSend) {
-        console.log(responseSend.data)
-    }
-    if (errorSend) {
-        console.log(errorSend.value)
-    }
-    if ($decision === 'accept') {
-        console.log('maintenance')
-        // TODO: update vehicle state to 'maintenance'
-    }
 }
 </script>
 
@@ -98,13 +87,13 @@ async function updateReport($decision) {
                 <v-spacer/>
             </v-col>
             <v-col>
-                <v-card width="800" v-if="(technician || admin)">
+                <v-card width="800" v-if="(manager || admin)">
                     <v-card-item>
                         <h3 style="margin-top: 10px">
-                            {{ reportTechnician.SubmitterName }}'s description:
+                            {{ reportInfo.SubmitterName }}'s description:
                         </h3>
                         <v-card color="grey-lighten-2" style="padding: 15px; margin-top: 10px" min-height="50">
-                            {{ reportTechnician.ReportDescription }}
+                            {{ reportInfo.ReportDescription }}
                         </v-card>
                         <v-form @submit.prevent="() => updateReport('accept')"
                                 style="margin-top: 20px">
@@ -112,7 +101,7 @@ async function updateReport($decision) {
                                 <v-col>
                                     <v-date-picker
                                         required
-                                        v-model="props.args.maintenanceDate"
+                                        v-model="maintenanceDate"
                                         label="Maintenance date"
                                         color="grey-lighten-2"
                                         style="border: 1px solid lightgrey"
@@ -121,25 +110,25 @@ async function updateReport($decision) {
                                 <v-col>
                                     <v-container content="center" style="margin-top: 20px">
                                         <v-row>
-                                            <v-icon size="30px">{{ reportTechnician.VehicleIcon }}</v-icon>
+                                            <v-icon size="30px">{{ reportInfo.VehicleIcon }}</v-icon>
                                             <h3 style="margin-left: 20px">
-                                                {{ reportTechnician.VehicleLicensePlate }}
-                                                "{{ reportTechnician.VehicleName }}"
+                                                {{ reportInfo.VehicleLicensePlate }}
+                                                "{{ reportInfo.VehicleName }}"
                                             </h3>
                                         </v-row>
                                         <v-row style="margin-top: 50px">
                                             <h4>
-                                                Last maintenance: {{ reportTechnician.VehicleLastMaintenance }}
+                                                Last maintenance: {{ reportInfo.VehicleLastMaintenance }}
                                             </h4>
                                         </v-row>
                                         <v-row>
                                             <h4>
-                                                Report date: {{ reportTechnician.ReportDate }}
+                                                Report date: {{ reportInfo.ReportDate }}
                                             </h4>
                                         </v-row>
                                         <v-select style="width: 300px; margin-top: 100px"
                                                   label="Select technician"
-                                                  v-model="props.args.technicianId"
+                                                  v-model="technicianId"
                                                   :items="technician_list"
                                                   required
                                         />
@@ -163,35 +152,35 @@ async function updateReport($decision) {
                         </v-form>
                     </v-card-item>
                 </v-card>
-                <v-card style="margin-top: 50px" v-if="(manager || admin)">
+                <v-card style="margin-top: 50px" v-if="(technician || admin)">
                     <v-card-item>
                         <v-row style="margin-top: 20px; margin-left: 10px">
-                            <v-icon size="50px">{{ reportManager.VehicleIcon }}</v-icon>
+                            <v-icon size="50px">{{ reportInfo.VehicleIcon }}</v-icon>
                             <h2 style="margin-left: 20px">
-                                {{ reportManager.VehicleLicensePlate }} "{{ reportManager.VehicleName }}"
+                                {{ reportInfo.VehicleLicensePlate }} "{{ reportInfo.VehicleName }}"
                             </h2>
                         </v-row>
                         <h4 style="margin-top: 25px; margin-left: 10px">
-                            Last maintenance: {{ reportManager.VehicleLastMaintenance }}
+                            Last maintenance: {{ reportInfo.VehicleLastMaintenance }}
                         </h4>
                         <h4 style="; margin-left: 10px">
-                            Report date: {{ reportManager.ReportDate }}
+                            Report date: {{ reportInfo.ReportDate }}
                         </h4>
                         <h4 style="; margin-left: 10px">
-                            Service date: {{ reportManager.ReportMaintenanceDate }}
+                            Service date: {{ reportInfo.ReportMaintenanceDate }}
                         </h4>
 
                         <h3 style="margin-top: 10px">
-                            {{ reportManager.SubmitterName }}'s description:
+                            {{ reportInfo.SubmitterName }}'s description:
                         </h3>
                         <v-card color="grey-lighten-2" style="padding: 15px; margin-top: 10px" min-height="50">
-                            {{ reportManager.ReportDescription }}
+                            {{ reportInfo.ReportDescription }}
                         </v-card>
                         <h3 style="margin-top: 10px">
-                            {{ reportManager.SubmitterName }}'s description:
+                            {{ reportInfo.SubmitterName }}'s description:
                         </h3>
                         <v-form @submit.prevent>
-                            <v-textarea v-model="props.args.technicianDescription">
+                            <v-textarea v-model="technicianDescription">
                             </v-textarea>
                             <v-row>
                                 <v-spacer/>
