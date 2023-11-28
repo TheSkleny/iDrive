@@ -45,7 +45,7 @@ async function sendAdd() {
     console.log(vehicleLicensePlate.value)
     console.log(vehicleType.value)
 
-    await useApi('POST', `vehicles`, {
+    const {response: resp, error: err} = await useApi('POST', `vehicles`, {
         'name': vehicleName.value,
         'brand': vehicleBrand.value,
         'imageUri': vehicleImage.value,
@@ -54,7 +54,12 @@ async function sendAdd() {
         'licensePlate': vehicleLicensePlate.value,
         'typeId': vehicleType.value
     })
-    await redirectToVehicles()
+    if (resp) {
+        redirectToVehicles()
+    }
+    if (err) {
+        console.log(err.value)
+    }
 
 }
 const redirectToVehicles = () => {
@@ -128,7 +133,6 @@ const redirectToVehicles = () => {
                             style="margin-right: 20px"
                             color="teal"
                             type="submit"
-                            @click="() => sendAdd()"
                         >
                             Save
                         </v-btn>
