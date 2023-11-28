@@ -57,6 +57,7 @@ class ReportController extends Controller
             'data' => $this->ReportRepository->handleReport(
                 $request->input('reportId'),
                 $request->input('technicianId'),
+                $request->input('vehicleId'),
                 $request->input('maintenanceDate'),
                 $request->input('decision')
             )
@@ -68,7 +69,9 @@ class ReportController extends Controller
             'data' => $this->ReportRepository->closeReport(
                 $request->input('reportId'),
                 $request->input('technicianId'),
-                $request->input('technicianDescription')
+                $request->input('vehicleId'),
+                $request->input('technicianDescription'),
+                $request->input('decision')
             )
         ]);
     }

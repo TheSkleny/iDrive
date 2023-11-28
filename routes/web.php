@@ -67,7 +67,7 @@ Route::get('/vehicles', function () {
 
 Route::get('/reports/{reportId}', function ($reportId) {
     return Inertia::render('Base', ['c' => 'ReportDetail',
-        'args' => ['reportId' => $reportId, 'UserType' => auth()->user()->type_id]]);
+        'args' => ['reportId' => $reportId, 'technicianId' => auth()->user()->Id, 'UserType' => auth()->user()->type_id]]);
 })->where('reportId', '.*')->middleware(['auth', 'verified']);
 
 Route::get('/repairs', function () {

@@ -128,8 +128,15 @@ class ReportRepository
                 )
         ', ['submitterId' => $submitterId, 'vehicleId' => $vehicleId, 'technicianId' => $technicianId, 'maintenanceDate' => $maintenanceDate]
         );
+
+        DB::update('
+            update "Vehicle"
+            set "StateId" = 2
+            where "Id" = :vehicleId
+        ', ['vehicleId' => $vehicleId]
+        );
     }
-    public function handleReport($reportId, $technicianId, $maintenanceDate, $decision) {
+    public function handleReport($reportId, $technicianId, $vehicleId, $maintenanceDate, $decision) {
         if ($decision == 'accept') {
             DB::update('
                 update "Report"
@@ -139,6 +146,12 @@ class ReportRepository
                     "MaintenanceDate" = :maintenanceDate
                 where "Id" = :reportId
             ', ['technicianId' => $technicianId, 'maintenanceDate' => $maintenanceDate, 'reportId' => $reportId]
+            );
+            DB::update('
+            update "Vehicle"
+            set "StateId" = 2
+            where "Id" = :vehicleId
+        ', ['vehicleId' => $vehicleId]
             );
         }
         else if ($decision == 'reject') {
@@ -150,7 +163,7 @@ class ReportRepository
             );
         }
     }
-    public function closeReport($reportId, $technicianId, $technicianDescription) {
+    public function closeReport($reportId, $technicianId, $vehicleId, $technicianDescription, $decision) {
         DB::update(
             'update "Report"
             set
@@ -161,5 +174,21 @@ class ReportRepository
             where "Id" = :reportId
         ', ['technicianId' => $technicianId, 'technicianDescription' => $technicianDescription, 'reportId' => $reportId]
         );
+        if ($decision == 'operational') {
+            DB::update('
+                update "Vehicle"
+                set "StateId" = 1
+                where "Id" = :vehicleId
+            ', ['vehicleId' => $vehicleId]
+            );
+        }
+        else if ($decision == 'kaputt') {
+            DB::update('
+                update "Vehicle"
+                set "StateId" = 3
+                where "Id" = :vehicleId
+            ', ['vehicleId' => $vehicleId]
+            );
+        }
     }
 }
